@@ -12,6 +12,10 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                gibson: ['Gibson', ...defaultTheme.fontFamily.sans],
+            },
+            colors:{
+                rojo: '#5E1D45'
             },
         },
     },

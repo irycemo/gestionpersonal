@@ -18,14 +18,16 @@
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
+
+    <body class="font-gibson antialiased">
 
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+        <div class="min-h-screen bg-gray-200">
 
             <!-- Page Content -->
-            @yield('content')
+            <main>
+                {{ $slot }}
+            </main>
 
         </div>
 
@@ -33,4 +35,5 @@
 
         @livewireScripts
     </body>
+
 </html>
