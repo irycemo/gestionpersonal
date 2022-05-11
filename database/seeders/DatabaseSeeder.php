@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\HorarioSeeder;
 use Database\Seeders\InhabilSeeder;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(HorarioSeeder::class);
         $this->call(InhabilSeeder::class);

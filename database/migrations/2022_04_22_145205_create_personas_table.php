@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->date('fecha_ingreso');
             $table->text('observaciones')->nullable();
-            $table->foreignId('horario_id')->constrained();
+            $table->foreignId('horario_id')->nullable()->constrained()->references('id')->on('horarios');
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
