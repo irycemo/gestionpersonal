@@ -133,11 +133,11 @@
 
                         </th>
 
-                        <th wire:click="order('location')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('ubicacion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Ubicación
 
-                            @if($sort == 'location')
+                            @if($sort == 'ubicacion')
 
                                 @if($direction == 'asc')
 
@@ -473,7 +473,7 @@
 
                     <div>
 
-                        @error('name') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('nombre') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -592,7 +592,7 @@
 
                 <div>
 
-                    @error('location') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                    @error('ubicacion') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                 </div>
 

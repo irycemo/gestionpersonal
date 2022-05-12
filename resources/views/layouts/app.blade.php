@@ -17,6 +17,9 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+        {{-- SweetAlert --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.13/dist/sweetalert2.all.min.js" defer></script>
     </head>
 
     <body class="font-gibson antialiased">
@@ -34,6 +37,30 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script>
+
+            window.addEventListener('mostrarMensaje', event => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: event.detail[0],
+                    title: event.detail[1]
+                })
+            })
+
+        </script>
+
     </body>
 
 </html>

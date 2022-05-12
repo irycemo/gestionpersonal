@@ -4,10 +4,13 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 class Usuarios extends Component
 {
+
+    use WithPagination;
 
     public $modal = false;
     public $modalBorrar = false;
@@ -25,7 +28,51 @@ class Usuarios extends Component
     public $role;
     public $ubicacion;
 
+    protected function rules(){
+        return [
+            'nombre' => 'required',
+            'email' => 'required|email|unique:users,email,' . $this->selected_id,
+            'status' => 'required|in:activo,inactivo',
+            'role' => 'required',
+            'ubicacion' => 'required',
+         ];
+    }
+
+    protected $messages = [
+        'nombre.required' => 'El campo nombre es reqierido',
+    ];
+
+    public function order($sort){
+
+        if($this->sort == $sort){
+            if($this->direction == 'desc'){
+                $this->direction = 'asc';
+            }else{
+                $this->direction = 'desc';
+            }
+        }else{
+            $this->sort = $sort;
+            $this->direction = 'asc';
+        }
+    }
+
+    public function updatedPagination(){
+        $this->resetPage();
+    }
+
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function resetearTodo(){
+
+        $this->reset(['nombre', 'email', 'status', 'role', 'ubicacion']);
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
     public function abrirModalCrear(){
+        $this->resetearTodo();
         $this->modal = true;
         $this->crear =true;
     }
@@ -37,34 +84,56 @@ class Usuarios extends Component
 
     public function crear(){
 
-        $usuario = User::create([
-            'name' => $this->nombre,
-            'email' => $this->email,
-            'status' => $this->status,
-            'ubicacion' => $this->ubicacion,
-            'password' => 'password'
-        ]);
+        $this->validate();
 
-        $usuario->roles()->attach($this->role);
+        try {
 
-        $this->modal = false;
+            $usuario = User::create([
+                'name' => $this->nombre,
+                'email' => $this->email,
+                'status' => $this->status,
+                'ubicacion' => $this->ubicacion,
+                'password' => 'password'
+            ]);
+
+            $usuario->roles()->attach($this->role);
+
+            $this->cerrarModal();
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se creo con exito."]);
+
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+            $this->cerrarModal();
+            $this->resetearTodo();
+        }
 
     }
 
     public function actualizar(){
 
-        $usuario = User::find($this->selected_id);
+        try{
 
-        $usuario->update([
-            'name' => $this->nombre,
-            'email' => $this->email,
-            'status' => $this->status,
-            'ubicacion' => $this->ubicacion,
-        ]);
+            $usuario = User::find($this->selected_id);
 
-        $usuario->roles()->sync($this->role);
+            $usuario->update([
+                'name' => $this->nombre,
+                'email' => $this->email,
+                'status' => $this->status,
+                'ubicacion' => $this->ubicacion,
+            ]);
 
-        $this->cerrarModal();
+            $usuario->roles()->sync($this->role);
+
+            $this->cerrarModal();
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se actualizo con exito."]);
+
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+            $this->cerrarModal();
+            $this->resetearTodo();
+        }
 
     }
 
@@ -78,16 +147,26 @@ class Usuarios extends Component
 
     public function borrar(){
 
-        $usuario = User::find($this->selected_id);
+        try{
 
-        $usuario->delete();
+            $usuario = User::find($this->selected_id);
 
-        $this->cerrarModal();
+            $usuario->delete();
+
+            $this->cerrarModal();
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se elimino con exito."]);
+
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+            $this->cerrarModal();
+            $this->resetearTodo();
+        }
 
     }
 
     public function abiriModalEditar($usuario){
-
+        $this->resetearTodo();
         $this->modal = true;
         $this->editar = true;
 
@@ -103,7 +182,12 @@ class Usuarios extends Component
     public function render()
     {
 
-        $usuarios = User::where('name', 'LIKE', '%' . $this->search . '%')->paginate($this->pagination);
+        $usuarios = User::where('name', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('email', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('ubicacion', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('status', 'LIKE', '%' . $this->search . '%')
+                            ->orderBy($this->sort, $this->direction)
+                            ->paginate($this->pagination);
 
         $roles = Role::all();
 

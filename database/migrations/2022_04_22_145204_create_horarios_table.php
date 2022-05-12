@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('tipo');
             $table->unsignedInteger('entrada');
             $table->unsignedInteger('salida');
-            $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
-            $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');
+            $table->foreignId('creado_por')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->foreignId('actualizado_por')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
