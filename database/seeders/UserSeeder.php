@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Delegado(a) Administrativo');
+        ])->assignRole('Delegado(a) Administrativo(a)');
 
         User::create([
             'name' => 'Alejandro',

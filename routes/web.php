@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Admin\Roles;
+use App\Http\Livewire\Admin\Permisos;
 use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -32,4 +34,8 @@ Route::middleware([
 Route::get('dashboard', DashboardController::class)->name('dashboard');
 
 Route::get('usuarios', Usuarios::class)->name('usuarios');
+
+Route::get('permisos', Permisos::class)->name('permisos');
+
+Route::get('roles', Roles::class)->name('roles');
 

@@ -20,8 +20,8 @@ class Usuarios extends Component
     public $sort = 'id';
     public $direction = 'desc';
     public $pagination=10;
-
     public $selected_id;
+
     public $nombre;
     public $email;
     public $status;
@@ -39,7 +39,7 @@ class Usuarios extends Component
     }
 
     protected $messages = [
-        'nombre.required' => 'El campo nombre es reqierido',
+        'nombre.required' => 'El campo nombre es requerido',
     ];
 
     public function order($sort){
@@ -66,9 +66,17 @@ class Usuarios extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['nombre', 'email', 'status', 'role', 'ubicacion']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'nombre', 'email', 'status', 'role', 'ubicacion']);
         $this->resetErrorBag();
         $this->resetValidation();
+    }
+
+    public function abrirModalBorrar($model){
+
+        $this->modalBorrar = true;
+
+        $this->selected_id = $model['id'];
+
     }
 
     public function abrirModalCrear(){
@@ -77,9 +85,19 @@ class Usuarios extends Component
         $this->crear =true;
     }
 
-    public function cerrarModal(){
-        $this->modal = false;
-        $this->modalBorrar = false;
+    public function abiriModalEditar($usuario){
+
+        $this->resetearTodo();
+        $this->modal = true;
+        $this->editar = true;
+
+        $this->selected_id = $usuario['id'];
+        $this->nombre = $usuario['name'];
+        $this->email = $usuario['email'];
+        $this->status = $usuario['status'];
+        $this->ubicacion = $usuario['ubicacion'];
+        $this->role = 1;
+
     }
 
     public function crear(){
@@ -93,14 +111,14 @@ class Usuarios extends Component
                 'email' => $this->email,
                 'status' => $this->status,
                 'ubicacion' => $this->ubicacion,
-                'password' => 'password'
+                'password' => 'sistema'
             ]);
 
             $usuario->roles()->attach($this->role);
 
             $this->cerrarModal();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se creo con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se creó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
@@ -127,21 +145,14 @@ class Usuarios extends Component
 
             $this->cerrarModal();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se actualizo con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
+            ;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->cerrarModal();
             $this->resetearTodo();
         }
-
-    }
-
-    public function abrirModalBorrar($usuario){
-
-        $this->modalBorrar = true;
-
-        $this->selected_id = $usuario['id'];
 
     }
 
@@ -165,20 +176,6 @@ class Usuarios extends Component
 
     }
 
-    public function abiriModalEditar($usuario){
-        $this->resetearTodo();
-        $this->modal = true;
-        $this->editar = true;
-
-        $this->selected_id = $usuario['id'];
-        $this->nombre = $usuario['name'];
-        $this->email = $usuario['email'];
-        $this->status = $usuario['status'];
-        $this->ubicacion = $usuario['ubicacion'];
-        $this->role = 1;
-
-    }
-
     public function render()
     {
 
@@ -186,6 +183,11 @@ class Usuarios extends Component
                             ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                             ->orWhere('ubicacion', 'LIKE', '%' . $this->search . '%')
                             ->orWhere('status', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere(function($q){
+                                return $q->whereHas('roles', function($q){
+                                    return $q->where('name', 'LIKE', '%' . $this->search . '%');
+                                });
+                            })
                             ->orderBy($this->sort, $this->direction)
                             ->paginate($this->pagination);
 

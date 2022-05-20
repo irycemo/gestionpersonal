@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
@@ -34,10 +35,9 @@ class User extends Authenticatable
         'Regional 2',
         'Regional 3',
         'Regional 4',
-        'Regional 5'
-        ,'Regional 6'
-        ,'Regional 7'
-        ,
+        'Regional 5',
+        'Regional 6',
+        'Regional 7'
     ];
 
     protected $fillable = [
@@ -77,4 +77,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getCreatedAtAttribute(){
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('d-m-Y H:i:s');
+    }
+
+    public function getUpdatedAtAttribute(){
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['updated_at'])->format('d-m-Y H:i:s');
+    }
 }
