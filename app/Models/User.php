@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\ModelosTrait;
 use Carbon\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -21,6 +22,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use ModelosTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -28,24 +30,14 @@ class User extends Authenticatable
      * @var string[]
      */
 
-    const UBICACIONES = [
-        'Catasro',
-        'RPP',
-        'Regional 1',
-        'Regional 2',
-        'Regional 3',
-        'Regional 4',
-        'Regional 5',
-        'Regional 6',
-        'Regional 7'
-    ];
-
     protected $fillable = [
         'name',
         'email',
         'status',
         'ubicacion',
         'password',
+        'actualizado_por',
+        'creado_por'
     ];
 
     /**
@@ -78,11 +70,4 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function getCreatedAtAttribute(){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('d-m-Y H:i:s');
-    }
-
-    public function getUpdatedAtAttribute(){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['updated_at'])->format('d-m-Y H:i:s');
-    }
 }

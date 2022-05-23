@@ -21,13 +21,13 @@
 
             </div>
 
-            {{-- @can('Crear usuario') --}}
+            @can('Crear usuario')
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Usuario</button>
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
-            {{-- @endcan --}}
+            @endcan
 
         </div>
 
@@ -308,9 +308,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($user->created_by != null)
+                                @if($user->creadoPor != null)
 
-                                    <span class="font-semibold">Registrado por: {{$user->createdBy->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$user->creadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -322,9 +322,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($user->updated_by != null)
+                                @if($user->actualizadoPor != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$user->updatedBy->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$user->actualizadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -338,7 +338,7 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    {{-- @can('Editar usuario') --}}
+                                    @can('Editar usuario')
 
                                         <button
                                             wire:click="abiriModalEditar({{$user}})"
@@ -356,9 +356,9 @@
 
                                         </button>
 
-                                    {{-- @endcan
+                                    @endcan
 
-                                    @can('Borrar usuario') --}}
+                                    @can('Borrar usuario')
 
                                         <button
                                             wire:click="abrirModalBorrar({{$user}})"
@@ -375,7 +375,7 @@
 
                                         </button>
 
-                                    {{-- @endcan --}}
+                                    @endcan
 
                                 </div>
 
@@ -556,7 +556,7 @@
                     <select class="bg-white rounded text-sm w-full" wire:model.defer="ubicacion">
                         <option selected value="">Selecciona una opción</option>
 
-                        @foreach (App\Models\User::UBICACIONES as $ubicacion)
+                        @foreach (App\Http\Constantes::UBICACIONES as $ubicacion)
 
                             <option value="{{ $ubicacion }}">{{ $ubicacion }}</option>
 

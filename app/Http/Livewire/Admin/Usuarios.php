@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Http\Traits\ComponentesTrait;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,16 +12,7 @@ class Usuarios extends Component
 {
 
     use WithPagination;
-
-    public $modal = false;
-    public $modalBorrar = false;
-    public $crear = false;
-    public $editar = false;
-    public $search;
-    public $sort = 'id';
-    public $direction = 'desc';
-    public $pagination=10;
-    public $selected_id;
+    use ComponentesTrait;
 
     public $nombre;
     public $email;
@@ -42,47 +34,11 @@ class Usuarios extends Component
         'nombre.required' => 'El campo nombre es requerido',
     ];
 
-    public function order($sort){
-
-        if($this->sort == $sort){
-            if($this->direction == 'desc'){
-                $this->direction = 'asc';
-            }else{
-                $this->direction = 'desc';
-            }
-        }else{
-            $this->sort = $sort;
-            $this->direction = 'asc';
-        }
-    }
-
-    public function updatedPagination(){
-        $this->resetPage();
-    }
-
-    public function updatingSearch(){
-        $this->resetPage();
-    }
-
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'nombre', 'email', 'status', 'role', 'ubicacion']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'nombre', 'email', 'status','role', 'ubicacion']);
         $this->resetErrorBag();
         $this->resetValidation();
-    }
-
-    public function abrirModalBorrar($model){
-
-        $this->modalBorrar = true;
-
-        $this->selected_id = $model['id'];
-
-    }
-
-    public function abrirModalCrear(){
-        $this->resetearTodo();
-        $this->modal = true;
-        $this->crear =true;
     }
 
     public function abiriModalEditar($usuario){
@@ -111,18 +67,19 @@ class Usuarios extends Component
                 'email' => $this->email,
                 'status' => $this->status,
                 'ubicacion' => $this->ubicacion,
-                'password' => 'sistema'
+                'password' => 'sistema',
+                'creado_por' => auth()->user()->id
             ]);
 
             $usuario->roles()->attach($this->role);
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se creó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
@@ -139,18 +96,19 @@ class Usuarios extends Component
                 'email' => $this->email,
                 'status' => $this->status,
                 'ubicacion' => $this->ubicacion,
+                'actualizado_por' => auth()->user()->id
             ]);
 
             $usuario->roles()->sync($this->role);
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
             ;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
@@ -164,13 +122,13 @@ class Usuarios extends Component
 
             $usuario->delete();
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se elimino con exito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
@@ -179,7 +137,7 @@ class Usuarios extends Component
     public function render()
     {
 
-        $usuarios = User::where('name', 'LIKE', '%' . $this->search . '%')
+        $usuarios = User::with('creadoPor', 'actualizadoPor')->where('name', 'LIKE', '%' . $this->search . '%')
                             ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                             ->orWhere('ubicacion', 'LIKE', '%' . $this->search . '%')
                             ->orWhere('status', 'LIKE', '%' . $this->search . '%')

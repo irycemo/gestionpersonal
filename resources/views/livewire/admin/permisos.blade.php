@@ -21,13 +21,13 @@
 
             </div>
 
-            {{-- @can('Crear usuario') --}}
+
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Permiso</button>
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
-            {{-- @endcan --}}
+
 
         </div>
 
@@ -196,9 +196,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($permiso->created_by != null)
+                                @if($permiso->creadoPor != null)
 
-                                    <span class="font-semibold">Registrado por: {{$permiso->createdBy->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$permiso->creadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -210,9 +210,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($permiso->updated_by != null)
+                                @if($permiso->actualizadoPor != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$permiso->updatedBy->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$permiso->actualizadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -226,7 +226,7 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    {{-- @can('Editar usuario') --}}
+                                    @can('Editar permiso')
 
                                         <button
                                             wire:click="abiriModalEditar({{$permiso}})"
@@ -244,9 +244,10 @@
 
                                         </button>
 
-                                    {{-- @endcan
+                                    @endcan
 
-                                    @can('Borrar usuario') --}}
+
+                                    @can('Borrar permiso')
 
                                         <button
                                             wire:click="abrirModalBorrar({{$permiso}})"
@@ -263,7 +264,7 @@
 
                                         </button>
 
-                                    {{-- @endcan --}}
+                                    @endcan
 
                                 </div>
 
@@ -353,7 +354,16 @@
 
                     <div>
 
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="area">
+                        <select wire:model.defer="area" class="bg-white rounded text-sm w-full">
+
+                            @foreach (App\Http\Constantes::AREAS as $area)
+
+                                <option value="{{ $area }}">{{ $area }}</option>
+
+                            @endforeach
+
+
+                        </select>
 
                     </div>
 

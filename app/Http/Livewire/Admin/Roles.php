@@ -2,22 +2,16 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Http\Traits\ComponentesTrait;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class Roles extends Component
 {
-
-    public $modal = false;
-    public $modalBorrar = false;
-    public $crear = false;
-    public $editar = false;
-    public $search;
-    public $sort = 'id';
-    public $direction = 'desc';
-    public $pagination=10;
-    public $selected_id;
+    use WithPagination;
+    use ComponentesTrait;
 
     public $nombre;
     public $listaDePermisos = [];
@@ -32,47 +26,11 @@ class Roles extends Component
         'nombre.required' => 'El campo nombre es requerido'
     ];
 
-    public function order($sort){
-
-        if($this->sort == $sort){
-            if($this->direction == 'desc'){
-                $this->direction = 'asc';
-            }else{
-                $this->direction = 'desc';
-            }
-        }else{
-            $this->sort = $sort;
-            $this->direction = 'asc';
-        }
-    }
-
-    public function updatedPagination(){
-        $this->resetPage();
-    }
-
-    public function updatingSearch(){
-        $this->resetPage();
-    }
-
     public function resetearTodo(){
 
         $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'nombre', 'listaDePermisos']);
         $this->resetErrorBag();
         $this->resetValidation();
-    }
-
-    public function abrirModalBorrar($model){
-
-        $this->modalBorrar = true;
-
-        $this->selected_id = $model['id'];
-
-    }
-
-    public function abrirModalCrear(){
-        $this->resetearTodo();
-        $this->modal = true;
-        $this->crear =true;
     }
 
     public function abiriModalEditar($modelo){
@@ -97,18 +55,19 @@ class Roles extends Component
         try {
 
             $role = Role::create([
-                'name' => $this->nombre
+                'name' => $this->nombre,
+                'creado_por' => auth()->user()->id
             ]);
 
             $role->permissions()->sync($this->listaDePermisos);
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El role se creó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
@@ -121,19 +80,20 @@ class Roles extends Component
             $rol = Role::find($this->selected_id);
 
             $rol->update([
-                'name' => $this->nombre
+                'name' => $this->nombre,
+                'actualizado_por' => auth()->user()->id
             ]);
 
             $rol->permissions()->sync($this->listaDePermisos);
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El rol se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
@@ -147,13 +107,13 @@ class Roles extends Component
 
             $role->delete();
 
-            $this->cerrarModal();
+            $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El role se elimino con exito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->cerrarModal();
+            $this->resetearTodo();
             $this->resetearTodo();
         }
 
