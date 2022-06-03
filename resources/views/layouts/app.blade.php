@@ -20,6 +20,9 @@
 
         {{-- SweetAlert --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.13/dist/sweetalert2.all.min.js" defer></script>
+
+        @stack('styles')
+
     </head>
 
     <body class="font-gibson antialiased">
@@ -60,6 +63,8 @@
             })
 
         </script>
+
+        @stack('scripts')
 
     </body>
 

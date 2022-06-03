@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(HorarioSeeder::class);
+        /* $this->call(HorarioSeeder::class); */
         $this->call(InhabilSeeder::class);
         $this->call(PermisoSeeder::class);
         $this->call(PersonaSeeder::class);

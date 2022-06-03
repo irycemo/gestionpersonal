@@ -11,11 +11,8 @@ class Incapacidad extends Model
 
     protected $fillable = ['folio', 'documento', 'tipo', 'persona_id', 'creado_por', 'actualizdo_por'];
 
-    public function creadoPor(){
-        return $this->belongsTo(User::class, 'creado_por');
+    public function persona(){
+        return $this->belongsTo(Persona::class);
     }
 
-    public function actualizadoPor(){
-        return $this->belongsTo(User::class, 'actualizado_por');
-    }
 }

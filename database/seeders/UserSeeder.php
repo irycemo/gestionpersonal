@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Prueba',
+            'name' => 'Admin',
             'ubicacion' => 'catastro',
             'status' => 'activo',
             'email' => 'correo@correo.com',

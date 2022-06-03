@@ -36,5 +36,30 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'Crear usuario', 'area' => 'Usuarios'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'Editar usuario', 'area' => 'Usuarios'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'Borrar usuario', 'area' => 'Usuarios'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de horarios', 'area' => 'Horarios'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear horario', 'area' => 'Horarios'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar horario', 'area' => 'Horarios'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar horario', 'area' => 'Horarios'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de inasistencias', 'area' => 'Inasistencias'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear inasistencia', 'area' => 'Inasistencias'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar inasistencia', 'area' => 'Inasistencias'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar inasistencia', 'area' => 'Inasistencias'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de permisos personal', 'area' => 'Permisos Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de incapacidades', 'area' => 'Incapacidades'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear incapacidad', 'area' => 'Incapacidades'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar incapacidad', 'area' => 'Incapacidades'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar incapacidad', 'area' => 'Incapacidades'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de personal', 'area' => 'Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear personal', 'area' => 'Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar personal', 'area' => 'Personal'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar personal', 'area' => 'Personal'])->syncRoles([$role1]);
     }
 }

@@ -8,7 +8,12 @@ class Constantes{
     const AREAS = [
         'Roles',
         'Permisos',
-        'Usuarios'
+        'Usuarios',
+        'Horarios',
+        'Inasistencias',
+        'Permisos Personal',
+        'Incapacidades',
+        'Personal'
     ];
 
     /* Usuarios */

@@ -15,22 +15,23 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('numero_empleado');
+            $table->unsignedInteger('numero_empleado')->unique();
+            $table->string('foto')->nullable();
             $table->string('nombre');
             $table->string('ap_paterno');
             $table->string('ap_materno');
-            $table->unsignedBigInteger('codigo_barras');
+            $table->unsignedBigInteger('codigo_barras')->unique();
             $table->string('localidad');
             $table->string('area');
             $table->string('tipo');
-            $table->string('rfc');
-            $table->string('curp');
-            $table->string('telefono');
+            $table->string('rfc')->unique();
+            $table->string('curp')->unique();
+            $table->string('telefono')->unique();
             $table->text('domicilio');
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
             $table->date('fecha_ingreso');
             $table->text('observaciones')->nullable();
-            $table->foreignId('horario_id')->nullable()->constrained()->references('id')->on('horarios');
+            $table->foreignId('horario_id')->constrained();
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();

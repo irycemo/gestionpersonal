@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Livewire\Admin\Roles;
+use App\Http\Livewire\Admin\Horarios;
 use App\Http\Livewire\Admin\Permisos;
+use App\Http\Livewire\Admin\Personal;
 use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Admin\Inasistencias;
+use App\Http\Livewire\Admin\Incapacidades;
 use App\Http\Controllers\DashboardController;
+use App\Http\Livewire\Admin\Permisospersonal;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +43,14 @@ Route::get('usuarios', Usuarios::class)->name('usuarios');
 Route::get('permisos', Permisos::class)->name('permisos');
 
 Route::get('roles', Roles::class)->name('roles');
+
+Route::get('horarios', Horarios::class)->name('horarios');
+
+Route::get('inasistenciass', Inasistencias::class)->name('inasistencias');
+
+Route::get('permisos_personal', Permisospersonal::class)->name('permisos_personal');
+
+Route::get('incapacidadess', Incapacidades::class)->name('incapacidades');
+
+Route::get('personal', Personal::class)->name('personal');
 

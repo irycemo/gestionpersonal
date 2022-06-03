@@ -2,7 +2,7 @@
 
     <div class="mb-5">
 
-        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Usuarios</h1>
+        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Personal</h1>
 
         <div class="flex justify-between">
 
@@ -21,9 +21,9 @@
 
             </div>
 
-            @can('Crear usuario')
+            @can('Lista de personal')
 
-                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Usuario</button>
+                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nueva Persona</button>
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
@@ -33,7 +33,7 @@
 
     </div>
 
-    @if($usuarios->count())
+    @if($personal->count())
 
         <div class="relative overflow-x-auto rounded-lg shadow-xl">
 
@@ -43,11 +43,41 @@
 
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                        <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('numero_empleado')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            #Empleado
+
+                            @if($sort == 'numero_empleado')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('ap_paterno')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Nombre
 
-                            @if($sort == 'name')
+                            @if($sort == 'nombre')
 
                                 @if($direction == 'asc')
 
@@ -73,47 +103,11 @@
 
                         </th>
 
-                        <th wire:click="order('email')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('codigo_barras')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Correo
+                            Codigo Barras
 
-                            @if($sort == 'email')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
-
-                        </th>
-
-                        <th class="px-3 py-3 hidden lg:table-cell">
-
-                            Rol
-
-                        </th>
-
-                        <th wire:click="order('ubicacion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
-
-                            Ubicación
-
-                            @if($sort == 'ubicacion')
+                            @if($sort == 'codigo_barras')
 
                                 @if($direction == 'asc')
 
@@ -139,11 +133,101 @@
 
                         </th>
 
-                        <th wire:click="order('status')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('localidad')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Estado
+                            Localidad
 
-                            @if($sort == 'status')
+                            @if($sort == 'localidad')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('area')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Área
+
+                            @if($sort == 'area')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('tipo')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Tipo
+
+                            @if($sort == 'tipo')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('horario_id')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Horario
+
+                            @if($sort == 'horario_id')
 
                                 @if($direction == 'asc')
 
@@ -238,69 +322,64 @@
 
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                    @foreach($usuarios as $user)
+                    @foreach($personal as $persona)
 
                         <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">#Empleado</span>
+
+                                {{ $persona->numero_empleado }}
+
+                            </td>
+
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
 
-                                <div class="flex items-center justify-center lg:justify-start">
-
-                                    <div class="flex-shrink-0 h-10 w-10">
-
-                                        <img class="h-10 w-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
-
-                                    </div>
-
-                                    <div class="ml-4">
-
-                                        <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-
-                                    </div>
-
-                                </div>
+                                {{ $persona->ap_paterno }} {{ $persona->ap_materno }} {{ $persona->nombre }}
 
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Email</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Codigo Barras</span>
 
-                                {{ $user->email }}
-
-                            </td>
-
-                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Role</span>
-
-                                {{ $user->getRoleNames()[0] }}
-
-                            </td>
-
-                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Ubicaión</span>
-
-                                {{ $user->ubicacion }}
+                                {{ $persona->codigo_barras }}
 
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Status</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Localidad</span>
 
-                                @if($user->status == 'activo')
+                                {{ $persona->localidad }}
 
-                                    <span class="bg-green-400 py-1 px-2 rounded-full text-white">{{ ucfirst($user->status) }}</span>
+                            </td>
 
-                                @else
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                    <span class="bg-red-400 py-1 px-2 rounded-full text-white">{{ ucfirst($user->status) }}</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Area</span>
 
-                                @endif
+                                {{ $persona->area }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
+
+                                {{ $persona->tipo }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Horario_id</span>
+
+                                {{ $persona->horario_id }}
 
                             </td>
 
@@ -308,13 +387,13 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($user->creadoPor != null)
+                                @if($persona->creadoPor != null)
 
-                                    <span class="font-semibold">Registrado por: {{$user->creadoPor->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$persona->creadoPor->name}}</span> <br>
 
                                 @endif
 
-                                {{ $user->created_at }}
+                                {{ $persona->created_at }}
 
                             </td>
 
@@ -322,13 +401,13 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($user->actualizadoPor != null)
+                                @if($persona->actualizadoPor != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$user->actualizadoPor->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$persona->actualizadoPor->name}}</span> <br>
 
                                 @endif
 
-                                {{ $user->updated_at }}
+                                {{ $persona->updated_at }}
 
                             </td>
 
@@ -338,12 +417,12 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    @can('Editar usuario')
+                                    @can('Editar personal')
 
                                         <button
-                                            wire:click="abrirModalEditar({{$user}})"
+                                            wire:click="abrirModalEditar({{$persona}})"
                                             wire:loading.attr="disabled"
-                                            wire:target="abiriModalEditar({{$user}})"
+                                            wire:target="abrirModalEditar({{$persona}})"
                                             class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none"
                                         >
 
@@ -358,12 +437,13 @@
 
                                     @endcan
 
-                                    @can('Borrar usuario')
+
+                                    @can('Borrar personal')
 
                                         <button
-                                            wire:click="abrirModalBorrar({{$user}})"
+                                            wire:click="abrirModalBorrar({{$persona}})"
                                             wire:loading.attr="disabled"
-                                            wire:target="abrirModalBorrar({{$user}})"
+                                            wire:target="abrirModalBorrar({{$persona}})"
                                             class="bg-red-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
                                         >
 
@@ -390,8 +470,8 @@
 
                     <tr>
 
-                        <td colspan="8" class="py-2 px-5">
-                            {{ $usuarios->links()}}
+                        <td colspan="13" class="py-2 px-5">
+                            {{ $personal->links()}}
                         </td>
 
                     </tr>
@@ -423,9 +503,9 @@
         <x-slot name="title">
 
             @if($crear)
-                Nuevo Usuario
+                Nueva Persona
             @elseif($editar)
-                Editar Usuario
+                Editar Persona
             @endif
 
         </x-slot>
@@ -438,7 +518,29 @@
 
                     <div>
 
+                        <Label>#Empleado</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="numero_empleado">
+
+                    </div>
+
+                    <div>
+
+                        @error('numero_empleado') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
                         <Label>Nombre</Label>
+
                     </div>
 
                     <div>
@@ -459,8 +561,225 @@
 
                     <div>
 
-                        <Label>Email</Label>
+                        <Label>Paterno</Label>
 
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="paterno">
+
+                    </div>
+
+                    <div>
+
+                        @error('paterno') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Materno</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="materno">
+
+                    </div>
+
+                    <div>
+
+                        @error('materno') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Código de Barras</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="codigo_barras">
+
+                    </div>
+
+                    <div>
+
+                        @error('codigo_barras') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Localidad</Label>
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="localidad">
+
+                            <option value="" selected>Selecciona una opción</option>
+
+                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                                <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
+                           @endforeach
+
+                         </select>
+
+
+                    </div>
+
+                    <div>
+
+                        @error('localidad') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Área</Label>
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="area">
+                            <option value="" selected>Selecciona una opción</option>
+                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                                <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
+                           @endforeach
+
+                         </select>
+
+
+                    </div>
+
+                    <div>
+
+                        @error('area') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Tipo</Label>
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="tipo">
+                            <option value="" selected>Selecciona una opción</option>
+                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                                <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
+                           @endforeach
+
+                         </select>
+
+
+                    </div>
+
+                    <div>
+
+                        @error('tipo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>RFC</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="rfc">
+
+                    </div>
+
+                    <div>
+
+                        @error('rfc') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>CURP</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="curp">
+
+                    </div>
+
+                    <div>
+
+                        @error('curp') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Teléfono</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="telefono">
+
+                    </div>
+
+                    <div>
+
+                        @error('telefono') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Email</Label>
                     </div>
 
                     <div>
@@ -481,62 +800,21 @@
 
             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                <div class="flex-auto mr-1 ">
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Domicilio</Label>
+                    </div>
 
                     <div>
 
-                        <Label>Status</Label>
+                        <textarea class="bg-white rounded text-sm w-full" wire:model="domicilio" ></textarea>
 
                     </div>
 
                     <div>
 
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="status">
-
-                            <option value="">Seleccione una opción</option>
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Inactivo</option>
-
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        @error('status') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto mr-1 ">
-
-                    <div>
-
-                        <Label>Rol</Label>
-
-                    </div>
-
-                    <div>
-
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="role">
-
-                            <option value="">Seleccione una opción</option>
-
-                            @foreach ($roles as $role)
-
-
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-
-                            @endforeach
-
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        @error('role') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('domicilio') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -544,36 +822,104 @@
 
             </div>
 
-            <div class="flex-auto mb-5">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                <div>
+                <div class="flex-auto">
 
-                    <Label>Ubicación</Label>
+                    <div>
+                        <Label>Fecha de ingreso</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="date" class="bg-white rounded text-sm w-full" wire:model.defer="fecha_ingreso">
+
+                    </div>
+
+                    <div>
+
+                        @error('fecha_ingreso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
                 </div>
 
-                <div>
+                <div class="flex-auto ">
 
-                    <select class="bg-white rounded text-sm w-full" wire:model.defer="ubicacion">
-                        <option selected value="">Selecciona una opción</option>
+                    <div>
 
-                        @foreach (App\Http\Constantes::UBICACIONES as $ubicacion)
+                        <Label>Horario</Label>
+                    </div>
 
-                            <option value="{{ $ubicacion }}">{{ $ubicacion }}</option>
+                    <div>
 
-                        @endforeach
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="horario_id">
+                            @foreach($horarios as $horario)
+                                <option value="{{$horario->id }}" >{{ $horario->tipo }}</option>
+                           @endforeach
 
-                    </select>
+                         </select>
 
-                </div>
 
-                <div>
+                    </div>
 
-                    @error('ubicacion') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                    <div>
+
+                        @error('horario_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
 
                 </div>
 
             </div>
 
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Observaciones</Label>
+                    </div>
+
+                    <div>
+
+                        <textarea class="bg-white rounded text-sm w-full" wire:model="observaciones" ></textarea>
+
+                    </div>
+
+                    <div>
+
+                        @error('observaciones') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+                        <Label>Fotografía</Label>
+                    </div>
+
+                    <div>
+
+                        <x-filepond wire:model="foto"  />
+
+                    </div>
+
+                    <div>
+
+                        @error('foto') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </x-slot>
 
@@ -621,11 +967,11 @@
     <x-jet-confirmation-modal wire:model="modalBorrar">
 
         <x-slot name="title">
-            Eliminar Usuario
+            Eliminar Persona
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar al usuario? No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar a la Persona? No será posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

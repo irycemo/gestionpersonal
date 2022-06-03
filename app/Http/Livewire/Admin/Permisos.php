@@ -35,7 +35,7 @@ class Permisos extends Component
         $this->resetValidation();
     }
 
-    public function abiriModalEditar($modelo){
+    public function abrirModalEditar($modelo){
 
         $this->resetearTodo();
         $this->modal = true;

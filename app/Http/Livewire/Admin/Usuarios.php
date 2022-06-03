@@ -41,7 +41,7 @@ class Usuarios extends Component
         $this->resetValidation();
     }
 
-    public function abiriModalEditar($usuario){
+    public function abrirModalEditar($usuario){
 
         $this->resetearTodo();
         $this->modal = true;
@@ -108,7 +108,6 @@ class Usuarios extends Component
         } catch (\Throwable $th) {
             ;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->resetearTodo();
             $this->resetearTodo();
         }
 

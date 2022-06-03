@@ -1,8 +1,9 @@
 <div class="">
 
-    <div class="mb-5">
+    <div class="mb-5" >
 
-        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Usuarios</h1>
+
+        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Lista de horarios</h1>
 
         <div class="flex justify-between">
 
@@ -21,9 +22,9 @@
 
             </div>
 
-            @can('Crear usuario')
+            @can('Crear horario')
 
-                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Usuario</button>
+                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Horario</button>
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
@@ -33,51 +34,21 @@
 
     </div>
 
-    @if($usuarios->count())
+    @if($horarios->count())
 
-        <div class="relative overflow-x-auto rounded-lg shadow-xl">
+    <div class="relative overflow-x-auto rounded-lg shadow-xl">
 
-            <table class="rounded-lg w-full">
+        <table class="rounded-lg w-full">
 
-                <thead class="border-b border-gray-300 bg-gray-50">
+            <thead class="border-b border-gray-300 bg-gray-50">
 
-                    <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                        <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                    <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Nombre
+                            Tipo
 
-                            @if($sort == 'name')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
-
-                        </th>
-
-                        <th wire:click="order('email')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
-
-                            Correo
-
-                            @if($sort == 'email')
+                            @if($sort == 'tipo')
 
                                 @if($direction == 'asc')
 
@@ -103,17 +74,11 @@
 
                         </th>
 
-                        <th class="px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('tolerancia')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
 
-                            Rol
+                            Tolerancia
 
-                        </th>
-
-                        <th wire:click="order('ubicacion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
-
-                            Ubicación
-
-                            @if($sort == 'ubicacion')
+                            @if($sort == 'tolerancia')
 
                                 @if($direction == 'asc')
 
@@ -139,11 +104,163 @@
 
                         </th>
 
-                        <th wire:click="order('status')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('entrada')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Estado
+                            Entrada
 
-                            @if($sort == 'status')
+                            @if($sort == 'entrada')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-    width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+
+                        <th wire:click="order('salida')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Salida
+
+                            @if($sort == 'salida')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('tolerancia_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
+
+                            Tolerancia Mixta
+
+                            @if($sort == 'tolerancia_mixta')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('entrada_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Entrada Mixta
+
+                            @if($sort == 'entrada_mixta')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-    width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+
+                        <th wire:click="order('salida_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Salida Mixta
+
+                            @if($sort == 'salida_mixta')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('descripcion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Descripción
+
+                            @if($sort == 'descripcion')
 
                                 @if($direction == 'asc')
 
@@ -238,25 +355,19 @@
 
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                    @foreach($usuarios as $user)
+                    @foreach($horarios as $horario)
 
                         <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
 
                                 <div class="flex items-center justify-center lg:justify-start">
 
-                                    <div class="flex-shrink-0 h-10 w-10">
-
-                                        <img class="h-10 w-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
-
-                                    </div>
-
                                     <div class="ml-4">
 
-                                        <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $horario->tipo }}</div>
 
                                     </div>
 
@@ -266,55 +377,72 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Email</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
 
-                                {{ $user->email }}
+                                {{ $horario->tolerancia }}
 
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Role</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
 
-                                {{ $user->getRoleNames()[0] }}
+                                {{ $horario->entrada }}
 
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Ubicaión</span>
+                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
 
-                                {{ $user->ubicacion }}
+                                {{ $horario->salida }}
 
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Status</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
 
-                                @if($user->status == 'activo')
-
-                                    <span class="bg-green-400 py-1 px-2 rounded-full text-white">{{ ucfirst($user->status) }}</span>
-
-                                @else
-
-                                    <span class="bg-red-400 py-1 px-2 rounded-full text-white">{{ ucfirst($user->status) }}</span>
-
-                                @endif
+                                {{ $horario->tolerancia_mixta }}
 
                             </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
+
+                                {{ $horario->entrada_mixta }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+
+                                {{ $horario->salida_mixta }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+
+                                {{ $horario->descripcion }}
+
+                            </td>
+
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($user->creadoPor != null)
+                                @if($horario->creadoPor != null)
 
-                                    <span class="font-semibold">Registrado por: {{$user->creadoPor->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$horario->creadoPor->name}}</span> <br>
 
                                 @endif
 
-                                {{ $user->created_at }}
+                                {{ $horario->created_at }}
 
                             </td>
 
@@ -322,13 +450,13 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($user->actualizadoPor != null)
+                                @if($horario->actualizadoPor != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$user->actualizadoPor->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$horario->actualizadoPor->name}}</span> <br>
 
                                 @endif
 
-                                {{ $user->updated_at }}
+                                {{ $horario->updated_at }}
 
                             </td>
 
@@ -338,12 +466,12 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    @can('Editar usuario')
+                                    @can('Editar horario')
 
                                         <button
-                                            wire:click="abrirModalEditar({{$user}})"
+                                            wire:click="abrirModalEditar({{$horario}})"
                                             wire:loading.attr="disabled"
-                                            wire:target="abiriModalEditar({{$user}})"
+                                            wire:target="abrirModalEditar({{$horario}})"
                                             class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none"
                                         >
 
@@ -358,12 +486,12 @@
 
                                     @endcan
 
-                                    @can('Borrar usuario')
+                                    @can('Borrar horario')
 
                                         <button
-                                            wire:click="abrirModalBorrar({{$user}})"
+                                            wire:click="abrirModalBorrar({{$horario}})"
                                             wire:loading.attr="disabled"
-                                            wire:target="abrirModalBorrar({{$user}})"
+                                            wire:target="abrirModalBorrar({{$horario}})"
                                             class="bg-red-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
                                         >
 
@@ -391,7 +519,7 @@
                     <tr>
 
                         <td colspan="8" class="py-2 px-5">
-                            {{ $usuarios->links()}}
+                            {{ $horarios->links()}}
                         </td>
 
                     </tr>
@@ -412,7 +540,7 @@
 
         <div class="border-b border-gray-300 bg-white text-gray-500 text-center p-5 rounded-full text-lg">
 
-            No hay resultados.
+            No hay horarios registrados.
 
         </div>
 
@@ -423,13 +551,12 @@
         <x-slot name="title">
 
             @if($crear)
-                Nuevo Usuario
+                Nuevo horario
             @elseif($editar)
-                Editar Usuario
+                Editar horario
             @endif
 
         </x-slot>
-
         <x-slot name="content">
 
              <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
@@ -438,18 +565,18 @@
 
                     <div>
 
-                        <Label>Nombre</Label>
+                        <Label>Tipo</Label>
                     </div>
 
                     <div>
 
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="nombre">
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="tipo">
 
                     </div>
 
                     <div>
 
-                        @error('nombre') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('tipo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -459,19 +586,62 @@
 
                     <div>
 
-                        <Label>Email</Label>
+                        <Label>Tolerancia</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="tolerancia">
 
                     </div>
 
                     <div>
 
-                        <input type="email" class="bg-white rounded text-sm w-full" wire:model.defer="email">
+                        @error('tolerancia') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Hora de Entrada</Label>
 
                     </div>
 
                     <div>
 
-                        @error('email') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="entrada">
+
+                    </div>
+
+                    <div>
+
+                        @error('entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Hora de Salida</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="salida">
+
+                    </div>
+
+                    <div>
+
+                        @error('salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -481,99 +651,97 @@
 
             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                <div class="flex-auto mr-1 ">
+                <div class="flex-auto ">
 
                     <div>
 
-                        <Label>Status</Label>
+                        <Label>Tolerancia Mixta</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="tolerancia_mixta">
 
                     </div>
 
                     <div>
 
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="status">
-
-                            <option value="">Seleccione una opción</option>
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Inactivo</option>
-
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        @error('status') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('tolerancia_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
                 </div>
 
-                <div class="flex-auto mr-1 ">
+                <div class="flex-auto ">
 
                     <div>
 
-                        <Label>Rol</Label>
+                        <Label>Hora de Entrada Mixta</Label>
 
                     </div>
 
                     <div>
 
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="role">
-
-                            <option value="">Seleccione una opción</option>
-
-                            @foreach ($roles as $role)
-
-
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-
-                            @endforeach
-
-                        </select>
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="entrada_mixta">
 
                     </div>
 
                     <div>
 
-                        @error('role') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('entrada_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Hora de Salida Mixta</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="salida_mixta">
+
+                    </div>
+
+                    <div>
+
+                        @error('salida_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Descripción</Label>
+                    </div>
+
+                    <div>
+
+                        <textarea wire:model="descripcion" class="bg-white rounded text-sm w-full"></textarea>
+
+                    </div>
+
+                    <div>
+
+                        @error('descripcion') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
                 </div>
 
             </div>
-
-            <div class="flex-auto mb-5">
-
-                <div>
-
-                    <Label>Ubicación</Label>
-                </div>
-
-                <div>
-
-                    <select class="bg-white rounded text-sm w-full" wire:model.defer="ubicacion">
-                        <option selected value="">Selecciona una opción</option>
-
-                        @foreach (App\Http\Constantes::UBICACIONES as $ubicacion)
-
-                            <option value="{{ $ubicacion }}">{{ $ubicacion }}</option>
-
-                        @endforeach
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    @error('ubicacion') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                </div>
-
-            </div>
-
 
         </x-slot>
 
@@ -621,11 +789,11 @@
     <x-jet-confirmation-modal wire:model="modalBorrar">
 
         <x-slot name="title">
-            Eliminar Usuario
+            Eliminar Horario
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar al usuario? No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar este horario? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

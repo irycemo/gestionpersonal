@@ -191,7 +191,7 @@
                                     @can('Editar usuario')
 
                                         <button
-                                            wire:click="abiriModalEditar({{$permiso}})"
+                                            wire:click="abrirModalEditar({{$permiso}})"
                                             wire:loading.attr="disabled"
                                             wire:target="abiriModalEditar({{$permiso}})"
                                             class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none"

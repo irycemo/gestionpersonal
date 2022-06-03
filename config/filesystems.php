@@ -44,6 +44,30 @@ return [
             'throw' => false,
         ],
 
+        'inasistencias' => [
+            'driver' => 'local',
+            'root' => storage_path('app/inasistencias'),
+            'url' => env('APP_URL').'/inasistencias',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'incapacidades' => [
+            'driver' => 'local',
+            'root' => storage_path('app/incapacidades'),
+            'url' => env('APP_URL').'/incapacidades',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'personal' => [
+            'driver' => 'local',
+            'root' => storage_path('app/personal'),
+            'url' => env('APP_URL').'/personal',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -71,6 +95,9 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('inasistencias') => storage_path('app/inasistencias'),
+        public_path('incapacidades') => storage_path('app/incapacidades'),
+        public_path('personal') => storage_path('app/personal'),
     ],
 
 ];

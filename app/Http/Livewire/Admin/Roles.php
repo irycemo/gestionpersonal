@@ -33,7 +33,7 @@ class Roles extends Component
         $this->resetValidation();
     }
 
-    public function abiriModalEditar($modelo){
+    public function abrirModalEditar($modelo){
 
         $this->resetearTodo();
         $this->modal = true;
@@ -93,7 +93,6 @@ class Roles extends Component
         } catch (\Throwable $th) {
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->resetearTodo();
             $this->resetearTodo();
         }
 

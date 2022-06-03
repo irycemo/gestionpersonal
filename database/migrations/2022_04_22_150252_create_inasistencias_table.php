@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('motivo');
             $table->timestamp('fecha');
-            $table->string('archivo');
+            $table->string('archivo')->nullable();
             $table->foreignId('persona_id')->constrained();
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');

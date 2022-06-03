@@ -2,20 +2,25 @@
 
 namespace App\Models;
 
+use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Horario extends Model
 {
     use HasFactory;
+    use ModelosTrait;
 
-    protected $fillable  = ['tipo', 'entrada', 'salida'];
-
-    public function creadoPor(){
-        return $this->belongsTo(User::class, 'creado_por');
-    }
-
-    public function actualizadoPor(){
-        return $this->belongsTo(User::class, 'actualizado_por');
-    }
+    protected $fillable  = [
+        'tipo',
+        'entrada',
+        'salida',
+        'entrada_mixta',
+        'salida_mixta',
+        'tolerancia',
+        'tolerancia_mixta',
+        'descripcion',
+        'creado_por',
+        'actualizado_por'
+    ];
 }
