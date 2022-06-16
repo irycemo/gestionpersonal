@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
+use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Justificacion extends Model
 {
     use HasFactory;
+    use ModelosTrait;
 
     protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizdo_por'];
 
-    public function creadoPor(){
-        return $this->belongsTo(User::class, 'creado_por');
-    }
-
-    public function actualizadoPor(){
-        return $this->belongsTo(User::class, 'actualizado_por');
+    public function persona(){
+        return $this->belongsTo(Persona::class);
     }
 }

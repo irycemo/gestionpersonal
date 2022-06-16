@@ -18,7 +18,7 @@ class Horario extends Model
         'entrada_mixta',
         'salida_mixta',
         'tolerancia',
-        'tolerancia_mixta',
+        'falta',
         'descripcion',
         'creado_por',
         'actualizado_por'

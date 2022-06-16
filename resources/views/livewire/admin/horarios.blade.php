@@ -165,11 +165,11 @@
 
                         </th>
 
-                        <th wire:click="order('tolerancia_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
+                        <th wire:click="order('falta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
 
                             Tolerancia Mixta
 
-                            @if($sort == 'tolerancia_mixta')
+                            @if($sort == 'falta')
 
                                 @if($direction == 'asc')
 
@@ -403,7 +403,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
 
-                                {{ $horario->tolerancia_mixta }}
+                                {{ $horario->falta }}
 
                             </td>
 
@@ -591,7 +591,7 @@
 
                     <div>
 
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="tolerancia">
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="tolerancia">
 
                     </div>
 
@@ -655,18 +655,18 @@
 
                     <div>
 
-                        <Label>Tolerancia Mixta</Label>
+                        <Label>Falta</Label>
                     </div>
 
                     <div>
 
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="tolerancia_mixta">
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="falta">
 
                     </div>
 
                     <div>
 
-                        @error('tolerancia_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('falta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 

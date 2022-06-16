@@ -21,7 +21,7 @@ class Horarios extends Component
     public $tolerancia;
     public $entrada_mixta;
     public $salida_mixta;
-    public $tolerancia_mixta;
+    public $falta;
 
     protected function rules(){
         return [
@@ -40,7 +40,7 @@ class Horarios extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'descripcion', 'tipo', 'entrada', 'salida','tolerancia','entrada_mixta','salida_mixta','tolerancia_mixta']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'descripcion', 'tipo', 'entrada', 'salida','tolerancia','entrada_mixta','salida_mixta','falta']);
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -59,7 +59,7 @@ class Horarios extends Component
         $this->tolerancia = $horario['tolerancia'];
         $this->entrada_mixta = $horario['entrada_mixta'];
         $this->salida_mixta = $horario['salida_mixta'];
-        $this->tolerancia_mixta = $horario['tolerancia_mixta'];
+        $this->falta = $horario['falta'];
     }
 
 
@@ -77,7 +77,7 @@ class Horarios extends Component
                 'tolerancia' => $this->tolerancia,
                 'entrada_mixta' => $this->entrada_mixta,
                 'salida_mixta' => $this->salida_mixta,
-                'tolerancia_mixta' => $this->tolerancia_mixta,
+                'falta' => $this->falta,
                 'creado_por' => auth()->user()->id
             ]);
 
@@ -108,7 +108,7 @@ class Horarios extends Component
                 'tolerancia' => $this->tolerancia,
                 'entrada_mixta' => $this->entrada_mixta,
                 'salida_mixta' => $this->salida_mixta,
-                'tolerancia_mixta' => $this->tolerancia_mixta,
+                'falta' => $this->falta,
                 'actualizado_por' => auth()->user()->id
             ]);
 

@@ -61,5 +61,20 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'Crear personal', 'area' => 'Personal'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'Editar personal', 'area' => 'Personal'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'Borrar personal', 'area' => 'Personal'])->syncRoles([$role1]);
+        Permission::create(['name' => 'Ver personal', 'area' => 'Personal'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de justificaciones', 'area' => 'Justificación'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear justificacion', 'area' => 'Justificación'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar justificacion', 'area' => 'Justificación'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar justificacion', 'area' => 'Justificación'])->syncRoles([$role1]);
+        Permission::create(['name' => 'Ver justificacion', 'area' => 'Justificación'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'Lista de inhabiles', 'area' => 'Inhábiles'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Crear inhabil', 'area' => 'Inhábiles'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Editar inhabil', 'area' => 'Inhábiles'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'Borrar inhabil', 'area' => 'Inhábiles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'Ver inhabil', 'area' => 'Inhábiles'])->syncRoles([$role1]);
+
     }
+
 }

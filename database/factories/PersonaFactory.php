@@ -21,7 +21,7 @@ class PersonaFactory extends Factory
         $horarios = Horario::pluck('id');
 
         return [
-            'numero_empleado' => $this->faker->randomDigit,
+            'numero_empleado' => $this->faker->unique()->randomDigit,
             'nombre' => $this->faker->sentence(),
             'ap_paterno' => $this->faker->sentence(),
             'ap_materno' => $this->faker->sentence(),

@@ -205,7 +205,8 @@ class Personal extends Component
 
             if($this->foto){
 
-                Storage::disk('personal')->delete($persona->foto);
+                if($persona->foto)
+                    Storage::disk('personal')->delete($persona->foto);
 
                 $nombreArchivo = $this->foto->store('/', 'personal');
 
@@ -225,6 +226,8 @@ class Personal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            dd($th);
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();

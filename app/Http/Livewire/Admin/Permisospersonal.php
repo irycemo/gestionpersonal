@@ -139,7 +139,7 @@ class Permisospersonal extends Component
 
     public function render()
     {
-        $permisos=Permisos::where('clave','like', '%'.$this->search.'%')
+        $permisos = Permisos::where('clave','like', '%'.$this->search.'%')
                             ->orWhere('descripcion','like', '%'.$this->search.'%')
                             ->orWhere('limite','like', '%'.$this->search.'%')
                             ->orderBy($this->sort, $this->direction)

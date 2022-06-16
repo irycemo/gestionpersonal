@@ -3,3 +3,11 @@
 @import 'tailwindcss/utilities';
 
 @import url(//db.onlinewebfonts.com/c/ad5566fd17858e1297ab7d5771601c5e?family=Gibson);
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}

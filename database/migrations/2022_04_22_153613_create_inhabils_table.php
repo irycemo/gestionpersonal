@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('inhabils', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('anio');
-            $table->unsignedInteger('mes');
-            $table->unsignedInteger('dia');
+            $table->date('fecha');
             $table->string('descripcion');
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');

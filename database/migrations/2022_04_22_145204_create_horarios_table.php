@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('tipo');
             $table->text('descripcion')->nullable();
-            $table->time('tolerancia');
+            $table->unsignedInteger('tolerancia');
             $table->time('entrada');
             $table->time('salida');
-            $table->time('tolerancia_mixta')->nullable();
+            $table->unsignedInteger('falta');
             $table->time('entrada_mixta')->nullable();
             $table->time('salida_mixta')->nullable();
             $table->foreignId('creado_por')->nullable()->references('id')->on('users')->onDelete('set null');

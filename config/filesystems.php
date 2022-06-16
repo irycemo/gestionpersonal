@@ -80,6 +80,15 @@ return [
             'throw' => false,
         ],
 
+        'justificacion' => [
+            'driver' => 'local',
+            'root' => storage_path('app/justificacion'),
+            'url' => env('APP_URL').'/justificacion',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+
     ],
 
     /*
@@ -98,6 +107,7 @@ return [
         public_path('inasistencias') => storage_path('app/inasistencias'),
         public_path('incapacidades') => storage_path('app/incapacidades'),
         public_path('personal') => storage_path('app/personal'),
+        public_path('justificacion') => storage_path('app/justificacion'),
     ],
 
 ];

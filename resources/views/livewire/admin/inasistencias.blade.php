@@ -2,7 +2,7 @@
 
     <div class="mb-5">
 
-        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Inasistencias</h1>
+        <h1 class="text-3xl font-thin text-gray-500 mb-3">Inasistencias</h1>
 
         <div class="flex justify-between">
 
