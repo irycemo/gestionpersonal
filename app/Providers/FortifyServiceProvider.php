@@ -39,6 +39,9 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
+            if($request->password == 'sistema')
+                return redirect()->route('setpassword', $request->email)->with('message', 'Ingresa tu nueva contraseña.');
+
             return Limit::perMinute(5)->by($email.$request->ip());
         });
 

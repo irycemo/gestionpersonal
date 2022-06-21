@@ -151,7 +151,7 @@
                         document.getElementById("codigo").blur();
                     }, 1000);
 
-                }.bind(this), 3000);
+                }.bind(this), 30000);
 
             },
 

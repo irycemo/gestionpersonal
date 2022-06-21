@@ -35,11 +35,9 @@ class Checador extends Component
 
         $this->checados = CH::where('persona_id', $this->persona->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->get();
 
-
-
         if($this->checados->count() > 0){
 
-            if($this->checados->last()->created_at->diffInMinutes(now()) > 2){
+            if($this->checados->last()->created_at->diffInMinutes(now()) > 1){
 
                 if($this->checados->last()->tipo == 'entrada'){
 
@@ -98,7 +96,7 @@ class Checador extends Component
         if($horario->falta < $hr){
 
             Falta::create([
-                'tipo' => '30 min tarde',
+                'tipo' => 'Más de 30 min tarde',
                 'persona_id' => $this->persona->id
             ]);
 

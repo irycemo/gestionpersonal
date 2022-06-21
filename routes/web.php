@@ -14,6 +14,7 @@ use App\Http\Livewire\Admin\Justificaciones;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Admin\Permisospersonal;
 use App\Http\Controllers\Admin\PersonaController;
+use App\Http\Controllers\SetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +70,7 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
 });
 
 Route::get('checador', ChecadorController::class)->name('checador');
+
+Route::get('setpassword/{email}', [SetPasswordController::class, 'create'])->name('setpassword');
+Route::post('setpassword', [SetPasswordController::class, 'store'])->name('setpassword.store');
 
