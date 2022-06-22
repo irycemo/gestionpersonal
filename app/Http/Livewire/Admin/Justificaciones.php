@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Falta;
 use App\Models\Persona;
+use App\Models\Retardo;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Justificacion;
@@ -19,6 +21,12 @@ class Justificaciones extends Component
     public $folio;
     public $documento;
     public $persona_id;
+    public $retardos;
+    public $faltas;
+    public $retardo_id;
+    public $falta_id;
+    public $retardoFlag = true;
+    public $faltaFlag = true;
 
     protected function rules(){
         return [
@@ -35,9 +43,28 @@ class Justificaciones extends Component
         'persona_id.required' => 'El campo empleado es requerido',
     ];
 
+    public function updatedPersonaId(){
+
+        $this->faltas = Falta::where('persona_id', $this->persona_id)->where('justificacion_id', null)->get();
+        $this->retardos = Retardo::where('persona_id', $this->persona_id)->where('justificacion_id', null)->get();
+
+    }
+
+    public function updatedRetardoId(){
+
+        $this->faltaFlag = false;
+
+    }
+
+    public function updatedFaltaId(){
+
+        $this->retardoFlag = false;
+
+    }
+
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'folio', 'documento', 'persona_id']);
+        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'folio', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos']);
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -83,12 +110,22 @@ class Justificaciones extends Component
                 'documento' => $nombredocumento
             ]);
 
+            if($this->falta_id){
+                $falta = Falta::find($this->falta_id);
+                $falta->update(['justificacion_id' => $justificacion->id]);
+            }
+
+            if($this->retardo_id){
+                $retardo = Retardo::find($this->retardo_id);
+                $retardo->update(['justificacion_id' => $justificacion->id]);
+            }
+
             $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se creó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -129,6 +166,16 @@ class Justificaciones extends Component
                 'documento' => $nombredocumento
             ]);
 
+            if($this->falta_id){
+                $falta = Falta::find($this->falta_id);
+                $falta->update(['justificacion_id' => $justificacion->id]);
+            }
+
+            if($this->retardo_id){
+                $retardo = Retardo::find($this->retardo_id);
+                $retardo->update(['justificacion_id' => $justificacion->id]);
+            }
+
             $this->resetearTodo();
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se actualizó con éxito."]);
@@ -140,10 +187,8 @@ class Justificaciones extends Component
 
         }
 
+
     }
-
-
-
 
     public function borrar(){
 

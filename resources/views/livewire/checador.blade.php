@@ -2,7 +2,11 @@
 
     @if ($flag)
 
-        <img class="w-96 mx-auto my-2" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+        <a href="{{ route('dashboard') }}">
+
+            <img class="w-96 mx-auto my-2" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+
+        </a>
 
         <h1 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-2  bg-white">{{ $persona->nombre }} {{ $persona->ap_paterno }} {{ $persona->ap_materno }}</h1>
 
@@ -79,7 +83,11 @@
 
     @else
 
-        <img class="w-96 mx-auto z-10" src="{{ asset('storage/img/logo.png') }}" alt="Logo">
+        <a href="{{ route('dashboard') }}">
+
+            <img class="w-96 mx-auto my-2" src="{{ asset('storage/img/logo.png') }}" alt="Logo">
+
+        </a>
 
     @endif
 

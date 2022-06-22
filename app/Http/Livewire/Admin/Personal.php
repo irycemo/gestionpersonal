@@ -33,6 +33,7 @@ class Personal extends Component
     public $observaciones;
     public $horario_id;
     public $foto;
+    public $status;
 
     protected function rules(){
         return [
@@ -40,6 +41,7 @@ class Personal extends Component
             'nombre' => 'required',
             'paterno' => 'required',
             'materno' => 'required',
+            'status' => 'required',
             'codigo_barras' => 'required',
             'localidad' => 'required',
             'area' => 'required',
@@ -56,6 +58,7 @@ class Personal extends Component
     }
 
     protected $messages = [
+        'status.required' => 'El campo estado es obligatorio',
         'horario_id.required' => 'El campo horario es obligatorio',
         'paterno.required' => 'El campo apellido paterno es obligatorio',
         'materno.required' => 'El campo apellido materno es obligatorio',
@@ -102,6 +105,7 @@ class Personal extends Component
 
         $this->selected_id = $modelo['id'];
         $this->nombre = $modelo['nombre'];
+        $this->status = $modelo['status'];
         $this->numero_empleado = $modelo['numero_empleado'];
         $this->paterno = $modelo['ap_paterno'];
         $this->materno = $modelo['ap_materno'];
@@ -130,6 +134,7 @@ class Personal extends Component
             $persona = Persona::create([
                 'numero_empleado' => $this->numero_empleado,
                 'nombre' => $this->nombre,
+                'status' => $this->status,
                 'ap_paterno' => $this->paterno,
                 'ap_materno' => $this->materno,
                 'codigo_barras' => $this->codigo_barras,
@@ -186,6 +191,7 @@ class Personal extends Component
             $persona->update([
                 'numero_empleado' => $this->numero_empleado,
                 'nombre' => $this->nombre,
+                'status' => $this->status,
                 'ap_paterno' => $this->paterno,
                 'ap_materno' => $this->materno,
                 'codigo_barras' => $this->numero_empleado,
@@ -263,6 +269,7 @@ class Personal extends Component
     {
         $personal = Persona::where('numero_empleado', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('nombre', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('status', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('ap_paterno', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('ap_materno', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('codigo_barras', 'LIKE', '%' . $this->search . '%')

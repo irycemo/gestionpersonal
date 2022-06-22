@@ -111,6 +111,12 @@
 
                         </th>
 
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Retardo/Falta
+
+                        </th>
+
                         <th wire:click="order('created_at')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Registro
@@ -207,6 +213,22 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">fecha</span>
 
                                 {{ $justificacion->persona->nombre}} / {{ $justificacion->persona->numero_empleado}}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Retardo / Falta</span>
+
+                                @if ($justificacion->retardo)
+
+                                    Retardo: {{ $justificacion->retardo->created_at }}
+
+                                @elseif($justificacion->falta)
+
+                                    Falta: {{ $justificacion->falta->tipo }} / {{ $justificacion->falta->created_at }}
+
+                                @endif
 
                             </td>
 
@@ -364,10 +386,6 @@
 
                 </div>
 
-             </div>
-
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
-
                 <div class="flex-auto ">
 
                     <div>
@@ -376,15 +394,12 @@
                     </div>
 
                     <div>
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="persona_id">
+                        <select class="bg-white rounded text-sm w-full" wire:model="persona_id">
+
                           <option value="" selected >Selecciona un empleado</option>
+
                             @foreach($personas as $persona)
-                                    <option value="{{$persona->id}}" >
-                                       {{$persona->nombre}}
-
-                                    </option>
-
-
+                                    <option value="{{$persona->id}}" > {{$persona->nombre}}</option>
                            @endforeach
 
                         </select>
@@ -396,7 +411,82 @@
                         @error('persona_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
+
                 </div>
+
+             </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                @if ($retardos && $retardoFlag)
+
+                    <div class="flex-auto ">
+
+                        <div>
+
+                            <Label>Retardo</Label>
+                        </div>
+
+                        <div>
+
+                            <select class="bg-white rounded text-sm w-full" wire:model="retardo_id">
+
+                            <option value="" selected >Selecciona un retardo</option>
+
+                                @foreach($retardos as $retardo)
+
+                                    <option value="{{$retardo->id}}" >{{$retardo->created_at}}</option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            @error('retardo_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                        </div>
+
+                    </div>
+
+                @endif
+
+                @if ($faltas && $faltaFlag)
+
+                    <div class="flex-auto ">
+
+                        <div>
+
+                            <Label>Faltas</Label>
+                        </div>
+
+                        <div>
+
+                            <select class="bg-white rounded text-sm w-full" wire:model="falta_id">
+
+                                <option value="" selected >Selecciona una falta</option>
+
+                                @foreach($faltas as $falta)
+
+                                    <option value="{{ $falta->id }}" >{{$falta->tipo}} / {{  $falta->created_at }}</option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            @error('falta_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                        </div>
+
+                    </div>
+
+                @endif
 
             </div>
 

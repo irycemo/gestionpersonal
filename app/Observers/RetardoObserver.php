@@ -16,9 +16,12 @@ class RetardoObserver
      */
     public function created(Retardo $retardo)
     {
-        $retardos = Retardo::where('status',  1)->where('persona_id', $retardo->persona->id)->get();
+        $retardos = Retardo::where('status',  1)
+                            ->where('persona_id', $retardo->persona->id)
+                            ->whereMonth('created_at', Carbon::now()->month)
+                            ->get();
 
-        if($retardos->count() > 3){
+        if($retardos->count() >= 3){
 
             Falta::create([
                 'tipo' => 'Más de 30 min tarde',

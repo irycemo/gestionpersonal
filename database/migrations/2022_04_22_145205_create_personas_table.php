@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('numero_empleado')->unique();
             $table->string('foto')->nullable();
+            $table->string('status')->default('activo');
             $table->string('nombre');
             $table->string('ap_paterno');
             $table->string('ap_materno');
