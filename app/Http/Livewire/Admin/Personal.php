@@ -248,7 +248,8 @@ class Personal extends Component
 
             $persona = Persona::find($this->selected_id);
 
-            Storage::disk('personal')->delete($persona->foto);
+            if($persona->foto)
+                Storage::disk('personal')->delete($persona->foto);
 
             $persona->delete();
 
@@ -291,4 +292,5 @@ class Personal extends Component
 
         return view('livewire.admin.personal', compact('personal', 'horarios'))->extends('layouts.admin');
     }
+
 }

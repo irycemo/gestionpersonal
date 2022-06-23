@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Falta;
 use App\Models\Horario;
 use App\Models\Retardo;
+use App\Models\Checador;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,6 +39,10 @@ class Persona extends Model
 
     public function faltas(){
         return $this->hasMany(Falta::class);
+    }
+
+    public function checados(){
+        return $this->hasMany(Checador::class);
     }
 }
 
