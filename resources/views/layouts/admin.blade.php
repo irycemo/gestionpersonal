@@ -27,7 +27,7 @@
             </div>
 
             {{-- Nav --}}
-            <nav class="p-4 text-rojo" x-data="{openRoles:true, openArticles:true}">
+            <nav class="p-4 text-rojo " x-data="{openRoles:true, openArticles:true}">
 
                 <p class="uppercase text-md text-rojo mb-4 tracking-wider">Administración</p>
 
@@ -231,6 +231,19 @@
                         </svg>
 
                         Días Inhábiles
+                    </a>
+
+                @endcan
+
+                @can('Reportes')
+
+                    <a href="{{ route('reportes') }}" class="mb-3 capitalize font-medium text-md  transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                        </svg>
+
+                        Reportes
                     </a>
 
                 @endcan

@@ -4,6 +4,7 @@ use App\Http\Livewire\Admin\Roles;
 use App\Http\Livewire\Admin\Horarios;
 use App\Http\Livewire\Admin\Permisos;
 use App\Http\Livewire\Admin\Personal;
+use App\Http\Livewire\Admin\Reportes;
 use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Inhabiles;
@@ -13,8 +14,8 @@ use App\Http\Controllers\ChecadorController;
 use App\Http\Livewire\Admin\Justificaciones;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Admin\Permisospersonal;
-use App\Http\Controllers\Admin\PersonaController;
 use App\Http\Controllers\SetPasswordController;
+use App\Http\Controllers\Admin\PersonaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,8 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
     Route::get('justificaciones', Justificaciones::class)->name('justificaciones');
 
     Route::get('inhabiles', Inhabiles::class)->name('inhabiles');
+
+    Route::get('reportes', Reportes::class)->name('reportes');
 
 });
 

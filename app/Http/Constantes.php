@@ -13,7 +13,8 @@ class Constantes{
         'Inasistencias',
         'Permisos Personal',
         'Incapacidades',
-        'Personal'
+        'Personal',
+        'Reportes'
     ];
 
     /* Usuarios */
