@@ -132,6 +132,41 @@
 
                         </th>
 
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Tiempo
+
+                        </th>
+
+                        <th wire:click="order('tipo')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Tipo
+
+                            @if($sort == 'tipo')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
 
                         <th wire:click="order('created_at')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
@@ -230,9 +265,26 @@
 
                             </td>
 
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo</span>
+
+                                @if($permiso->tiempo < 24)
+                                    {{ $permiso->tiempo  }} Horas
+                                @else
+                                     {{ $permiso->tiempo / 24 }} Días
+                                @endif
 
 
+                            </td>
 
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static capitalize">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
+
+                                {{ $permiso->tipo }}
+
+                            </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -267,6 +319,25 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Acciones</span>
 
                                 <div class="flex justify-center lg:justify-start">
+
+                                    @can('Asignar permiso personal')
+
+                                        <button
+                                            wire:click="abiriModalAsignar({{$permiso}})"
+                                            wire:loading.attr="disabled"
+                                            wire:target="abiriModalAsignar({{$permiso}})"
+                                            class="bg-green-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-green-700 flex focus:outline-none"
+                                        >
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+
+                                            <p>Asignar</p>
+
+                                        </button>
+
+                                    @endcan
 
                                     @can('Editar permiso personal')
 
@@ -407,7 +478,54 @@
 
                 </div>
 
+                <div class="flex-auto mr-1 ">
 
+                    <div>
+
+                        <Label>Tipo</Label>
+
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="tipo">
+
+                            <option value="" selected>Seleccione un tipo</option>
+                            <option value="oficial">Oficial</option>
+                            <option value="personal">Personal</option>
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        @error('tipo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+                <div class="flex-auto mr-1 ">
+
+                    <div>
+
+                        <Label>Tiempo</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="tiempo">
+
+                    </div>
+
+                    <div>
+
+                        @error('tiempo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -440,9 +558,6 @@
 
             </div>
 
-
-
-
         </x-slot>
 
         <x-slot name="footer">
@@ -470,6 +585,75 @@
                     </button>
 
                 @endif
+
+                <button
+                    wire:click="resetearTodo"
+                    wire:loading.attr="disabled"
+                    wire:target="resetearTodo"
+                    type="button"
+                    class="bg-red-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-red-700 flaot-left focus:outline-none">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </x-slot>
+
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="modalAsignar">
+
+        <x-slot name="title">
+
+            Asignar Permiso A Empleado
+
+        </x-slot>
+
+        <x-slot name="content">
+
+            <div class="flex-auto">
+
+                <div>
+                    <label>Empleado</label>
+                </div>
+
+                <div>
+
+                    <select class="bg-white rounded text-sm w-full" wire:model="empleado_id">
+
+                        <option value="" selected>Selecciona un empleado</option>
+
+                        @foreach ($empleados as $empleado)
+
+                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->ap_paterno }} {{ $empleado->ap_materno }}</option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    @error('empleado_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                </div>
+
+            </div>
+
+        </x-slot>
+
+        <x-slot name="footer">
+
+            <div class="float-righ">
+
+                <button
+                    wire:click="asignarPermiso"
+                    wire:loading.attr="disabled"
+                    wire:target="asignarPermiso"
+                    class="bg-blue-400 text-white hover:shadow-lg font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+                    Asignar
+                </button>
 
                 <button
                     wire:click="resetearTodo"

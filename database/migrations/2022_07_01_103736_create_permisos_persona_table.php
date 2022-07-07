@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('inasistencias', function (Blueprint $table) {
+        Schema::create('permisos_persona', function (Blueprint $table) {
             $table->id();
-            $table->text('motivo');
-            $table->timestamp('fecha');
-            $table->string('archivo')->nullable();
             $table->foreignId('persona_id')->constrained();
-            $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
-            $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');
-            $table->timestamps();
+            $table->foreignId('permisos_id')->references('id')->on('permisos');
+            $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');            $table->timestamps();
         });
     }
 
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inasistencias');
+        Schema::dropIfExists('permisos_persona');
     }
 };

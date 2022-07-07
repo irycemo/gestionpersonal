@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="relative min-h-screen md:flex">
+    <div class="relative max-h-screen md:flex">
 
         {{-- Sidebar --}}
         <div id="sidebar" class="z-50 bg-white w-64 absolute inset-y-0 left-0 transform -translate-x-full transition duration-200 ease-in-out md:relative md:translate-x-0">
@@ -27,7 +27,7 @@
             </div>
 
             {{-- Nav --}}
-            <nav class="p-4 text-rojo " x-data="{openRoles:true, openArticles:true}">
+            <nav class="p-4 text-rojo overflow-y-auto h-menu" x-data="{openRoles:true, openArticles:true}">
 
                 <p class="uppercase text-md text-rojo mb-4 tracking-wider">Administración</p>
 
@@ -98,19 +98,6 @@
                           </svg>
 
                         Horarios
-                    </a>
-
-                @endcan
-
-                @can('Lista de inasistencias')
-
-                    <a href="{{ route('inasistencias') }}" class="mb-3 capitalize font-medium text-md hover:text-red-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-
-                        Inasistencias
                     </a>
 
                 @endcan
@@ -248,6 +235,14 @@
 
                 @endcan
 
+                <a href="{{ route('manual') }}" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+
+                    Manual de Usuario
+                </a>
 
             </nav>
 

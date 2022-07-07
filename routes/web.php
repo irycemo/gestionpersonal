@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\Reportes;
 use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Inhabiles;
+use App\Http\Controllers\ManualController;
 use App\Http\Livewire\Admin\Inasistencias;
 use App\Http\Livewire\Admin\Incapacidades;
 use App\Http\Controllers\ChecadorController;
@@ -54,8 +55,6 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
 
     Route::get('horarios', Horarios::class)->name('horarios');
 
-    Route::get('inasistenciass', Inasistencias::class)->name('inasistencias');
-
     Route::get('permisos_personal', Permisospersonal::class)->name('permisos_personal');
 
     Route::get('incapacidadess', Incapacidades::class)->name('incapacidades');
@@ -76,4 +75,6 @@ Route::get('checador', ChecadorController::class)->name('checador');
 
 Route::get('setpassword/{email}', [SetPasswordController::class, 'create'])->name('setpassword');
 Route::post('setpassword', [SetPasswordController::class, 'store'])->name('setpassword.store');
+
+Route::get('manual', ManualController::class)->name('manual');
 

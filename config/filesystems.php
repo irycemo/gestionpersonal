@@ -44,14 +44,6 @@ return [
             'throw' => false,
         ],
 
-        'inasistencias' => [
-            'driver' => 'local',
-            'root' => storage_path('app/inasistencias'),
-            'url' => env('APP_URL').'/inasistencias',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
         'incapacidades' => [
             'driver' => 'local',
             'root' => storage_path('app/incapacidades'),
@@ -104,7 +96,6 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('inasistencias') => storage_path('app/inasistencias'),
         public_path('incapacidades') => storage_path('app/incapacidades'),
         public_path('personal') => storage_path('app/personal'),
         public_path('justificacion') => storage_path('app/justificacion'),

@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->string('clave');
+            $table->string('tipo');
             $table->text('descripcion');
             $table->unsignedInteger('limite');
+            $table->unsignedInteger('tiempo');
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();

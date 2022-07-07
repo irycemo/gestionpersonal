@@ -6,6 +6,7 @@ use App\Models\Falta;
 use App\Models\Horario;
 use App\Models\Retardo;
 use App\Models\Checador;
+use App\Models\Permisos;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,10 +20,6 @@ class Persona extends Model
 
     public function horario(){
         return $this->belongsTo(Horario::class);
-    }
-
-    public function inasistencias(){
-        return $this->hasMany(Inasistencia::class);
     }
 
     public function incapacidades(){
@@ -43,6 +40,10 @@ class Persona extends Model
 
     public function checados(){
         return $this->hasMany(Checador::class);
+    }
+
+    public function permisos(){
+        return $this->belongsToMany(Permisos::class)->withTimestamps();
     }
 }
 

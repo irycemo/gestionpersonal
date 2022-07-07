@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Jefe(a) de Departamento');
+        ])->assignRole('Contador(a)');
 
 
         User::create([
@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Jefe(a) de Departamento');
+        ])->assignRole('Contador(a)');
 
         User::create([
             'name' => 'Ana',
@@ -80,7 +80,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
 
         User::create([
             'name' => 'Francisco',
@@ -91,7 +91,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
 
         User::create([
             'name' => 'Jorge',
@@ -102,7 +102,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
 
         User::create([
             'name' => 'Claudia',
@@ -113,7 +113,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
 
         User::create([
             'name' => 'Maria',
@@ -124,7 +124,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
 
         User::create([
             'name' => 'Juan',
@@ -135,6 +135,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('Almacenista');
+        ])->assignRole('Checador');
     }
 }
