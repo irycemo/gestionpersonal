@@ -43,7 +43,7 @@ class Persona extends Model
     }
 
     public function permisos(){
-        return $this->belongsToMany(Permisos::class)->withTimestamps();
+        return $this->belongsToMany(Permisos::class)->withPivot(['fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
     }
 }
 

@@ -7,6 +7,7 @@ use App\Models\Falta;
 use App\Models\Inhabil;
 use App\Models\Persona;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RevisarAsistencias extends Command
 {
@@ -46,12 +47,26 @@ class RevisarAsistencias extends Command
 
             foreach($empleados as $empleado){
 
+                $permiso = $empleado->permisos()
+                                        ->whereDate('fecha_inicio', '<=', Carbon::yesterday()->toDateString())
+                                        ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
+                                        ->first();
+
+                if($permiso && $permiso->tiempo >= 24)
+                    continue;
+
                 Falta::create([
                     'tipo' => 'No se presento',
                     'persona_id' => $empleado->id
                 ]);
 
             }
+
+            Log::info('Proceso completo.');
+
+        }else{
+
+            Log::info('Día inhabil.');
 
         }
     }

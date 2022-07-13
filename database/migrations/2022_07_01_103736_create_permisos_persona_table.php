@@ -17,7 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('persona_id')->constrained();
             $table->foreignId('permisos_id')->references('id')->on('permisos');
-            $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');            $table->timestamps();
+            $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
+            $table->date('fecha_inicio');
+            $table->date('fecha_final')->nullable();
+            $table->integer('tiempo_consumido')->nullable();
+            $table->integer('status')->nullable();
+            $table->timestamps();
         });
     }
 

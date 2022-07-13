@@ -2,7 +2,7 @@
 
     <div class="mb-5">
 
-        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Permisos Personal</h1>
+        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Permisos</h1>
 
         <div class="flex justify-between">
 
@@ -43,36 +43,6 @@
 
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                        <th wire:click="order('clave')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
-
-                            Clave
-
-                            @if($sort == 'clave')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
-
-                        </th>
-
                         <th wire:click="order('descripcion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Descripcion
@@ -104,7 +74,7 @@
                         </th>
                         <th wire:click="order('limite')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Limite
+                            Limite de solicitudes
 
                             @if($sort == 'limite')
 
@@ -240,14 +210,6 @@
                     @foreach($permisos as $permiso)
 
                         <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-
-                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
-
-                                {{$permiso->clave}}
-
-                            </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -505,6 +467,7 @@
                     </div>
 
                 </div>
+
                 <div class="flex-auto mr-1 ">
 
                     <div>
@@ -513,9 +476,20 @@
 
                     </div>
 
-                    <div>
+                    <div class="relative rounded-md shadow-sm">
 
-                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="tiempo">
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="tiempo" min="1">
+
+                        <div class="absolute inset-y-0 right-0 flex items-center">
+
+                            <select wire:model.defer="unidad" class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">
+
+                                <option value="horas">Horas</option>
+                                <option value="dias">Días</option>
+
+                            </select>
+
+                        </div>
 
                     </div>
 
@@ -611,31 +585,55 @@
 
         <x-slot name="content">
 
-            <div class="flex-auto">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                <div>
-                    <label>Empleado</label>
+                <div class="flex-auto">
+
+                    <div>
+                        <label>Empleado</label>
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model="empleado_id">
+
+                            <option value="" selected>Selecciona un empleado</option>
+
+                            @foreach ($empleados as $empleado)
+
+                                <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->ap_paterno }} {{ $empleado->ap_materno }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        @error('empleado_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
                 </div>
 
-                <div>
+                <div class="flex-auto">
 
-                    <select class="bg-white rounded text-sm w-full" wire:model="empleado_id">
+                    <div>
+                        <label>Fecha</label>
+                    </div>
 
-                        <option value="" selected>Selecciona un empleado</option>
+                    <div>
 
-                        @foreach ($empleados as $empleado)
+                        <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada" @if($permiso_tiempo == 0) disabled @endif>
 
-                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->ap_paterno }} {{ $empleado->ap_materno }}</option>
+                    </div>
 
-                        @endforeach
+                    <div>
 
-                    </select>
+                        @error('fecha_asignada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
-                </div>
-
-                <div>
-
-                    @error('empleado_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
 
                 </div>
 

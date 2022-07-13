@@ -51,7 +51,7 @@ class Checador extends Component
 
             }else{
 
-                $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Debe esperar almenos 2 minutos para hacer un nuevo registro."]);
+                $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Debe esperar almenos 1 minutos para hacer un nuevo registro."]);
 
             }
 
@@ -74,6 +74,8 @@ class Checador extends Component
     }
 
     public function checar($hora, $tipo){
+
+        $this->checarPermiso($tipo);
 
         $ch = CH::create([
             'hora' => $hora,
@@ -106,6 +108,25 @@ class Checador extends Component
                 'status' => 1,
                 'persona_id' => $this->persona->id
             ]);
+        }
+
+    }
+
+    public function checarPermiso($tipo){
+
+        $permiso = $this->persona->permisos()
+                                    ->where('tipo', 'personal')
+                                    ->where('tiempo_consumido', null)
+                                    ->where('status', null)
+                                    ->whereDate('fecha_inicio', now()->format('Y-m-d'))
+                                    ->first();
+
+        if($permiso && $tipo == 'entrada'){
+
+            $permiso->pivot->status = 1;
+            $permiso->pivot->tiempo_consumido = now()->diffInMinutes($this->persona->checados->last()->created_at);
+            $permiso->pivot->save();
+
         }
 
     }

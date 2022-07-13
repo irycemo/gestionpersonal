@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('revisar:asistencias')->everyMinute();
+        $schedule->command('revisar:permisos_activos')->everyMinute();
+        $schedule->command('calcular:tiempo_permisos')->everyMinute();
     }
 
     /**
