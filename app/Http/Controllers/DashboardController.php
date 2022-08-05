@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Falta;
 use App\Models\Retardo;
-use App\Models\Permisos;
 use App\Models\Incapacidad;
 use App\Models\Justificacion;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
         $faltas = Falta::whereMonth('created_at', Carbon::now()->month)->count();
 
-        $permisos = Permisos::whereMonth('created_at', Carbon::now()->month)->count();
+        $permisos = DB::table('permisos_persona')->whereMonth('created_at', Carbon::now()->month)->count();
 
         $retardos = Retardo::whereMonth('created_at', Carbon::now()->month)->count();
 

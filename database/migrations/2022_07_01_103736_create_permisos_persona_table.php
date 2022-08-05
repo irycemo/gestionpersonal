@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('permisos_persona', function (Blueprint $table) {
             $table->id();
             $table->foreignId('persona_id')->constrained();
-            $table->foreignId('permisos_id')->references('id')->on('permisos');
+            $table->foreignId('permisos_id')->constrained();
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->date('fecha_inicio');
             $table->date('fecha_final')->nullable();

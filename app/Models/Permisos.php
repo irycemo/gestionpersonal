@@ -18,7 +18,4 @@ class Permisos extends Model
         return $this->belongsToMany(Persona::class)->withPivot(['tiempo_consumido', 'status']);
     }
 
-    public function persona(){
-        return $this->belongsTo(Persona::class);
-    }
 }

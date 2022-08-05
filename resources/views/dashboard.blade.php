@@ -58,7 +58,7 @@
 
                 </div>
 
-                <a href="{{ route('permisos_personal') . "?search=" . now()->format('Y-m') }}" class="mx-auto rounded-full border border-indigo-600 py-1 px-4 text-indigo-500 hover:bg-indigo-600 hover:text-white transition-all ease-in-out"> Ver permisos</a>
+                <a href="{{ route('reportes') . "?area=permisos&fecha1=" . now()->startOfMonth()->format('Y-m-d') . '+00%3A00%3A00' . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') . '+23%3A59%3A59' }}" class="mx-auto rounded-full border border-indigo-600 py-1 px-4 text-indigo-500 hover:bg-indigo-600 hover:text-white transition-all ease-in-out"> Ver permisos</a>
 
             </div>
 

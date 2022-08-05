@@ -47,11 +47,13 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
     public function headings(): array
     {
         return [
-            'Clave',
+            'Empleado',
             'Descripción',
-            'Cantidad límite',
-            'Registrado por',
-            'Actualizado por',
+            'Fecha Inicial',
+            'Fecha Final',
+            'Tiempo Consumido (min)',
+            'Registrado Por',
+            'Actualizado Por',
             'Registrado en',
             'Actualizado en'
         ];
@@ -60,9 +62,11 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
     public function map($permiso): array
     {
         return [
-            $permiso->clave,
-            $permiso->descripcion,
-            $permiso->limite,
+            $permiso->persona->nombre . ' ' . $permiso->persona->ap_paterno . ' ' . $permiso->persona->ap_materno,
+            $permiso->permiso->descripcion,
+            $permiso->fecha_inicio,
+            $permiso->fecha_final,
+            $permiso->tiempo_consumido,
             $permiso->createdBy ? $permiso->createdBy->name : 'N/A',
             $permiso->updatedBy ? $permiso->updatedBy->name : 'N/A',
             $permiso->created_at,
@@ -83,10 +87,10 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->mergeCells('A1:G1');
+                $event->sheet->mergeCells('A1:I1');
                 $event->sheet->setCellValue('A1', "Instituto Registral Y Catastral Del Estado De Michoacán De Ocampo\nReporte de permisos (Sistema de Gestión Personal)\n" . now()->format('d-m-Y'));
                 $event->sheet->getStyle('A1')->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A1:G1')->applyFromArray([
+                $event->sheet->getStyle('A1:I1')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 13
@@ -97,7 +101,7 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
                     ],
                 ]);
                 $event->sheet->getRowDimension('1')->setRowHeight(90);
-                $event->sheet->getStyle('A2:K2')->applyFromArray([
+                $event->sheet->getStyle('A2:I2')->applyFromArray([
                         'font' => [
                             'bold' => true
                         ]

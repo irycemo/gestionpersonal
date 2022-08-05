@@ -82,18 +82,59 @@
 
                     <div>
 
-                        <Label>Descripción</Label>
+                        <Label>Empleado</Label>
                     </div>
 
                     <div>
 
-                        <input class="rounded text-sm w-full" type="text" wire:model="descripcionPermiso">
+                        <select class="rounded text-sm w-full" wire:model.defer="personaPermiso">
+
+                            <option value="" selected>Seleccione un empleado</option>
+
+                            @foreach ($empleados as $empleado)
+
+                                <option value="{{$empleado->id}}" >{{$empleado->nombre}} {{$empleado->ap_paterno}} {{$empleado->ap_materno}}</option>
+
+                            @endforeach
+
+                        </select>
 
                     </div>
 
                     <div>
 
-                        @error('descripcionPermiso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('personaPermiso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Permiso</Label>
+                    </div>
+
+                    <div>
+
+                        <select class="rounded text-sm w-full" wire:model.defer="permisoPermiso">
+
+                            <option value="" selected>Seleccione un permiso</option>
+
+                            @foreach ($permisos as $permiso)
+
+                                <option value="{{$permiso->id}}" >{{$permiso->descripcion}}</option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        @error('permisoPermiso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -612,27 +653,33 @@
 
                         <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                            <th  class="px-3 py-3 hidden lg:table-cell">
+                            <th class=" px-3 hidden lg:table-cell py-2">
 
-                                Descripción
-
-                            </th>
-
-                            <th class="px-3 py-3 hidden lg:table-cell">
-
-                                Cantidad límite
+                                Empleado
 
                             </th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">
+                            <th class=" px-3 hidden lg:table-cell py-2">
 
-                                Registro
+                                Descripcíon
 
                             </th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">
+                            <th class=" px-3 hidden lg:table-cell py-2">
 
-                                Actualizado
+                                Fecha Inicial
+
+                            </th>
+
+                            <th class=" px-3 hidden lg:table-cell py-2">
+
+                                Fecha Final
+
+                            </th>
+
+                            <th class=" px-3 hidden lg:table-cell py-2">
+
+                                Tiempo Consumido
 
                             </th>
 
@@ -640,56 +687,76 @@
 
                     </thead>
 
-
                     <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none">
 
                         @foreach($permisos_filtrados as $permiso)
 
                             <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
-                                    {{ $permiso->descripcion }}
+                                    {{ $permiso->persona->nombre }} {{ $permiso->persona->ap_paterno }} {{ $permiso->persona->ap_materno }}
 
                                 </td>
 
-                                <td class="capitalize w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cantidad límite</span>
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
-                                    {{ $permiso->limite }}
+                                    {{ $permiso->permiso->descripcion }}
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
 
-                                    @if($permiso->created_by != null)
+                                    @if ($permiso->fecha_inicio)
 
-                                        <span class="font-semibold">Registrado por: {{$permiso->createdBy->name}}</span> <br>
+                                        {{ $permiso->fecha_inicio }}
+
+                                    @else
+
+                                        N/A
 
                                     @endif
 
-                                    {{ $permiso->created_at }}
-
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fehca Final</span>
 
-                                    @if($permiso->updated_by != null)
+                                    @if ($permiso->fecha_final)
 
-                                        <span class="font-semibold">Actualizado por: {{$permiso->updatedBy->name}}</span> <br>
+                                        {{ $permiso->fecha_final }}
+
+                                    @else
+
+                                        N/A
 
                                     @endif
 
-                                    {{ $permiso->updated_at }}
+                                </td>
+
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo Consumido</span>
+
+                                    @if ($permiso->tiempo_consumido)
+
+                                        {{ $permiso->tiempo_consumido }} min.
+
+                                    @else
+
+                                        N/A
+
+                                    @endif
 
                                 </td>
+
                             </tr>
 
                         @endforeach
@@ -779,7 +846,6 @@
                         </tr>
 
                     </thead>
-
 
                     <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none">
 

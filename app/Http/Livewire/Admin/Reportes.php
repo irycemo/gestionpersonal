@@ -12,6 +12,7 @@ use App\Models\Permisos;
 use App\Models\Incapacidad;
 use App\Exports\FaltasExport;
 use App\Models\Justificacion;
+use App\Models\PermisoPersona;
 use App\Exports\PermisosExport;
 use App\Exports\PersonalExport;
 use App\Exports\RetardosExport;
@@ -35,8 +36,8 @@ class Reportes extends Component
 
     public $inasistencia_empleado;
 
-    public $clavePermiso;
-    public $descripcionPermiso;
+    public $permisoPermiso;
+    public $personaPermiso;
 
     public $incapacidades_empleado;
     public $incapacidades_folio;
@@ -183,9 +184,12 @@ class Reportes extends Component
 
         $this->validate();
 
-        $this->permisos_filtrados=Permisos::with('creadoPor', 'actualizadoPor')
-                                            ->when (isset($this->descripcionPermiso) && $this->descripcionPermiso != "", function($q){
-                                                return $q->where('descripcion','like','%'.$this->descripcionPermiso.'%');
+        $this->permisos_filtrados = PermisoPersona::with('persona', 'permiso')
+                                            ->when (isset($this->personaPermiso) && $this->personaPermiso != "", function($q){
+                                                return $q->where('persona_id', $this->personaPermiso);
+                                            })
+                                            ->when (isset($this->permisoPermiso) && $this->permisoPermiso != "", function($q){
+                                                return $q->where('permisos_id', $this->permisoPermiso);
                                             })
                                             ->whereBetween('created_at', [$this->fecha1, $this->fecha2])
                                             ->get();
@@ -319,6 +323,8 @@ class Reportes extends Component
             $this->filtrarFaltas();
         elseif($this->area == 'retardos')
             $this->filtrarRetardos();
+        elseif($this->area == 'permisos')
+            $this->filtrarPermisos();
 
     }
 
@@ -326,6 +332,8 @@ class Reportes extends Component
     {
 
         $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->get();
+
+        $permisos = Permisos::select('id', 'descripcion')->get();
 
         $horarios = Horario::all();
 
@@ -335,7 +343,7 @@ class Reportes extends Component
 
         $tipos = Constantes::TIPO;
 
-        return view('livewire.admin.reportes', compact('empleados','horarios','localidades','areas', 'tipos'))->extends('layouts.admin');
+        return view('livewire.admin.reportes', compact('empleados','horarios','localidades','areas', 'tipos', 'permisos'))->extends('layouts.admin');
 
     }
 }
