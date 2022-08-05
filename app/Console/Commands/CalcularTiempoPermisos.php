@@ -48,7 +48,9 @@ class CalcularTiempoPermisos extends Command
 
             }
 
-            $dias = ($min / 60) / 24;
+            $horasLaborales = $empleado->horario->salida->diffHours($empleado->horario->entrada);
+
+            $dias = ($min / 60) / $horasLaborales;
 
             if($dias >= 1){
 

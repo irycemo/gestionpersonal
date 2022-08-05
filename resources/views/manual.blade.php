@@ -47,39 +47,77 @@
                     Horarios
                 </a>
 
-                <a href="#entradas" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
-                      </svg>
-
-                    Entradas
-                </a>
-
-                <a href="#seguimiento" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+                <a href="#permisos" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" />
-                      </svg>
-
-                    Seguimiento
-                </a>
-
-                <a href="#conclusiones" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
 
-                    Conclusiones
+                    Permisos
+                </a>
+
+                <a href="#incapacidades" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+
+                    Incapacidades
+                </a>
+
+                <a href="#justificaciones" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+
+                    Justificaciones
+                </a>
+
+                <a href="#inhabil" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+
+                    Días Inhábiles
+                </a>
+
+                <a href="#reportes" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                    </svg>
+
+                    Reportes
+                </a>
+
+                <a href="#checador" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+
+                    Checador
+                </a>
+
+                <a href="#personal" class="mb-3 capitalize font-medium text-md transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"  class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+
+                    Personal
                 </a>
 
             </nav>
 
         </div>
 
+        {{-- Content --}}
         <div class="flex-1 flex-col flex max-h-screen overflow-x-auto min-h-screen">
 
+            {{-- Mobile --}}
             <div class="w-100 bg-white border-b-2 border-b-grey-200 flex-none flex flex-row p-5 justify-between items-center h-20">
 
                 <!-- Mobile menu button-->
@@ -102,20 +140,21 @@
 
             </div>
 
+            {{-- Main Content --}}
             <div class="bg-white flex-1 overflow-y-auto py-8 md:border-l-2 border-l-grey-200">
 
                 <div class="lg:w-2/3 mx-auto rounded-xl">
 
                     <div class="capitulo mb-10" id="introduccion">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Introducción</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Introducción</h2>
 
                         <div class="  px-3">
 
                             <p class="mb-2">
                                 El Sistema de Gestión Personal, tiene como propósito administrar los empleados del Instituto Registral y Catastral de Michoacán.
                                 El sistema permite dar seguimiento a las incidencias que cada empleado genera como: faltas, retardos, justificaciones, entre otras.
-                                La información puede ser accesada mediante reportes generados en Excel.
+                                La información puede ser accesada y procesada en cada una de las áreas correspondientes asi como hacer reportes generados en Excel.
                             </p>
 
                         </div>
@@ -124,7 +163,7 @@
 
                     <div class="capitulo mb-10" id="usuarios">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Usuarios</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Usuarios</h2>
 
                         <div class="  px-3">
 
@@ -186,12 +225,32 @@
 
                     <div class="capitulo mb-10" id="horarios">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Horarios</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Horarios</h2>
 
                         <div class="  px-3">
 
                             <p class="mb-2">
-                                La sección de horarios lleva el control del registro de los horarios los cuales estaran asignados a cada uno de los empleados.
+                                La sección de horarios lleva el control del registro de los horarios los cuales estaran asignados a cada uno de los empleados.Cada registro tiene
+                                los siguientes campos:
+                            </p>
+
+                            <p class="mb-2 px-4">
+                                <strong>Tipo:</strong> Es el nombre del horario.
+                                <br>
+                                <strong>Tolerancia:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere un retardo (minutos).
+                                <br>
+                                <strong>Hora de entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Hora de salida:</strong> Hora de salida.
+                                <br>
+                                <strong>Falta:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere una falta (minutos)..
+                                <br>
+                                <strong>Hora de entrada mixta</strong>: En caso de ser un horario mixto esta sera la hora de entrada.
+                                <br>
+                                <strong>Hora de salida mixta:</strong> En caso de ser un horario mixto esta sera la hora de salida.
+                                <br>
+                                <strong>Descripción:</strong> Descripción del horario.
+                                <br>
                             </p>
 
                             <p>
@@ -209,14 +268,6 @@
                             </p>
 
                             <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/horarios_modal_crear.jpg') }}" alt="Imágen modal crear">
-
-                            <p>
-                                Tipo: Es el nombre del horario.
-                                Tolerancia: El tiempo limite que tiene el empleado para registrar su entreada sin que se genere un retardo (minutos).
-                                Hora de entrada: Hora de entrada
-                                Hora de entrada: Hora de entrada
-
-                            </p>
 
                             <p>
                                 <strong>Editar horario:</strong>
@@ -240,195 +291,426 @@
 
                     </div>
 
-                    <div class="capitulo mb-10" id="entradas">
+                    <div class="capitulo mb-10" id="permisos">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Entradas</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Permisos</h2>
 
                         <div class="  px-3">
 
                             <p class="mb-2">
-                                La sección de entradas lleva el control del registro de las entradas. Una entrada representa un documento que ha llegado al usuario Titular.
-                                Las entradas estan compuestas de un conjunto de campos, siendo ellos:
+                                La sección de permisos lleva el control del registro de los permisos. Cada registro tiene los siguientes campos:
+                            </p>
 
-                                <ul class="px-4 list-disc mb-4">
-                                    <li>Folio: Este campo es un identificador el cual se agrega a cada registro automáticamente.</li>
-                                    <li>Oficio: Este campo contiene el número de oficio del documento entrante.</li>
-                                    <li>Asunto: Este campo contiene la descripción general del contenido del documento.</li>
-                                    <li>Origen: Es la dependencia de la cual proviene el documento.</li>
-                                    <li>Destinatario: Es la oficina a la que va dirigido el documento.</li>
-                                    <li>Asignado a: Son los usuarios los cuales se les asigna el seguimiento y conclusión del documento.</li>
-                                    <li>Fecha de término: Es la fecha limite para dar respuesta al documento.</li>
-                                    <li>Estado: Es estado de la entrada. Nuevo; idica que la entrada no contiene aún seguimientos. Seguimiento; inidca que la entrada tiene seguimientos. Concluido; indica que la entrada ha concluido.</li>
-                                    <li>Archivos: Es el documento entrante en formato PDF, puede subir varios archivos a la vez.</li>
-                                </ul>
-
+                            <p class="mb-2 px-4">
+                                <strong>Límite:</strong> Es la cantidad veces que el empleado puede solicitar el permiso en el mes actual.
+                                <br>
+                                <strong>Tipo:</strong> El tipo de permiso puede ser "Oficial" o "Personal".
+                                <br>
+                                <strong>Tiempo:</strong> El tiempo que abarca el permiso.
+                                <br>
+                                <strong>Descripción:</strong> Descripción general del permiso.
+                                <br>
                             </p>
 
                             <p>
-                                <strong>Busqueda de entradas:</strong>
-                                puede hacer busqueda de entradas por cualquiera de las columnas que muestra la tabla.
+                                <strong>Busqueda de permisos:</strong>
+                                puede hacer busqueda de permisos por cualquiera de las columnas que muestra la tabla.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/entradas_buscar.jpg') }}" alt="Imágen buscar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permisos_buscar.jpg') }}" alt="Imágen buscar">
 
                             <p>
-                                <strong>Agregar nueva entrada:</strong>
-                                puede agregar una nueva entrada haciendo click el el botón "Agregar nueva Entrada" esta acción deplegará una ventana modal
+                                <strong>Agregar nuevo permiso:</strong>
+                                puede agregar un nuevo permiso haciendo click el el botón "Agregar nueva Permiso" esta acción deplegará una ventana modal
                                 en la cual se ingresará la información necesaria para el registro. Al hacer click en el botón "Guardar" se generará el registro con los datos
                                 proporcionados. Al hacer click en cerrar se cerrará la ventana modal borrando la información proporcionada.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/entrada_modal_crear.jpg') }}" alt="Imágen modal crear">
-
-                            <p class="mb-4">
-                                En la sección de "Asignar A", puede seleccionar uno o mas usuarios manteniendo presionada la tecla ctrl.
-                            </p>
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permiso_modal_crear.jpg') }}" alt="Imágen modal crear">
 
                             <p>
-                                <strong>Editar entrada:</strong>
-                                cada entrada tiene asociado dos botones de acciones, puede editar una entrada haciendo click el el botón "Editar" esta acción deplegará una ventana modal
-                                en la cual se mostrará la información de la entrada para actualizar.
+                                <strong>Editar permiso:</strong>
+                                cada permiso tiene asociado tres botones de acciones, puede editar una permiso haciendo click el el botón "Editar" esta acción deplegará una ventana modal
+                                en la cual se mostrará la información de la permiso para actualizar.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/entradas_editar.jpg') }}" alt="Imágen editar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permiso_editar.jpg') }}" alt="Imágen editar">
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/entradas_modal_editar.jpg') }}" alt="Imágen editar modal">
-
-                            <p class="mb-4">
-                                Los archivos de la entrada se mostraran justo despues de la seccion de "Asunto", los cuales puede eliminar haciendo click en el botón que los precede.
-                                En la columna de Asignado A cada uno de los usuarios tienen un botón el cual tiene la funcion de enviar un mensaje via Whatsapp, informando que se les ha sido adignada una entrada
-                            </p>
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permiso_modal_editar.jpg') }}" alt="Imágen editar modal">
 
                             <p>
-                                <strong>Borrar entrada:</strong>
-                                puede borrar una entrada haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
+                                <strong>Asignar</strong>
+                                puede hacer asignaciones de permisos a cualquier empleado indicando la fecha en la que será asignado.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permiso_asignar.jpg') }}" alt="Imágen asignar">
+
+                            <p>
+                                <strong>Borrar permiso:</strong>
+                                puede borrar un permiso haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
                                 en la cual se mostrará una advertencia, dando la opcion de cancelar o borrar la información.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/entradas_borrar.jpg') }}" alt="Imágen borrar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/permiso_borrar.jpg') }}" alt="Imágen borrar">
+
+                            <p>
+                                <strong>Tareas automáticas:</strong>
+                                El sistema integra tareas automáticas, estas se encargan de revisar los registros efectuados por los permisos
+                                solicitados por los empleados.
+                                <br>
+                                Cada fin de mes se ejecuta una tarea encargada de calcular el tiempo consumido por los permisos personales solicitados de cada empleado, si
+                                la cantidad de tiempo es mayor a la cantidad de tiempo de una jornada laboral se le agregara un permiso "Día Económico" descontandose del límite
+                                de permisos que puede solicitar de este tipo de permiso.
+                                <br>
+                                Otra tarea automática es la de revisar los permisos personales solicitados por los empleados en los que no se registra  su regreso,
+                                calculando el tiempo consumido desde su salida hasta la hora de salida que tiene su horario.
+                            </p>
 
                         </div>
 
                     </div>
 
-                    <div class="capitulo mb-10" id="seguimiento">
+                    <div class="capitulo mb-10" id="incapacidades">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Seguimiento</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Incapacidades</h2>
 
                         <div class="  px-3">
 
                             <p class="mb-2">
-                                La sección de seguimiento lleva el control del registro de los seguimientos. Una seguimiento representa una eventualidad en el proceso de la entrada.
-                                Los seguimientos estan compuestos de un conjunto de campos, siendo ellos:
+                                La sección de incapacidades lleva el control del registro de las incapacidades. Cada registro tiene los siguientes campos:
+                            </p>
 
-                                <ul class="px-4 list-disc mb-4">
-                                    <li>Oficio de respuesta: Este campo contiene el número de oficio con el que se respunde.</li>
-                                    <li>Comentario: Este campo contiene la descripción general del contenido del documento.</li>
-                                    <li>Entrada: La entrada a la cual pertenece el seguimiento, mostrando el folio de la entrada.</li>
-                                    <li>Fecha de respuesta: Es la fecha en la cual se genera el documento.</li>
-                                    <li>Archivos: Es el documento del seguimiento en formato PDF, puede subir varios archivos a la vez</li>
-                                </ul>
-
+                            <p class="mb-2 px-4">
+                                <strong>Folio:</strong> Es el folio con el que se identifica la incapacidad.
+                                <br>
+                                <strong>Tipo:</strong> El tipo de incacpacidad.
+                                <br>
+                                <strong>Empleado:</strong> El empleado que se incapacita.
+                                <br>
+                                <strong>Documento:</strong> El documento que avala la incapacidad.
+                                <br>
+                                <strong>Fecha Inicial:</strong> La fecha en la que comienza la incapacidad.
+                                <br>
+                                <strong>Fecha Final:</strong> La fecha en la que termina la incapacidad.
+                                <br>
                             </p>
 
                             <p>
-                                <strong>Busqueda de seguimientos:</strong>
-                                puede hacer busqueda de seguimientos por cualquiera de las columnas que muestra la tabla.
+                                <strong>Busqueda de incapacidades:</strong>
+                                puede hacer busqueda de incapacidades por cualquiera de las columnas que muestra la tabla.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/seguimientos_buscar.jpg') }}" alt="Imágen buscar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/incapacidades_buscar.jpg') }}" alt="Imágen buscar">
 
                             <p>
-                                <strong>Agregar nuevo seguimiento:</strong>
-                                puede agregar un nuevo seguimiento haciendo click el el botón "Agregar nuevo Seguimiento" esta acción deplegará una ventana modal
+                                <strong>Agregar nueva incapacidad:</strong>
+                                puede agregar un nuevo incapacidades haciendo click el el botón "Agregar nuevo Incapacidad" esta acción deplegará una ventana modal
                                 en la cual se ingresará la información necesaria para el registro. Al hacer click en el botón "Guardar" se generará el registro con los datos
                                 proporcionados. Al hacer click en cerrar se cerrará la ventana modal borrando la información proporcionada.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/seguimiento_modal_crear.jpg') }}" alt="Imágen modal crear">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/incapacidades_modal_crear.jpg') }}" alt="Imágen modal crear">
 
                             <p>
-                                <strong>Editar seguimiento:</strong>
-                                cada seguimiento tiene asociado dos botones de acciones, puede editar un seguimiento haciendo click el el botón "Editar" esta acción deplegará una ventana modal
-                                en la cual se mostrará la información del seguimiento para actualizar.
+                                <strong>Editar incapacidad:</strong>
+                                cada incapacidad tiene asociado dos botones de acciones, puede editar un incapacidades haciendo click el el botón "Editar" esta acción deplegará una ventana modal
+                                en la cual se mostrará la información del incapacidades para actualizar.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/seguimiento_editar.jpg') }}" alt="Imágen editar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/incapacidades_editar.jpg') }}" alt="Imágen editar">
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/seguimiento_modal_editar.jpg') }}" alt="Imágen editar modal">
-
-                            <p class="mb-4">
-                                Los archivos del seguimiento se mostraran justo despues de la seccion de "Comentario", los cuales puede eliminar haciendo click en el botón que los precede.
-                            </p>
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/incapacidades_modal_editar.jpg') }}" alt="Imágen editar modal">
 
                             <p>
-                                <strong>Borrar seguimiento:</strong>
-                                puede borrar un seguimiento haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
+                                <strong>Borrar incapacidad:</strong>
+                                puede borrar un incapacidad haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
                                 en la cual se mostrará una advertencia, dando la opcion de cancelar o borrar la información.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/seguimiento_borrar.jpg') }}" alt="Imágen borrar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/incapacidades_borrar.jpg') }}" alt="Imágen borrar">
 
                         </div>
 
                     </div>
 
-                    <div class="capitulo mb-10" id="conclusiones">
+                    <div class="capitulo mb-10" id="justificaciones">
 
-                        <p class="text-2xl font-semibold text-rojo mb-5">Conclusiones</p>
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Justificaciones</h2>
 
                         <div class="  px-3">
 
                             <p class="mb-2">
-                                La sección de conclusiones lleva el control del registro de las conclusiones. Una conclusión representa el fín en el proceso de la entrada, puede haber varias resoluciones
-                                para concluir una entrada.
-                                Las conclusiones estan compuestas de un conjunto de campos, siendo ellos:
+                                La sección de justificaciones lleva el control del registro de las justificaciones. Cada registro tiene los siguientes campos:
+                            </p>
 
-                                <ul class="px-4 list-disc mb-4">
-                                    <li>Entrada: La entrada a la cual pertenece el seguimiento, mostrando el folio de la entrada.</li>
-                                    <li>Comentario: Este campo contiene la descripción general del contenido del documento.</li>
-                                    <li>Archivos: Es el documento del seguimiento en formato PDF, puede subir varios archivos a la vez</li>
-                                </ul>
-
+                            <p class="mb-2 px-4">
+                                <strong>Folio:</strong> Es el folio con el que se identifica la justificación.
+                                <br>
+                                <strong>Empleado:</strong> El empleado que se justificará.
+                                <br>
+                                <strong>Retardo:</strong> El retardo que se pretende justificar.
+                                <br>
+                                <strong>Falta:</strong> La falta que se pretende justificar.
+                                <br>
+                                <strong>Documento:</strong> El documento que avala la justificación.
                             </p>
 
                             <p>
-                                <strong>Busqueda de conclusiones:</strong>
-                                puede hacer busqueda de conclusiones por cualquiera de las columnas que muestra la tabla.
+                                <strong>Busqueda de justificaciones:</strong>
+                                puede hacer busqueda de justificaciones por cualquiera de las columnas que muestra la tabla.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/conclusiones_buscar.jpg') }}" alt="Imágen buscar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_buscar.jpg') }}" alt="Imágen buscar">
 
                             <p>
-                                <strong>Agregar nueva conclusión:</strong>
-                                puede agregar una nueva conclusión haciendo click el el botón "Agregar nueva Conclusión" esta acción deplegará una ventana modal
+                                <strong>Agregar nueva justificación:</strong>
+                                puede agregar una nueva justificación haciendo click el el botón "Agregar nueva justificación" esta acción deplegará una ventana modal
                                 en la cual se ingresará la información necesaria para el registro. Al hacer click en el botón "Guardar" se generará el registro con los datos
                                 proporcionados. Al hacer click en cerrar se cerrará la ventana modal borrando la información proporcionada.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/conclusion_modal_crear.jpg') }}" alt="Imágen modal crear">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_modal_crear.jpg') }}" alt="Imágen modal crear">
 
                             <p>
-                                <strong>Editar conclusión:</strong>
-                                cada conclusión tiene asociado dos botones de acciones, puede editar una conclusión haciendo click el el botón "Editar" esta acción deplegará una ventana modal
-                                en la cual se mostrará la información del conclusión para actualizar.
+                                Al seleccionar un empleado automaticamente se desplegaran las opciones de Retardo y Falta pudiendo seleccionar solo una de ellas.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/conclusion_editar.jpg') }}" alt="Imágen editar">
-
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/conclusion_modal_editar.jpg') }}" alt="Imágen editar modal">
-
-                            <p class="mb-4">
-                                Los archivos de la conclusión se mostraran justo despues de la seccion de "Comentario", los cuales puede eliminar haciendo click en el botón que los precede.
-                            </p>
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_modal_crear_2.jpg') }}" alt="Imágen modal crear">
 
                             <p>
-                                <strong>Borrar conclusión:</strong>
-                                puede borrar una conclusión haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
+                                <strong>Editar justificación:</strong>
+                                cada justificación tiene asociado dos botones de acciones, puede editar una justificación haciendo click el el botón "Editar" esta acción deplegará una ventana modal
+                                en la cual se mostrará la información del justificación para actualizar.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_editar.jpg') }}" alt="Imágen editar">
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_modal_editar.jpg') }}" alt="Imágen editar modal">
+
+                            <p>
+                                <strong>Borrar justificación:</strong>
+                                puede borrar una justificación haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
                                 en la cual se mostrará una advertencia, dando la opcion de cancelar o borrar la información.
                             </p>
 
-                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/conclusion_borrar.jpg') }}" alt="Imágen borrar">
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/justificaciones_borrar.jpg') }}" alt="Imágen borrar">
+
+                        </div>
+
+                    </div>
+
+                    <div class="capitulo mb-10" id="inhabil">
+
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Días Inhábiles</h2>
+
+                        <div class="  px-3">
+
+                            <p class="mb-2">
+                                La sección de días inhabiles lleva el control del registro de los días inhabiles. Cada registro tiene los siguientes campos:
+                            </p>
+
+                            <p class="mb-2 px-4">
+                                <strong>Fecha:</strong> La fecha del día inhabil.
+                                <br>
+                                <strong>Descripción:</strong> La descripción del día inhabil.
+                            </p>
+
+                            <p>
+                                <strong>Busqueda de días inhabiles:</strong>
+                                puede hacer busqueda de días inhabiles por cualquiera de las columnas que muestra la tabla.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/inhabiles_buscar.jpg') }}" alt="Imágen buscar">
+
+                            <p>
+                                <strong>Agregar nuevo día inhabil:</strong>
+                                puede agregar un nuevo día inhabil haciendo click el el botón "Agregar día inhabil" esta acción deplegará una ventana modal
+                                en la cual se ingresará la información necesaria para el registro. Al hacer click en el botón "Guardar" se generará el registro con los datos
+                                proporcionados. Al hacer click en cerrar se cerrará la ventana modal borrando la información proporcionada.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/inhabiles_modal_crear.jpg') }}" alt="Imágen modal crear">
+
+                            <p>
+                                <strong>Editar día inhabil:</strong>
+                                cada día inhabil tiene asociado dos botones de acciones, puede editar un día inhabil haciendo click el el botón "Editar" esta acción deplegará una ventana modal
+                                en la cual se mostrará la información del día inhabil para actualizar.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/inhabiles_editar.jpg') }}" alt="Imágen editar">
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/inhabiles_modal_editar.jpg') }}" alt="Imágen editar modal">
+
+                            <p>
+                                <strong>Borrar día inhabil:</strong>
+                                puede borrar una día inhabil haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
+                                en la cual se mostrará una advertencia, dando la opcion de cancelar o borrar la información.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/inhabiles_borrar.jpg') }}" alt="Imágen borrar">
+
+                        </div>
+
+                    </div>
+
+                    <div class="capitulo mb-10" id="reportes">
+
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Reportes</h2>
+
+                        <div class="  px-3">
+
+                            <p class="mb-2">
+                                La sección de reportes permite generar consultas sobre las áreas de interes asi como generar un archivo .xlsx (Excel) con el resultado de la consulta.
+                            </p>
+
+                            <p>
+                                <strong>Generar consulta:</strong>
+                                puede generar consulta de las áreas  indicando el intervalo de tiempo.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/reporte_1.jpg') }}" alt="Imágen reportes">
+
+                            <p>
+                                <strong>Filtros:</strong>
+                                cada área despleagrá un conjunto de opciones para filtrar la información.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/reporte_2.jpg') }}" alt="Imágen reportes">
+
+                            <p>
+                                <strong>Generar reporte Excel:</strong>
+                                Al tener seleccionados los filtros necesarios y hacer click en el botón "Filtrar", se desplegara una tabla con la información filtrada, puede hacer click en el boton "Exportar a Excel"
+                                para generar el archivo
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/reporte_3.jpg') }}" alt="Imágen reportes">
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/reporte_4.jpg') }}" alt="Imágen borrar">
+
+                        </div>
+
+                    </div>
+
+                    <div class="capitulo mb-10" id="checador">
+
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Checador</h2>
+
+                        <div class="  px-3">
+
+                            <p class="mb-2">
+                                La sección de checador esta encargada de llevar el registro de las asistencias, inasistencias y retardos del personal.
+                            </p>
+
+                            <p>
+                                <strong>Registro de entrada / salida:</strong>
+                                El empleado generara su registro de llegada o salida en el sistema al ser escaneado o ingresado manualmente su código de barras. Esto desplegará
+                                una nueva pantalla con información general del empleado
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/checador_1.jpg') }}" alt="Imágen checador">
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/checador_2.jpg') }}" alt="Imágen checador">
+
+                            <p>
+                                <strong>Tareas automáticas:</strong>
+                                El sistema integra tareas automáticas que se ejecutan una vez al día, estas se encargan de revisar los registros efectuados por el checador,
+                                revisando los empleados que no registraron su entradas y generandoles una falta, si el empleado tiene registrada una incapacidad ó permiso
+                                no se le generará falta. Otra tarea automáticas es revisar si el empleado genera su tercer retardo automáticamente se le genera una falta.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="capitulo mb-10" id="personal">
+
+                        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Personal</h2>
+
+                        <div class="  px-3">
+
+                            <p class="mb-2">
+                                La sección de personal lleva el control del registro de los empleados. Cada registro tiene los siguientes campos:
+                            </p>
+
+                            <p class="mb-2 px-4">
+                                <strong># Empleado:</strong> Es el número del empleado.
+                                <br>
+                                <strong>Nombre:</strong> Nombre del empleado.
+                                <br>
+                                <strong>Paterno:</strong> El apellido paterno del empleado.
+                                <br>
+                                <strong>Materno:</strong> El apellido materno del empleado.
+                                <br>
+                                <strong>Localidad:</strong> La localidad del empleado ,esta pueden ser las regionales o Catastro o RPP.
+                                <br>
+                                <strong>Área:</strong> El área a la que pertenece el empleado, esta puede ser direcciones, subdirecciones o departamentos.
+                                <br>
+                                <strong>Tipo:</strong> El tipo de empleado.
+                                <br>
+                                <strong>Código de barras:</strong> El código de barras del empleado.
+                                <br>
+                                <strong>Teléfono:</strong> El teléfono del empleado.
+                                <br>
+                                <strong>Email:</strong> El correo electrónico del empleado.
+                                <br>
+                                <strong>RFC:</strong> El RFC del empleado.
+                                <br>
+                                <strong>CURP:</strong> La CURP del empleado.
+                                <br>
+                                <strong>Domicilio:</strong> El domicilio del empleado.
+                                <br>
+                                <strong>Fecha de ingreso:</strong> La fecha en la que ingreso a trabajar al Instituto Registral y Catastral del Estado de Michoacán empleado.
+                                <br>
+                                <strong>Horario:</strong> El horario del empleado.
+                                <br>
+                                <strong>Estado:</strong> El estado del empleado puede estar activo o inactivo.
+                                <br>
+                                <strong>Observaciones:</strong> Observaciones necesarias del empleado.
+                                <br>
+                                <strong>Fotografía:</strong> Imagen del empleado.
+                                <br>
+                            </p>
+
+                            <p>
+                                <strong>Busqueda de personal:</strong>
+                                puede hacer busqueda de personal por cualquiera de las columnas que muestra la tabla.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_buscar.jpg') }}" alt="Imágen buscar">
+
+                            <p>
+                                <strong>Agregar nuevo personal:</strong>
+                                puede agregar un nuevo personal haciendo click el el botón "Agregar nueva Personal" esta acción deplegará una ventana modal
+                                en la cual se ingresará la información necesaria para el registro. Al hacer click en el botón "Guardar" se generará el registro con los datos
+                                proporcionados. Al hacer click en cerrar se cerrará la ventana modal borrando la información proporcionada.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_modal_crear.jpg') }}" alt="Imágen modal crear">
+
+                            <p>
+                                <strong>Editar personal:</strong>
+                                cada personal tiene asociado tres botones de acciones, puede editar una personal haciendo click el el botón "Editar" esta acción deplegará una ventana modal
+                                en la cual se mostrará la información de la personal para actualizar.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_editar.jpg') }}" alt="Imágen editar">
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_modal_editar.jpg') }}" alt="Imágen editar modal">
+
+                            <p>
+                                <strong>Ver</strong>
+                                puede ver la información completa del personal haciendo click en el boton "Ver", asi como todas las incidencias que ha generado cada empleado.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_ver.jpg') }}" alt="Imágen ver">
+
+                            <p>
+                                <strong>Borrar personal:</strong>
+                                puede borrar un personal haciendo click el el botón "Borrar" esta acción deplegará una ventana modal
+                                en la cual se mostrará una advertencia, dando la opcion de cancelar o borrar la información.
+                            </p>
+
+                            <img class="mb-4 mt-4 rounded mx-auto" src="{{ asset('storage/img/manual/personal_borrar.jpg') }}" alt="Imágen borrar">
 
                         </div>
 

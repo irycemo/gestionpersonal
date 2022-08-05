@@ -42,30 +42,37 @@ class Personal extends Component
             'paterno' => 'required',
             'materno' => 'required',
             'status' => 'required',
-            'codigo_barras' => 'required',
+            'codigo_barras' => 'sometimes',
             'localidad' => 'required',
             'area' => 'required',
             'tipo' => 'required',
-            'rfc' => 'required',
-            'curp' => 'required',
             'telefono' => 'required',
             'domicilio' => 'required',
             'email' => 'email',
             'fecha_ingreso' => 'required',
             'horario_id' => 'required',
             'foto' => 'nullable|mimes:jpg,png,jpeg',
+            'rfc' => [
+                        'required',
+                        'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/'
+                    ],
+            'curp' => [
+                        'required',
+                        'regex:/^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/i'
+                    ],
          ];
     }
 
-    protected $messages = [
-        'status.required' => 'El campo estado es obligatorio',
-        'horario_id.required' => 'El campo horario es obligatorio',
-        'paterno.required' => 'El campo apellido paterno es obligatorio',
-        'materno.required' => 'El campo apellido materno es obligatorio',
-        'telefono.required' => 'El campo teléfono es obligatorio',
-        'numero_empleado.required' => 'El campo número de empleado es obligatorio',
-        'codigo_barras.required' => 'El campo código de barras es obligatorio',
-        'area.required' => 'El campo área es obligatorio',
+    protected $validationAttributes  = [
+        'rfc' => 'RFC',
+        'curp' => 'CURP',
+        'horario_id' => 'horario',
+        'paterno' => 'apellido paterno',
+        'materno' => 'apellido materno',
+        'telefono' => 'teléfono',
+        'numero_empleado' => 'número de empleado',
+        'codigo_barras' => 'código de barras',
+        'area' => 'área',
     ];
 
     public function resetearTodo(){
@@ -283,7 +290,11 @@ class Personal extends Component
                                 ->orWhere('domicilio', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('fecha_ingreso', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('horario_id', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere(function($q){
+                                    return $q->whereHas('horario', function($q){
+                                        return $q->where('tipo', 'LIKE', '%' . $this->search . '%');
+                                    });
+                                })
                                 ->orWhere('observaciones', 'LIKE', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);

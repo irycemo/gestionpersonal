@@ -29,6 +29,7 @@ class Checador extends Component
 
             $this->codigo = null;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "No se encuentra la persona ó código incorrecto."]);
+            $this->codigo = null;
             return;
 
         }
@@ -97,7 +98,7 @@ class Checador extends Component
 
         if($horario->falta < $hr){
 
-            Falta::create([
+            $falta = Falta::create([
                 'tipo' => 'Más de 30 min tarde',
                 'persona_id' => $this->persona->id
             ]);

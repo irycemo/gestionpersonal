@@ -108,7 +108,7 @@ class Permisos extends Component
 
             $this->resetearTodo();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se elimino con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);

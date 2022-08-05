@@ -6,6 +6,7 @@ use App\Models\Falta;
 use App\Models\Retardo;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Justificacion extends Model
@@ -25,5 +26,13 @@ class Justificacion extends Model
 
     public function falta(){
         return $this->hasOne(Falta::class);
+    }
+
+    public function imagenUrl(){
+
+        return $this->documento
+                    ? Storage::disk('justificacion')->url($this->documento)
+                    : Storage::disk('public')->url('img/logo2.png');
+
     }
 }

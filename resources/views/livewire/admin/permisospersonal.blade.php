@@ -45,7 +45,7 @@
 
                         <th wire:click="order('descripcion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Descripcion
+                            Descripción
 
                             @if($sort == 'descripcion')
 
@@ -74,7 +74,7 @@
                         </th>
                         <th wire:click="order('limite')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Limite de solicitudes
+                            Límite de solicitudes
 
                             @if($sort == 'limite')
 
@@ -396,27 +396,6 @@
         <x-slot name="content">
 
              <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
-
-                <div class="flex-auto ">
-
-                    <div>
-
-                        <Label>Clave</Label>
-                    </div>
-
-                    <div>
-
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="clave">
-
-                    </div>
-
-                    <div>
-
-                        @error('clave') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
 
                 <div class="flex-auto mr-1 ">
 

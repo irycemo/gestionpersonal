@@ -10,13 +10,11 @@ use Livewire\Component;
 use App\Http\Constantes;
 use App\Models\Permisos;
 use App\Models\Incapacidad;
-use App\Models\Inasistencia;
 use App\Exports\FaltasExport;
 use App\Models\Justificacion;
 use App\Exports\PermisosExport;
 use App\Exports\PersonalExport;
 use App\Exports\RetardosExport;
-use App\Exports\InasistenciasExport;
 use App\Exports\IncapacidadesExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JustificacionesExport;
@@ -28,7 +26,6 @@ class Reportes extends Component
     public $fecha1;
     public $fecha2;
 
-    public $verInasistencias;
     public $verPermisos;
     public $verIncapacidades;
     public $verJustificaciones;
@@ -59,7 +56,6 @@ class Reportes extends Component
 
     public $retardo_empleado;
 
-    public $inasistencias_filtradas;
     public $permisos_filtrados;
     public $incapacidades_filtradas;
     public $justificaciones_filtradas;
@@ -79,11 +75,22 @@ class Reportes extends Component
         'fecha2.required' => "La fecha final es obligatoria.",
     ];
 
+    public function updatedFecha1(){
+
+        $this->fecha1 = $this->fecha1 . ' 00:00:00';
+
+    }
+
+    public function updatedFecha2(){
+
+        $this->fecha2 = $this->fecha2 . ' 23:59:59';
+
+    }
+
     public function updatedArea(){
 
         $this->reset(
             [
-                'inasistencias_filtradas',
                 'permisos_filtrados',
                 'incapacidades_filtradas',
                 'justificaciones_filtradas',
@@ -172,28 +179,11 @@ class Reportes extends Component
 
     }
 
-    public function filtrarInasistencias(){
-
-        $this->validate();
-
-        $this->inasistencias_filtradas = Inasistencia::with('persona', 'creadoPor', 'actualizadoPor')
-                                                        ->when(isset($this->inasistencia_empleado) && $this->inasistencia_empleado != "", function($q){
-                                                            return $q->where('persona_id', $this->inasistencia_empleado);
-                                                        })
-                                                        ->whereBetween('created_at', [$this->fecha1, $this->fecha2])
-                                                        ->get();
-
-    }
-
     public function filtrarPermisos(){
 
         $this->validate();
 
         $this->permisos_filtrados=Permisos::with('creadoPor', 'actualizadoPor')
-                                            ->when(isset($this->clavePermiso) && $this->clavePermiso != "", function($q){
-                                                return $q->where('clave', $this->clavePermiso);
-
-                                            })
                                             ->when (isset($this->descripcionPermiso) && $this->descripcionPermiso != "", function($q){
                                                 return $q->where('descripcion','like','%'.$this->descripcionPermiso.'%');
                                             })
@@ -296,9 +286,6 @@ class Reportes extends Component
 
     public function descargarExcel($modelo){
 
-        if($modelo == 'inasistencias')
-            return Excel::download(new InasistenciasExport($this->inasistencias_filtradas), 'Reporte_de_inasistencias_' . now()->format('d-m-Y') . '.xlsx');
-
         if($modelo == 'permisos')
             return Excel::download(new PermisosExport($this->permisos_filtrados), 'Reporte_de_permisos_' . now()->format('d-m-Y') . '.xlsx');
 
@@ -318,10 +305,27 @@ class Reportes extends Component
             return Excel::download(new RetardosExport($this->retardos_filtrados), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
     }
 
+    public function mount(){
+
+        $this->area = request()->query('area');
+
+        $this->fecha1 = request()->query('fecha1');
+
+        $this->fecha2 = request()->query('fecha2');
+
+        $this->updatedArea();
+
+        if($this->area == 'faltas')
+            $this->filtrarFaltas();
+        elseif($this->area == 'retardos')
+            $this->filtrarRetardos();
+
+    }
+
     public function render()
     {
 
-        $empleados = Persona::all();
+        $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->get();
 
         $horarios = Horario::all();
 

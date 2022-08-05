@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('justificacions', function (Blueprint $table) {
             $table->id();
             $table->string('folio');
-            $table->string('documento');
+            $table->string('documento')->nullable();
             $table->foreignId('persona_id')->constrained();
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');

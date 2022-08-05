@@ -268,14 +268,14 @@
 
     @endif
 
-    <x-jet-dialog-modal wire:model="modal">
+    <x-jet-dialog-modal wire:model="modal" maxWidth="2xl">
 
         <x-slot name="title">
 
             @if($crear)
-                Nuevo Permiso
+                Nuevo Rol
             @elseif($editar)
-                Editar Permiso
+                Editar Rol
             @endif
 
         </x-slot>
@@ -399,11 +399,11 @@
     <x-jet-confirmation-modal wire:model="modalBorrar">
 
         <x-slot name="title">
-            Eliminar Usuario
+            Eliminar Rol
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar al usuario? No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar al rol? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

@@ -1,3 +1,9 @@
+@push('styles')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+@endpush
+
 <div class="">
 
     <div class="mb-5">
@@ -83,7 +89,7 @@
 
                         <th wire:click="order('persona_id')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Persona
+                            Empleado
 
                             @if($sort == 'persona_id')
 
@@ -183,7 +189,6 @@
 
                 </thead>
 
-
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                     @foreach($justificaciones as $justificacion)
@@ -203,7 +208,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">fecha</span>
 
-                                <img class="h-20" src="{{ Storage::disk('justificacion')->url($justificacion->documento) }}" alt="Inasistencia">
+                                <a href="{{ $justificacion->imagenUrl() }}" data-lightbox="imagen" data-title="Documento">
+                                    <img class="h-20" src="{{ $justificacion->imagenUrl() }}" alt="Documento">
+                                </a>
 
                             </td>
 
@@ -212,7 +219,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">fecha</span>
 
-                                {{ $justificacion->persona->nombre}} / {{ $justificacion->persona->numero_empleado}}
+                                {{ $justificacion->persona->nombre}} {{ $justificacion->persona->ap_paterno }} {{ $justificacion->persona->ap_materno }}
 
                             </td>
 
@@ -394,12 +401,15 @@
                     </div>
 
                     <div>
+
                         <select class="bg-white rounded text-sm w-full" wire:model="persona_id">
 
                           <option value="" selected >Selecciona un empleado</option>
 
                             @foreach($personas as $persona)
-                                    <option value="{{$persona->id}}" > {{$persona->nombre}}</option>
+
+                                <option value="{{$persona->id}}" >{{$persona->nombre}} {{$persona->ap_paterno}} {{$persona->ap_materno}}</option>
+
                            @endforeach
 
                         </select>
@@ -459,7 +469,7 @@
 
                         <div>
 
-                            <Label>Faltas</Label>
+                            <Label>Falta</Label>
                         </div>
 
                         <div>
@@ -509,6 +519,21 @@
                         @error('documento') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
+
+                    @if ($documento)
+
+                        <a href="{{ $documento->temporaryUrl() }}" data-lightbox="imagen" data-title="Documento">
+                            <img class="h-20" src="{{ $documento->temporaryUrl() }}" alt="Documento">
+                        </a>
+
+
+                    @elseif ($imagen)
+
+                        <a href="{{ $imagen }}" data-lightbox="imagen" data-title="Documento">
+                            <img class="h-20" src="{{ $imagen }}" alt="Documento">
+                        </a>
+
+                    @endif
 
                 </div>
 
@@ -591,3 +616,9 @@
 
 </div>
 
+@push('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@endpush

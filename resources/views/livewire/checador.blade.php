@@ -1,24 +1,24 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white">
 
     @if ($flag)
 
-        <a href="{{ route('dashboard') }}">
+        <div class="w-1/2">
 
-            <img class="w-96 mx-auto my-2" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+            <a href="{{ route('dashboard') }}">
 
-        </a>
+                <img class="w-96 mx-auto my-2" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
 
-        <h1 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-2  bg-white">{{ $persona->nombre }} {{ $persona->ap_paterno }} {{ $persona->ap_materno }}</h1>
+            </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2">
+            <h1 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-4  bg-white">{{ $persona->nombre }} {{ $persona->ap_paterno }} {{ $persona->ap_materno }}</h1>
 
-            <div class="p-4 mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 w-full">
 
-                <img class="rounded-lg max-h-56 object-cover shadow-xl" src="{{ Storage::disk('personal')->url($persona->foto) }}" alt="Fotografía">
+                <div class="mx-auto flex items-center">
 
-            </div>
+                    <img class="rounded-lg max-h-56 object-cover shadow-xl" src="{{  $persona->imagenUrl() }}" alt="Fotografía">
 
-            <div class="p-4">
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 p-4 bg-white rounded-lg shadow-xl">
 
@@ -28,17 +28,17 @@
 
                         <p class="font-semibold">{{ $persona->horario->tipo }}</p>
 
-                        <p>Entrada:</p>
+                        <strong>Entrada:</strong>
 
                         <p>{{ $persona->horario->entrada }}</p>
 
-                        <p>Salida:</p>
+                        <strong>Salida:</strong>
 
                         <p>{{ $persona->horario->salida }}</p>
 
                         @if($persona->horario->entrada_mixta)
 
-                            <p>Entrada (mixta):</p>
+                            <strong>Entrada (mixta):</strong>
 
                             <p>{{ $persona->horario->entrada_mixta }}</p>
 
@@ -46,7 +46,7 @@
 
                         @if ($persona->horario->salida_mixta)
 
-                            <p>Salida (mixta):</p>
+                            <strong>Salida (mixta):</strong>
 
                             <p>{{ $persona->horario->salida_mixta }}</p>
 
@@ -54,9 +54,17 @@
 
                         @if ($persona->horario->tolerancia)
 
-                            <p>Tolerancia:</p>
+                            <strong>Tolerancia:</strong>
 
-                            <p>{{ $persona->horario->tolerancia }}</p>
+                            <p>{{ $persona->horario->tolerancia }} min</p>
+
+                        @endif
+
+                        @if ($persona->horario->falta)
+
+                            <strong>Falta:</strong>
+
+                            <p>{{ $persona->horario->falta }} min</p>
 
                         @endif
 
@@ -76,7 +84,6 @@
 
                 </div>
 
-
             </div>
 
         </div>
@@ -91,7 +98,7 @@
 
     @endif
 
-    <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-50">
+    <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white shadow-xl overflow-hidden sm:rounded-lg z-50">
 
         <h1 class="text-3xl tracking-widest text-center mb-2">Checador </h1>
 
@@ -125,7 +132,7 @@
             var dt=x.getDate().toString();
             dt=dt.length==1 ? 0+dt : dt;
 
-            var x1=month + "/" + dt + "/" + x.getFullYear();
+            var x1= dt + "/" + month + "/" + x.getFullYear();
             x1 = x1 + " - " +  hours + ":" +  minutes + ":" +  seconds + " " + ampm;
             document.getElementById('clock').innerHTML = x1;
 
@@ -171,6 +178,19 @@
         window.addEventListener('contador', event => {
 
             alarm.setup()
+
+        });
+
+        onScan.attachTo(document, {
+
+            suffixKeyCodes: [13],
+            onScan: function(barcode){
+                console.log(barcode);
+                window.Livewire.emit('scanCode', barcode)
+            },
+            onScanError: function(e){
+                console.log(e);
+            }
 
         });
 

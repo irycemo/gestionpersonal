@@ -30,6 +30,7 @@ class Permisospersonal extends Component
     public $permiso_tiempo;
     public $fecha_asignada;
 
+    protected $queryString = ['search'];
 
     protected function rules(){
         return [
@@ -41,10 +42,11 @@ class Permisospersonal extends Component
     }
 
     protected $messages = [
-        'descripcion.required' => 'El campo descripción es requerido.',
-        'limite.required' =>'El campo límite es requerido.',
-        'empleado_id.required' =>'El campo empleado es requerido.',
-        'fecha_asignada.required' =>'El campo fecha es requerido.',
+        'descripcion.required' => 'El campo descripción es obligatorio.',
+        'limite.required' =>'El campo límite es obligatorio.',
+        'empleado_id.required' =>'El campo empleado es obligatorio.',
+        'fecha_asignada.required' =>'El campo fecha es obligatorio.',
+        'fecha_asignada.date' =>'El campo fecha es inválido.',
         'fecha_asignada.after' =>'El campo fecha debe ser igual o mayor a hoy.'
     ];
 
@@ -52,9 +54,11 @@ class Permisospersonal extends Component
 
         if($this->empleado_id != null){
 
-            $this->empleado = Persona::with('permisos')->find($this->empleado_id);
+            $this->empleado = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->with('permisos')->find($this->empleado_id);
 
-            $permisosSolicitados = $this->empleado->permisos()->where('permisos_id', $this->permiso_id)->count();
+            $permisosSolicitados = $this->empleado->permisos()->where('permisos_id', $this->permiso_id)
+                                                                ->whereMonth('permisos.created_at', Carbon::now()->month)
+                                                                ->count();
 
             if($permisosSolicitados >= $this->permiso_limite){
 
@@ -103,10 +107,16 @@ class Permisospersonal extends Component
         $this->editar = true;
         $this->selected_id = $permisospersonal['id'];
 
-        $this ->tipo = $permisospersonal['tipo'];
-        $this ->tiempo = $permisospersonal['tiempo'];
+        $this->tipo = $permisospersonal['tipo'];
         $this->descripcion = $permisospersonal['descripcion'];
         $this->limite = $permisospersonal['limite'];
+
+        if($permisospersonal['tiempo'] > 24){
+            $this->tiempo = $permisospersonal['tiempo'] / 24;
+            $this->unidad = "dias";
+        }
+        else
+            $this->tiempo = $permisospersonal['tiempo'];
 
     }
 
@@ -145,6 +155,7 @@ class Permisospersonal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se creó con éxito."]);
 
         } catch (\Throwable $th) {
+            dd($th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -190,7 +201,7 @@ class Permisospersonal extends Component
 
             $this->resetearTodo();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se elimino con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
@@ -274,10 +285,11 @@ class Permisospersonal extends Component
     public function render()
     {
 
-        $empleados = Persona::all();
+        $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
         $permisos = Permisos::Where('descripcion','like', '%'.$this->search.'%')
                             ->orWhere('tipo','like', '%'.$this->search.'%')
+                            ->orWhere('created_at','like', '%'.$this->search.'%')
                             ->orderBy($this->sort, $this->direction)
                             ->paginate($this->pagination);
 

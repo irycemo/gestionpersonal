@@ -136,7 +136,7 @@
 
                         <th wire:click="order('codigo_barras')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Codigo Barras
+                            Código Barras
 
                             @if($sort == 'codigo_barras')
 
@@ -370,7 +370,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
 
-                                {{ $persona->ap_paterno }} {{ $persona->ap_materno }} {{ $persona->nombre }}
+                                {{ $persona->nombre }} {{ $persona->ap_paterno }} {{ $persona->ap_materno }}
 
                             </td>
 
@@ -567,9 +567,9 @@
         <x-slot name="title">
 
             @if($crear)
-                Nueva Persona
+                Nuevo Empleado
             @elseif($editar)
-                Editar Persona
+                Editar Empleado
             @endif
 
         </x-slot>
@@ -673,27 +673,6 @@
 
                     <div>
 
-                        <Label>Código de Barras</Label>
-                    </div>
-
-                    <div>
-
-                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="codigo_barras">
-
-                    </div>
-
-                    <div>
-
-                        @error('codigo_barras') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto ">
-
-                    <div>
-
                         <Label>Localidad</Label>
                     </div>
 
@@ -703,7 +682,7 @@
 
                             <option value="" selected>Selecciona una opción</option>
 
-                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                            @foreach(App\Http\Constantes::LOCALIDADES as $ubicacion)
                                 <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
                            @endforeach
 
@@ -731,7 +710,7 @@
 
                         <select class="bg-white rounded text-sm w-full" wire:model.defer="area">
                             <option value="" selected>Selecciona una opción</option>
-                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                            @foreach(App\Http\Constantes::AREAS_ADSCRIPCION as $ubicacion)
                                 <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
                            @endforeach
 
@@ -759,7 +738,7 @@
 
                         <select class="bg-white rounded text-sm w-full" wire:model.defer="tipo">
                             <option value="" selected>Selecciona una opción</option>
-                            @foreach(App\Http\Constantes::UBICACIONES as $ubicacion)
+                            @foreach(App\Http\Constantes::TIPO as $ubicacion)
                                 <option value="{{$ubicacion}}" >{{$ubicacion}}</option>
                            @endforeach
 
@@ -771,6 +750,71 @@
                     <div>
 
                         @error('tipo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Código de Barras</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="codigo_barras">
+
+                    </div>
+
+                    <div>
+
+                        @error('codigo_barras') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Teléfono</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="telefono">
+
+                    </div>
+
+                    <div>
+
+                        @error('telefono') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Email</Label>
+                    </div>
+
+                    <div>
+
+                        <input type="email" class="bg-white rounded text-sm w-full" wire:model.defer="email">
+
+                    </div>
+
+                    <div>
+
+                        @error('email') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -815,46 +859,6 @@
                     <div>
 
                         @error('curp') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto">
-
-                    <div>
-                        <Label>Teléfono</Label>
-                    </div>
-
-                    <div>
-
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="telefono">
-
-                    </div>
-
-                    <div>
-
-                        @error('telefono') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto">
-
-                    <div>
-                        <Label>Email</Label>
-                    </div>
-
-                    <div>
-
-                        <input type="email" class="bg-white rounded text-sm w-full" wire:model.defer="email">
-
-                    </div>
-
-                    <div>
-
-                        @error('email') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -1059,11 +1063,11 @@
     <x-jet-confirmation-modal wire:model="modalBorrar">
 
         <x-slot name="title">
-            Eliminar Persona
+            Eliminar Empleado
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar a la Persona? No será posible recuperar la información.
+            ¿Esta seguro que desea eliminar el empleado? No será posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

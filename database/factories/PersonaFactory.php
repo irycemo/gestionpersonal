@@ -22,10 +22,10 @@ class PersonaFactory extends Factory
 
         return [
             'numero_empleado' => $this->faker->unique()->randomDigit,
-            'nombre' => $this->faker->sentence(),
-            'ap_paterno' => $this->faker->sentence(),
-            'ap_materno' => $this->faker->sentence(),
-            'codigo_barras' => $this->faker->randomDigit,
+            'nombre' => $this->faker->name,
+            'ap_paterno' => $this->faker->name,
+            'ap_materno' => $this->faker->name,
+            'codigo_barras' => $this->faker->unique()->randomNumber,
             'localidad' => $this->faker->sentence(),
             'area' => $this->faker->sentence(),
             'tipo' => $this->faker->sentence(),
@@ -37,6 +37,7 @@ class PersonaFactory extends Factory
             'fecha_ingreso' => $this->faker->date,
             'observaciones' => $this->faker->text(),
             'horario_id' => $this->faker->randomElement($horarios),
+            'status' => 'activo'
         ];
     }
 }

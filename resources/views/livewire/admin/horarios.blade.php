@@ -36,15 +36,15 @@
 
     @if($horarios->count())
 
-    <div class="relative overflow-x-auto rounded-lg shadow-xl">
+        <div class="relative overflow-x-auto rounded-lg shadow-xl">
 
-        <table class="rounded-lg w-full">
+            <table class="rounded-lg w-full">
 
-            <thead class="border-b border-gray-300 bg-gray-50">
+                <thead class="border-b border-gray-300 bg-gray-50">
 
-                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                    <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                    <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Tipo
 
@@ -74,33 +74,15 @@
 
                         </th>
 
-                        <th wire:click="order('tolerancia')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
+                        <th  class=" px-3 py-3 hidden lg:table-cell" >
 
                             Tolerancia
 
-                            @if($sort == 'tolerancia')
+                        </th>
 
-                                @if($direction == 'asc')
+                        <th class="px-3 py-3 hidden lg:table-cell" >
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
+                            Falta
 
                         </th>
 
@@ -134,42 +116,11 @@
 
                         </th>
 
-
                         <th wire:click="order('salida')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Salida
 
                             @if($sort == 'salida')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
-
-                        </th>
-
-                        <th wire:click="order('falta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell" >
-
-                            Tolerancia Mixta
-
-                            @if($sort == 'falta')
 
                                 @if($direction == 'asc')
 
@@ -224,7 +175,6 @@
                             @endif
 
                         </th>
-
 
                         <th wire:click="order('salida_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
@@ -352,7 +302,6 @@
 
                 </thead>
 
-
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                     @foreach($horarios as $horario)
@@ -377,9 +326,17 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tolerancia</span>
 
-                                {{ $horario->tolerancia }}
+                                {{ $horario->tolerancia }} min
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Falta</span>
+
+                                {{ $horario->falta }} min
 
                             </td>
 
@@ -391,27 +348,44 @@
 
                             </td>
 
-                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
 
                                 {{ $horario->salida }}
 
                             </td>
 
-                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center  lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
 
-                                {{ $horario->falta }}
+                                @if ($horario->entrada_mixta)
+
+                                    {{ $horario->entrada_mixta }}
+
+                                @else
+
+                                    N/A
+
+                                @endif
 
                             </td>
 
-                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
+                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
 
-                                {{ $horario->entrada_mixta }}
+                                @if ($horario->salida_mixta)
+
+                                    {{ $horario->salida_mixta }}
+
+                                @else
+
+                                    N/A
+
+                                @endif
 
                             </td>
 
@@ -419,15 +393,15 @@
 
                                 <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
 
-                                {{ $horario->salida_mixta }}
+                                @if ($horario->descripcion)
 
-                            </td>
+                                    {{ $horario->descripcion }}
 
-                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                @else
 
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+                                    N/A
 
-                                {{ $horario->descripcion }}
+                                @endif
 
                             </td>
 

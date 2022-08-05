@@ -1,14 +1,22 @@
 @extends('layouts.admin')
 
+@push('styles')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css">
+
+@endpush
+
+
 @section('content')
 
     <h1 class="text-2xl tracking-widest px-6 py-3 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-3  bg-white">{{ $persona->nombre }} {{ $persona->ap_paterno }} {{ $persona->ap_materno }}</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 mb-3">
 
         <div class="p-4 mx-auto">
 
-            <img class="rounded-lg max-h-96 object-cover mb-3 shadow-xl" src="{{ Storage::disk('personal')->url($persona->foto) }}" alt="Fotografía">
+            <img class="rounded-lg max-h-96 object-cover mb-3 shadow-xl" src="{{  $persona->imagenUrl() }}" alt="Fotografía">
 
         </div>
 
@@ -169,35 +177,47 @@
 
                         <table class="rounded-lg w-full">
 
-                            <thead class="border-b border-gray-300 bg-gray-50">
+                            <thead class="border-b border-gray-300 bg-gray-50 ">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider ">
 
-                                    <th class="px-3 hidden lg:table-cell">
+                                    <th class="px-3 hidden lg:table-cell py-2">
 
                                         Folio
 
                                     </th>
 
-                                    <th  class="px-3 hidden lg:table-cell">
+                                    <th  class="px-3 hidden lg:table-cell py-2">
 
                                         Documento
 
                                     </th>
 
-                                    <th  class=" px-3 hidden lg:table-cell">
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Tipo
 
                                     </th>
 
-                                    <th  class=" px-3 hidden lg:table-cell">
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
+
+                                        Fecha inicial
+
+                                    </th>
+
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
+
+                                        Fecha final
+
+                                    </th>
+
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Registro
 
                                     </th>
 
-                                    <th class="px-3 hidden lg:table-cell">
+                                    <th class="px-3 hidden lg:table-cell py-2">
 
                                         Actualizado
 
@@ -227,7 +247,9 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Documento</span>
 
-                                            <img class="h-20" src="{{ Storage::disk('incapacidades')->url($incapacidad->documento) }}" alt="Incapacidad">
+                                            <a href="{{ $incapacidad->imagenUrl() }}" data-lightbox="{{ $incapacidad->id }}" data-title="Documento">
+                                                <img class="h-20 py-1" src="{{ $incapacidad->imagenUrl() }}" alt="Incapacidad">
+                                            </a>
 
                                         </td>
 
@@ -236,6 +258,22 @@
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
 
                                             {{ $incapacidad->tipo }}
+
+                                        </td>
+
+                                        <td class="px-3  w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
+
+                                            {{ $incapacidad->fecha_inicial }}
+
+                                        </td>
+
+                                        <td class="px-3  w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha final</span>
+
+                                            {{ $incapacidad->fecha_final }}
 
                                         </td>
 
@@ -319,31 +357,31 @@
 
                                 <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Folio
 
                                     </th>
 
-                                    <th  class=" px-3 hidden lg:table-cell">
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Documento
 
                                     </th>
 
-                                    <th  class=" px-3 hidden lg:table-cell">
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Retardo / Falta
 
                                     </th>
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Registro
 
                                     </th>
 
-                                    <th  class=" px-3 hidden lg:table-cell">
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Actualizado
 
@@ -371,7 +409,9 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">fecha</span>
 
-                                            <img class="h-20" src="{{ Storage::disk('justificacion')->url($justificacion->documento) }}" alt="Justificación">
+                                            <a href="{{ $justificacion->imagenUrl() }}" data-lightbox="{{ $justificacion->id }}" data-title="Documento">
+                                                <img class="h-20 py-1" src="{{ $justificacion->imagenUrl() }}" alt="Justificación">
+                                            </a>
 
                                         </td>
 
@@ -470,13 +510,13 @@
 
                                 <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Registro
 
                                     </th>
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Justificación
 
@@ -492,7 +532,7 @@
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
-                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registro</span>
 
@@ -500,7 +540,7 @@
 
                                         </td>
 
-                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Justificación</span>
 
@@ -568,19 +608,19 @@
 
                                 <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Tipo
 
                                     </th>
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Registro
 
                                     </th>
 
-                                    <th class=" px-3 hidden lg:table-cell">
+                                    <th class=" px-3 hidden lg:table-cell py-2">
 
                                         Justificación
 
@@ -596,7 +636,7 @@
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
-                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
 
@@ -604,7 +644,7 @@
 
                                         </td>
 
-                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registro</span>
 
@@ -612,7 +652,7 @@
 
                                         </td>
 
-                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Justificación</span>
 
@@ -650,9 +690,195 @@
 
             </div>
 
+            <div @click="selected != 2 ? selected = 2 : selected = null" class="">
+
+                <h2 class="text-2xl tracking-widest px-6 py-3 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-3 cursor-pointer  bg-white">
+
+                    Permisos ({{ $persona->permisos->count() }})
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-right" :class="selected == 2 ? 'transform rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="gray">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 9l-7 7-7-7" />
+                    </svg>
+
+                </h2>
+
+            </div>
+
+            <div
+                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                x-ref="tab2"
+                :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
+            >
+
+                @if($persona->permisos->count())
+
+                    <div class="relative overflow-x-auto rounded-lg shadow-xl">
+
+                        <table class="rounded-lg w-full">
+
+                            <thead class="border-b border-gray-300 bg-gray-50">
+
+                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Descripcíon
+
+                                    </th>
+
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Límite
+
+                                    </th>
+
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Fecha Inicial
+
+                                    </th>
+
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Fecha Final
+
+                                    </th>
+
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Tiempo Consumido
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+
+                                @foreach($persona->permisos as $permiso)
+
+                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
+
+                                            {{ $permiso->descripcion }}
+
+                                        </td>
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Límite</span>
+
+                                            {{ $permiso->limite }}
+
+                                        </td>
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
+
+                                            @if ($permiso->pivot->fecha_inicio)
+
+                                                {{ $permiso->pivot->fecha_inicio }}
+
+                                            @else
+
+                                                N/A
+
+                                            @endif
+
+                                        </td>
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fehca Final</span>
+
+                                            @if ($permiso->pivot->fecha_final)
+
+                                                {{ $permiso->pivot->fecha_final }}
+
+                                            @else
+
+                                                N/A
+
+                                            @endif
+
+                                        </td>
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo Consumido</span>
+
+                                            @if ($permiso->pivot->tiempo_consumido)
+
+                                                {{ $permiso->pivot->tiempo_consumido }} min.
+
+                                            @else
+
+                                                N/A
+
+                                            @endif
+
+                                        </td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                @else
+
+                    <div class="border-b border-gray-300 bg-white text-gray-500 text-center p-5 rounded-full text-lg">
+
+                        No hay resultados.
+
+                    </div>
+
+                @endif
+
+            </div>
+
+            <div @click="selected != 6 ? selected = 6 : selected = null" class="">
+
+                <h2 class="text-2xl tracking-widest px-6 py-3 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-3 cursor-pointer  bg-white">
+
+                    Checador
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-right" :class="selected == 6 ? 'transform rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="gray">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 9l-7 7-7-7" />
+                    </svg>
+
+                </h2>
+
+            </div>
+
+            <div
+                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                x-ref="tab6"
+                :style="selected == 6 ? 'max-height: ' + $refs.tab6.scrollHeight + 'px;' :  ''"
+            >
+
+                @livewire('admin.full-calendar', ['persona_id' => $persona->id])
+
+            </div>
+
         </div>
 
     </div>
 
 @endsection
 
+@push('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
+@endpush

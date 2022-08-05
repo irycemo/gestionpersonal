@@ -42,6 +42,7 @@ class RevisarAsistencias extends Command
                                                     ->whereDate('checadors.created_at', '=', Carbon::yesterday()->toDateString());
                                     })
                                     ->where('status', 'activo')
+                                    ->where('tipo', '!=', 'Estructura')
                                     ->where('checadors.persona_id', null)
                                     ->get();
 
@@ -52,7 +53,15 @@ class RevisarAsistencias extends Command
                                         ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
                                         ->first();
 
+                $incapacidad = $empleado->incapacidades()
+                                        ->whereDate('fecha_inicial', '<=', Carbon::yesterday()->toDateString())
+                                        ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
+                                        ->first();
+
                 if($permiso && $permiso->tiempo >= 24)
+                    continue;
+
+                if($incapacidad)
                     continue;
 
                 Falta::create([

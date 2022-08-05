@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use Carbon\Carbon;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Models\Incapacidad;
@@ -9,7 +10,6 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Http\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Models\Permission;
 
 class Incapacidades extends Component
 {
@@ -21,27 +21,40 @@ class Incapacidades extends Component
     public $documento;
     public $tipo;
     public $persona;
+    public $imagen;
+    public $fecha_inicial;
+    public $fecha_final;
+
+    protected $queryString = ['search'];
 
     protected function rules(){
         return [
             'folio' => 'required',
-            'documento' => 'required|mimes:jpg,png,jpeg',
+            'documento' => 'nullable|mimes:jpg,png,jpeg',
             'tipo' => 'required',
-            'persona' => 'required'
+            'persona' => 'required',
+            'fecha_inicial' => 'required|date|after:yesterday',
+            'fecha_final' => 'required|date|after:fecha_inicial|after:fecha_inicial'
          ];
     }
 
+    protected $validationAttributes  = [
+        'fecha_inicial' => 'fecha inicial',
+        'fecha_final' => 'fecha final',
+        'persona' => 'empleado',
+    ];
+
     protected $messages = [
-        'folio.required' => 'El campo folio es requerido',
-        'documento.required' => 'El campo documento es requerido',
-        'tipo.required' => 'El campo tipo es requerido'
+        'fecha_inicial.after' => 'El campo fecha inicial debe ser una fecha posterior al día de ayer.'
     ];
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'folio', 'documento', 'tipo', 'persona']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'folio', 'documento', 'tipo', 'persona', 'imagen', 'fecha_inicial', 'fecha_final']);
         $this->resetErrorBag();
         $this->resetValidation();
+
+        $this->dispatchBrowserEvent('removeFiles');
     }
 
     public function abiriModalEditar($modelo){
@@ -52,9 +65,11 @@ class Incapacidades extends Component
 
         $this->selected_id = $modelo['id'];
         $this->folio = $modelo['folio'];
-        $this->documento = $modelo['documento'];
         $this->tipo = $modelo['tipo'];
-        $this->persona = $modelo['persona'];
+        $this->fecha_inicial = Carbon::createFromFormat('d-m-Y', $modelo['fecha_inicial'])->format('Y-m-d');
+        $this->fecha_final = Carbon::createFromFormat('d-m-Y', $modelo['fecha_final'])->format('Y-m-d');
+        $this->persona = $modelo['persona_id'];
+        $this->imagen = Storage::disk('incapacidades')->url($modelo['documento']);
 
     }
 
@@ -67,6 +82,8 @@ class Incapacidades extends Component
             $incapacidad = Incapacidad::create([
                 'folio' => $this->folio,
                 'tipo' => $this->tipo,
+                'fecha_inicial' => $this->fecha_inicial,
+                'fecha_final' => $this->fecha_final,
                 'persona_id' => $this->persona,
                 'creado_por' => auth()->user()->id
             ]);
@@ -77,14 +94,11 @@ class Incapacidades extends Component
 
                 $this->dispatchBrowserEvent('removeFiles');
 
-            }else{
+                $incapacidad->update([
+                    'documento' => $nombreArchivo
+                ]);
 
-                $nombreArchivo = null;
             }
-
-            $incapacidad->update([
-                'documento' => $nombreArchivo
-            ]);
 
             $this->resetearTodo();
 
@@ -109,8 +123,10 @@ class Incapacidades extends Component
 
             $incapacidad->update([
                 'folio' => $this->folio,
-                'documento' => $this->documento,
                 'tipo' => $this->tipo,
+                'fecha_inicial' => $this->fecha_inicial,
+                'fecha_final' => $this->fecha_final,
+                'persona_id' => $this->persona,
                 'actualizado_por' => auth()->user()->id
             ]);
 
@@ -118,18 +134,15 @@ class Incapacidades extends Component
 
                 Storage::disk('incapacidades')->delete($incapacidad->documento);
 
-                $nombreArchivo = $this->documento->store('/', '');
+                $nombreArchivo = $this->documento->store('/', 'incapacidades');
 
                 $this->dispatchBrowserEvent('removeFiles');
 
-            }else{
+                $incapacidad->update([
+                    'documento' => $nombreArchivo
+                ]);
 
-                $nombreArchivo = null;
             }
-
-            $incapacidad->update([
-                'documento' => $nombreArchivo
-            ]);
 
             $this->resetearTodo();
 
@@ -156,7 +169,7 @@ class Incapacidades extends Component
 
             $this->resetearTodo();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se elimino con éxito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
@@ -166,18 +179,16 @@ class Incapacidades extends Component
 
     }
 
-
-
-
     public function render()
     {
         $incapacidades = Incapacidad::where('folio', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('documento', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
+                                        ->orWhere('created_at','like', '%'.$this->search.'%')
                                         ->orderBy($this->sort, $this->direction)
                                         ->paginate($this->pagination);
 
-        $personas = Persona::all();
+        $personas = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('status', 'activo')->orderBy('nombre')->get();
 
         return view('livewire.admin.incapacidades', compact('incapacidades', 'personas'))->extends('layouts.admin');
     }

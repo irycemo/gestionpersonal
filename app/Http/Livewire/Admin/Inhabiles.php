@@ -30,8 +30,8 @@ class Inhabiles extends Component
     }
 
     protected $messages = [
-        'fecha.required' => 'El campo fecha es requerido',
-        'descripcion.required' => 'El campo descripción es requerido',
+        'fecha.required' => 'El campo fecha es obligatorio',
+        'descripcion.required' => 'El campo descripción es obligatorio',
 
     ];
 

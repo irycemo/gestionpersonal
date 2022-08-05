@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('ap_paterno');
             $table->string('ap_materno');
-            $table->unsignedBigInteger('codigo_barras')->unique();
+            $table->unsignedBigInteger('codigo_barras')->nullable()->unique();
             $table->string('localidad');
             $table->string('area');
             $table->string('tipo');

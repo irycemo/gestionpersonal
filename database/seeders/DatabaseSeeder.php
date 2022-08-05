@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HorarioSeeder::class);
 
         $this->call(PermisoSeeder::class);
-        /* $this->call(PersonaSeeder::class); */
+        $this->call(PersonaSeeder::class);
 
     }
 }

@@ -27,26 +27,38 @@ class Justificaciones extends Component
     public $falta_id;
     public $retardoFlag = true;
     public $faltaFlag = true;
+    public $imagen;
+
+    protected $queryString = ['search'];
 
     protected function rules(){
         return [
             'folio' => 'required',
-            'documento' => 'required|mimes:jpg,jpeg,png',
+            'documento' => 'nullable|mimes:jpg,jpeg,png',
             'persona_id' => 'required',
+            'retardo_id' => 'required_without:falta_id',
+            'falta_id' => 'required_without:retardo_id',
          ];
     }
 
     protected $messages = [
-        'folio.required' => 'El campo folio es requerido',
-        'documento.required' => 'El campo documento es requerido',
+        'folio.required' => 'El campo folio es obligatorio',
+        'documento.required' => 'El campo documento es obligatorio',
         'documento.mimes' => 'Formato de documento inválido',
-        'persona_id.required' => 'El campo empleado es requerido',
+        'persona_id.required' => 'El campo empleado es obligatorio',
+        'retardo_id.required_without' => 'El campo retardo es obligatorio cuando falta no está presente',
+        'falta_id.required_without' => 'El campo falta es obligatorio cuando retardo no está presente',
     ];
 
     public function updatedPersonaId(){
 
         $this->faltas = Falta::where('persona_id', $this->persona_id)->where('justificacion_id', null)->get();
+
         $this->retardos = Retardo::where('persona_id', $this->persona_id)->where('justificacion_id', null)->get();
+
+        $this->retardoFlag = true;
+
+        $this->faltaFlag = true;
 
     }
 
@@ -64,9 +76,10 @@ class Justificaciones extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'folio', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos']);
+        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'folio', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos', 'imagen']);
         $this->resetErrorBag();
         $this->resetValidation();
+        $this->dispatchBrowserEvent('removeFiles');
     }
 
     public function abiriModalEditar($modelo){
@@ -77,8 +90,10 @@ class Justificaciones extends Component
 
         $this->selected_id = $modelo['id'];
         $this->folio = $modelo['folio'];
-        $this->documento = $modelo['documento'];
         $this->persona_id = $modelo['persona_id'];
+        $this->imagen = Storage::disk('justificacion')->url($modelo['documento']);
+
+        $this->updatedPersonaId();
 
     }
 
@@ -101,14 +116,11 @@ class Justificaciones extends Component
 
                 $this->dispatchBrowserEvent('removeFiles');
 
-            }else{
+                $justificacion->update([
+                    'documento' => $nombredocumento
+                ]);
 
-                $nombredocumento = null;
             }
-
-            $justificacion->update([
-                'documento' => $nombredocumento
-            ]);
 
             if($this->falta_id){
                 $falta = Falta::find($this->falta_id);
@@ -143,7 +155,6 @@ class Justificaciones extends Component
 
             $justificacion->update([
                 'folio' => $this->folio,
-                'documento' => $this->documento,
                 'persona_id' => $this->persona_id,
                 'actualizado_por' => auth()->user()->id
 
@@ -155,25 +166,40 @@ class Justificaciones extends Component
 
                 $nombredocumento = $this->documento->store('/', 'justificacion');
 
+                $justificacion->update([
+                    'documento' => $nombredocumento
+                ]);
+
                 $this->dispatchBrowserEvent('removeFiles');
 
-            }else{
-
-                $nombredocumento = null;
             }
 
-            $justificacion->update([
-                'documento' => $nombredocumento
-            ]);
-
             if($this->falta_id){
+
+                if($justificacion->retardo)
+                    $justificacion->retardo->update(['justificacion_id' => null]);
+
+                if($justificacion->falta)
+                    $justificacion->falta->update(['justificacion_id' => null]);
+
                 $falta = Falta::find($this->falta_id);
+
                 $falta->update(['justificacion_id' => $justificacion->id]);
+
             }
 
             if($this->retardo_id){
+
+                if($justificacion->falta)
+                    $justificacion->falta->update(['justificacion_id' => null]);
+
+                if($justificacion->retardo)
+                    $justificacion->retardo->update(['justificacion_id' => null]);
+
                 $retardo = Retardo::find($this->retardo_id);
+
                 $retardo->update(['justificacion_id' => $justificacion->id]);
+
             }
 
             $this->resetearTodo();
@@ -181,7 +207,7 @@ class Justificaciones extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
-
+            dd($th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -202,9 +228,10 @@ class Justificaciones extends Component
 
             $this->resetearTodo();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificacion se elimino con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificacion se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+            dd($th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -215,19 +242,17 @@ class Justificaciones extends Component
     public function render()
     {
 
+        $personas = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('status', 'activo')->orderBy('nombre')->get();
 
-        $personas = Persona::all();
-
-
-        $justificaciones = Justificacion::where('folio', 'LIKE', '%' . $this->search . '%')
+        $justificaciones = Justificacion::with('falta', 'retardo')->where('folio', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('persona_id', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('creado_por', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('actualizado_por', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('created_at','like', '%'.$this->search.'%')
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);
 
-
-
         return view('livewire.admin.justificaciones', compact('justificaciones','personas'))->extends('layouts.admin');
+
     }
 }

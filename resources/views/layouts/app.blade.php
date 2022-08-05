@@ -18,6 +18,8 @@
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
 
+        <script src="{{ asset('js/onscan.min.js') }}"></script>
+
         {{-- SweetAlert --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.13/dist/sweetalert2.all.min.js" defer></script>
 

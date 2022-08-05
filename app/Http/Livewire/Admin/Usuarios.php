@@ -31,7 +31,9 @@ class Usuarios extends Component
     }
 
     protected $messages = [
-        'nombre.required' => 'El campo nombre es requerido',
+        'nombre.required' => 'El campo nombre es obligatorio',
+        'role.required' => 'El campo rol es obligatorio',
+        'ubicacion.required' => 'El campo ubicación es obligatorio',
     ];
 
     public function resetearTodo(){
@@ -80,7 +82,6 @@ class Usuarios extends Component
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
-            $this->resetearTodo();
         }
 
     }
@@ -106,7 +107,6 @@ class Usuarios extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El usuario se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
-            ;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -127,7 +127,6 @@ class Usuarios extends Component
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
-            $this->resetearTodo();
             $this->resetearTodo();
         }
 

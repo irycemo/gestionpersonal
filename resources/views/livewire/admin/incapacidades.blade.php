@@ -1,3 +1,9 @@
+@push('styles')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+@endpush
+
 <div class="">
 
     <div class="mb-5">
@@ -73,6 +79,36 @@
 
                         </th>
 
+                        <th wire:click="order('persona_id')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Empleado
+
+                            @if($sort == 'persona_id')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
                         <th  class="px-3 py-3 hidden lg:table-cell">
 
                             Documento
@@ -109,9 +145,69 @@
 
                         </th>
 
+                        <th wire:click="order('fecha_inicial')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Fecha Inicial
+
+                            @if($sort == 'fecha_inicial')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
+                        <th wire:click="order('fecha_final')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Fecha Final
+
+                            @if($sort == 'fecha_final')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
                         <th wire:click="order('persona_id')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Perona
+                            Persona
 
                             @if($sort == 'persona_id')
 
@@ -205,7 +301,6 @@
 
                 </thead>
 
-
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                     @foreach($incapacidades as $incapacidad)
@@ -220,12 +315,22 @@
 
                             </td>
 
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Empleado</span>
+
+                                {{ $incapacidad->persona->nombre }} {{ $incapacidad->persona->ap_paterno }} {{ $incapacidad->persona->materno }}
+
+                            </td>
+
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Documento</span>
 
-                                <img class="h-20" src="{{ Storage::disk('incapacidades')->url($incapacidad->documento) }}" alt="Incapacidad">
+                                <a href="{{ $incapacidad->imagenUrl() }}" data-lightbox="imagen" data-title="Documento">
+                                    <img class="h-20" src="{{ $incapacidad->imagenUrl() }}" alt="Incapacidad">
+                                </a>
 
                             </td>
 
@@ -234,6 +339,22 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
 
                                 {{ $incapacidad->tipo }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
+
+                                {{ $incapacidad->fecha_inicial }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Final</span>
+
+                                {{ $incapacidad->fecha_final }}
 
                             </td>
 
@@ -374,7 +495,7 @@
 
         <x-slot name="content">
 
-             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
                 <div class="flex-auto ">
 
@@ -397,7 +518,40 @@
 
                 </div>
 
+                <div class="flex-auto ">
 
+                    <div>
+
+                        <Label>Empleado</Label>
+                    </div>
+
+                    <div>
+
+                        <select class="bg-white rounded text-sm w-full" wire:model.defer="persona">
+
+                            <option value="" selected>Seleccione un empleado</option>
+
+                           @foreach($personas as $persona)
+
+                                <option value="{{$persona->id}}" >{{$persona->nombre}} {{$persona->ap_paterno}} {{$persona->ap_materno}}</option>
+
+                           @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        @error('persona') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
                 <div class="flex-auto ">
 
@@ -425,29 +579,44 @@
 
                     <div>
 
-                        <Label>Empleado</Label>
-                    </div>
-
-                    <div>
-                        <select class="bg-white rounded text-sm w-full" wire:model.defer="persona">
-                           @foreach($personas as $persona)
-                                    <option value="{{$persona->id}}" >
-                                       {{$persona->nombre}}
-
-                                    </option>
-
-
-                           @endforeach
-
-                        </select>
+                        <Label>Fecha Inicial</Label>
 
                     </div>
 
                     <div>
 
-                        @error('persona') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        <input type="date" class="bg-white rounded text-sm w-full" wire:model.defer="fecha_inicial">
 
                     </div>
+
+                    <div>
+
+                        @error('fecha_inicial') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Fecha Final</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="date" class="bg-white rounded text-sm w-full" wire:model.defer="fecha_final">
+
+                    </div>
+
+                    <div>
+
+                        @error('fecha_final') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
                 </div>
 
             </div>
@@ -471,6 +640,20 @@
                         @error('documento') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
+
+                    @if ($documento)
+
+                        <a href="{{ $documento->temporaryUrl() }}" data-lightbox="imagen" data-title="Documento">
+                            <img class="h-20" src="{{ $documento->temporaryUrl() }}" alt="Incapacidad">
+                        </a>
+
+                    @elseif ($imagen)
+
+                            <a href="{{ $imagen }}" data-lightbox="imagen" data-title="Documento">
+                                <img class="h-20" src="{{ $imagen }}" alt="Incapacidad">
+                            </a>
+
+                    @endif
 
                 </div>
 
@@ -552,3 +735,10 @@
     </x-jet-confirmation-modal>
 
 </div>
+
+@push('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@endpush

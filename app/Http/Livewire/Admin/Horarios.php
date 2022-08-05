@@ -6,8 +6,6 @@ use App\Http\Traits\ComponentesTrait;
 use Livewire\Component;
 use App\Models\Horario;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Role;
-
 
 class Horarios extends Component
 {
@@ -30,12 +28,14 @@ class Horarios extends Component
             'entrada' => 'required',
             'salida' => 'required|after:entrada',
             'tolerancia' => 'required',
+            'falta' => 'required',
             'entrada_mixta' => 'nullable|after:salida',
             'salida_mixta' => 'nullable|required_with:entrada_mixta|after:entrada_mixta',
          ];
     }
 
     protected $messages = [
+        'descripcion.required' => 'El campo descripción es requerido',
     ];
 
     public function resetearTodo(){
@@ -135,7 +135,7 @@ class Horarios extends Component
 
             $this->resetearTodo();
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se eliminó con exito."]);
+            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);

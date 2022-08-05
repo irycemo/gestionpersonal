@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('folio');
             $table->string('documento')->nullable();
             $table->string('tipo');
+            $table->date('fecha_inicial');
+            $table->date('fecha_final');
             $table->foreignId('persona_id')->constrained();
             $table->foreignId('creado_por')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('actualizado_por')->nullable()->constrained()->references('id')->on('users');

@@ -9,6 +9,7 @@ use App\Models\Checador;
 use App\Models\Permisos;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Persona extends Model
@@ -44,6 +45,14 @@ class Persona extends Model
 
     public function permisos(){
         return $this->belongsToMany(Permisos::class)->withPivot(['fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
+    }
+
+    public function imagenUrl(){
+
+        return $this->foto
+                    ? Storage::disk('personal')->url($this->foto)
+                    : Storage::disk('public')->url('img/unknown_user.png');
+
     }
 }
 

@@ -556,7 +556,7 @@
                     <select class="bg-white rounded text-sm w-full" wire:model.defer="ubicacion">
                         <option selected value="">Selecciona una opción</option>
 
-                        @foreach (App\Http\Constantes::UBICACIONES as $ubicacion)
+                        @foreach (App\Http\Constantes::AREAS_ADSCRIPCION as $ubicacion)
 
                             <option value="{{ $ubicacion }}">{{ $ubicacion }}</option>
 

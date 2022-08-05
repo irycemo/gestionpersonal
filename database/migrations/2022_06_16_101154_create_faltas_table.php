@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('tipo');
             $table->foreignId('persona_id')->constrained();
-            $table->foreignId('justificacion_id')->nullable()->constrained();
+            $table->foreignId('justificacion_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }
