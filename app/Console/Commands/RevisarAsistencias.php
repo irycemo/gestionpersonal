@@ -42,7 +42,7 @@ class RevisarAsistencias extends Command
                                                     ->whereDate('checadors.created_at', '=', Carbon::yesterday()->toDateString());
                                     })
                                     ->where('status', 'activo')
-                                    ->where('tipo', '!=', 'Estructura')
+                                    ->where('personas.tipo', '!=', 'Estructura')
                                     ->where('checadors.persona_id', null)
                                     ->get();
 

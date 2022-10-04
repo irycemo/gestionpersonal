@@ -29,6 +29,7 @@ class Incapacidades extends Component
 
     protected function rules(){
         return [
+            'documento' => 'required',
             'folio' => 'required',
             'documento' => 'nullable|mimes:jpg,png,jpeg',
             'tipo' => 'required',
@@ -76,6 +77,18 @@ class Incapacidades extends Component
     public function crear(){
 
         $this->validate();
+
+        $incapacidad = Incapacidad::where('persona_id', $this->persona)->where('fecha_inicial', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_inicial))->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_inicial))->first();
+
+        if($incapacidad){
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ya tiene una incapacidad asignada que cobre esa fecha."]);
+
+            $this->resetearTodo();
+
+            return;
+
+        }
 
         try {
 

@@ -102,4 +102,196 @@
 
     </div>
 
+    <div>
+
+        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Estadisticas de Asistencias</h2>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        <div class=" border-t-4 border-green-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Catastro</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalCatastroTotal }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalCatastroPresente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Catastro' ,'personalTotal' => $personalCatastroTotal, 'personalPresente' => $personalCatastroPresente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-blue-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">RPP</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRPPTotal }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRppPresente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'RPP' ,'personalTotal' => $personalRPPTotal, 'personalPresente' => $personalRppPresente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-gray-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 1 (Zamora)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional1Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional1Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 1' ,'personalTotal' => $personalRegional1Total, 'personalPresente' => $personalRegional1Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-red-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 2 (La Piedad)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional2Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional2Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 2' ,'personalTotal' => $personalRegional2Total, 'personalPresente' => $personalRegional2Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-yellow-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 3 (Apatzingan)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional3Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional3Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 3' ,'personalTotal' => $personalRegional3Total, 'personalPresente' => $personalRegional3Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-indigo-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 4 (Uruapan)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional4Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional4Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 4' ,'personalTotal' => $personalRegional4Total, 'personalPresente' => $personalRegional4Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-orange-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 5 (Huetamo)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional5Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional5Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 5' ,'personalTotal' => $personalRegional5Total, 'personalPresente' => $personalRegional5Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-pink-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 6 (Lazaro Cardenas)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional6Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional6Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 6' ,'personalTotal' => $personalRegional6Total, 'personalPresente' => $personalRegional6Presente])
+
+            </div>
+
+        </div>
+
+        <div class=" border-t-4 border-purple-400 shadow-xl text-gray-600 rounded-xl bg-white p-3">
+
+            <h4 class="text-center text-2xl mb-2">Regional 7 (Ciudad Hidalgo)</h4>
+
+            <div class="md:flex items-end justify-between">
+
+                <div>
+
+                    <p class="font-bold">Total de empleados activos: {{ $personalRegional7Total }}</p>
+
+                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional7Presente }}</p>
+
+                </div>
+
+                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 7' ,'personalTotal' => $personalRegional7Total, 'personalPresente' => $personalRegional7Presente])
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
 @endsection

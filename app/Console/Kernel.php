@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('revisar:asistencias')->everyMinute();
-        $schedule->command('revisar:permisos_activos')->everyMinute();
-        $schedule->command('calcular:tiempo_permisos')->everyMinute();
+        $schedule->command('revisar:asistencias')->dailyAt('1:00')->days([Schedule::TUESDAY, Schedule::WEDNESDAY, Schedule::THURSDAY, Schedule::FRIDAY, Schedule::SATURDAY]);
+        $schedule->command('revisar:permisos_activos')->dailyAt('1:00')->days([Schedule::TUESDAY, Schedule::WEDNESDAY, Schedule::THURSDAY, Schedule::FRIDAY, Schedule::SATURDAY]);
+        $schedule->command('calcular:tiempo_permisos')->lastDayOfMonth('23:00');
     }
 
     /**

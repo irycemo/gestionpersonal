@@ -10,4 +10,8 @@ class Checador extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function persona(){
+        return $this->belongsTo(Persona::class);
+    }
 }

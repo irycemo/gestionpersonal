@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('horarios', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo');
+            $table->string('tipo')->unique();
             $table->text('descripcion')->nullable();
             $table->unsignedInteger('tolerancia');
             $table->time('entrada');

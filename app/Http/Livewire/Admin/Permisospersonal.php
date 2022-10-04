@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Admin;
 
 use Carbon\Carbon;
+use App\Models\Inhabil;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Models\Permisos;
 use Livewire\WithPagination;
+use App\Models\PermisoPersona;
 use App\Http\Traits\ComponentesTrait;
-use App\Models\Inhabil;
 
 class Permisospersonal extends Component
 {
@@ -217,6 +218,18 @@ class Permisospersonal extends Component
             'empleado_id' => 'required',
         ]);
 
+        $permiso = PermisoPersona::where('persona_id', $this->empleado_id)->where('fecha_inicio', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->first();
+
+        if($permiso){
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ya tiene un permiso asignado que cobre esa fecha."]);
+
+            $this->resetearTodo();
+
+            return;
+
+        }
+
         if($this->permiso_tiempo > 24){
 
 
@@ -287,7 +300,7 @@ class Permisospersonal extends Component
 
         $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
-        $permisos = Permisos::Where('descripcion','like', '%'.$this->search.'%')
+        $permisos = Permisos::where('descripcion','like', '%'.$this->search.'%')
                             ->orWhere('tipo','like', '%'.$this->search.'%')
                             ->orWhere('created_at','like', '%'.$this->search.'%')
                             ->orderBy($this->sort, $this->direction)

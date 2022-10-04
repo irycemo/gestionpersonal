@@ -34,7 +34,7 @@ class Justificaciones extends Component
     protected function rules(){
         return [
             'folio' => 'required',
-            'documento' => 'nullable|mimes:jpg,jpeg,png',
+            'documento' => 'required|mimes:jpg,jpeg,png',
             'persona_id' => 'required',
             'retardo_id' => 'required_without:falta_id',
             'falta_id' => 'required_without:retardo_id',

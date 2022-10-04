@@ -18,7 +18,6 @@ class PermisoSeeder extends Seeder
         Permisos::create([
             'tiempo' => 24,
             'tipo' => 'oficial',
-
             'descripcion' => 'Día económico',
             'limite' => '12',
         ]);
@@ -26,7 +25,6 @@ class PermisoSeeder extends Seeder
         Permisos::create([
             'tiempo' => 2,
             'tipo' => 'oficial',
-
             'descripcion' => 'Cobro de salario',
             'limite' => '24',
         ]);
@@ -34,49 +32,50 @@ class PermisoSeeder extends Seeder
         Permisos::create([
             'tiempo' => 24,
             'tipo' => 'oficial',
-
             'descripcion' => 'Asambleas Sindicales',
-            'limite' => '120',
+            'limite' => '10',
         ]);
 
         Permisos::create([
             'tiempo' => 24,
             'tipo' => 'oficial',
-
             'descripcion' => 'Trámites prejubilatorios',
-            'limite' => '120',
+            'limite' => '5',
         ]);
 
         Permisos::create([
             'tiempo' => 24,
-            'tipo' => 'personal',
-
+            'tipo' => 'oficial',
             'descripcion' => 'Cumpleaños',
-            'limite' => '24',
+            'limite' => '10',
         ]);
 
         Permisos::create([
             'tiempo' => 2160,
-            'tipo' => 'personal',
-
+            'tipo' => 'oficial',
             'descripcion' => 'Permiso Paternidad o Maternidad',
             'limite' => '24',
         ]);
 
         Permisos::create([
             'tiempo' => 240,
-            'tipo' => 'personal',
-
+            'tipo' => 'oficial',
             'descripcion' => 'Permiso matrimonio',
-            'limite' => '10',
+            'limite' => '2',
         ]);
 
         Permisos::create([
             'tiempo' => 264,
-            'tipo' => 'personal',
-
+            'tipo' => 'oficial',
             'descripcion' => 'Permiso defunción',
-            'limite' => '264',
+            'limite' => '2',
+        ]);
+
+        Permisos::create([
+            'tiempo' => 0,
+            'tipo' => 'personal',
+            'descripcion' => 'Permiso de salida',
+            'limite' => '2',
         ]);
     }
 }

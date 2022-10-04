@@ -44,7 +44,7 @@
 
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                        <th wire:click="order('name')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('tipo')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Tipo
 

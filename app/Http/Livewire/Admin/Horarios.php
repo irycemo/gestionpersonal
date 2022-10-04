@@ -24,7 +24,7 @@ class Horarios extends Component
     protected function rules(){
         return [
             'descripcion' => 'required',
-            'tipo' => 'required',
+            'tipo' => 'required|unique:horarios,tipo,' . $this->selected_id,
             'entrada' => 'required',
             'salida' => 'required|after:entrada',
             'tolerancia' => 'required',
@@ -34,8 +34,8 @@ class Horarios extends Component
          ];
     }
 
-    protected $messages = [
-        'descripcion.required' => 'El campo descripción es requerido',
+    protected $validationAttributes  = [
+        'descripcion' => 'descripción',
     ];
 
     public function resetearTodo(){
@@ -61,7 +61,6 @@ class Horarios extends Component
         $this->salida_mixta = $horario['salida_mixta'];
         $this->falta = $horario['falta'];
     }
-
 
     public function crear(){
 

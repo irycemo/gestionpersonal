@@ -2,7 +2,7 @@
 
     @if ($flag)
 
-        <div class="w-1/2">
+        <div class="md:w-1/2 p-2">
 
             <a href="{{ route('dashboard') }}">
 
@@ -137,6 +137,8 @@
             document.getElementById('clock').innerHTML = x1;
 
             display_c();
+
+            document.getElementById("codigo").focus();
         }
 
         function display_c(){
@@ -181,17 +183,18 @@
 
         });
 
-        onScan.attachTo(document, {
+        window.addEventListener('DOMContentLoaded', (event) => {
+            onScan.attachTo(document, {
 
-            suffixKeyCodes: [13],
-            onScan: function(barcode){
-                console.log(barcode);
-                window.Livewire.emit('scanCode', barcode)
-            },
-            onScanError: function(e){
-                console.log(e);
-            }
+                suffixKeyCodes: [13],
+                onScan: function(barcode){
+                    window.Livewire.emit('capturarCodigo', barcode)
+                },
+                onScanError: function(e){
+                    console.log(e);
+                }
 
+            });
         });
 
     </script>

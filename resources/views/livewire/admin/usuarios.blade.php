@@ -276,7 +276,11 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Role</span>
 
-                                {{ $user->getRoleNames()[0] }}
+                                @if ($user->getRoleNames()->count())
+
+                                    {{ $user->getRoleNames()[0] }}
+
+                                @endif
 
                             </td>
 

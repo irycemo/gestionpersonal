@@ -26,7 +26,7 @@
 
         </div>
 
-        <div class="mb-5 flex space-x-8">
+        <div class="mb-5 md:flex md:flex-row flex-col md:space-x-4">
 
             <div>
 
@@ -50,7 +50,7 @@
 
             </div>
 
-            <div>
+            <div class="mt-2 md:mt-0">
 
                 <div>
 
@@ -76,7 +76,7 @@
 
         @if ($verPermisos)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -141,6 +141,50 @@
                 </div>
 
                 <div>
+
+                    <div>
+
+                        <Label>Fecha inicial</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="date" class="bg-white rounded text-sm " wire:model.defer="fecha_inicioPermiso">
+
+                    </div>
+
+                    <div>
+
+                        @error('fecha_inicioPermiso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div class="mt-2 md:mt-0">
+
+                    <div>
+
+                        <Label>Fecha final</Label>
+
+                    </div>
+
+                    <div>
+
+                        <input type="date" class="bg-white rounded text-sm " wire:model.defer="fecha_finalPermiso">
+
+                    </div>
+
+                    <div>
+
+                        @error('fecha_finalPermiso') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+                <div>
                     <button
                         class="bg-blue-500 hover:shadow-lg hover:bg-blue-700  text-sm py-2 px-4 text-white rounded-full focus:outline-none mt-3 w-full"
                         wire:click="filtrarPermisos"
@@ -158,7 +202,7 @@
 
         @if ($verIncapacidades)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -251,7 +295,7 @@
 
         @if ($verJustificaciones)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -323,7 +367,7 @@
 
         @if ($verPersonal)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -502,7 +546,7 @@
 
         @if ($verFaltas)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -574,7 +618,7 @@
 
         @if ($verRetardos)
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 items-center">
+            <div class="md:flex flex-col md:flex-row justify-between md:space-x-3 items-center">
 
                 <div class="flex-auto ">
 
@@ -629,11 +673,11 @@
 
         @if(count($permisos_filtrados))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($permisos_filtrados) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('permisos')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('permisos')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -683,6 +727,18 @@
 
                             </th>
 
+                            <th class="px-3 py-3 hidden lg:table-cell">
+
+                                Registro
+
+                            </th>
+
+                            <th class="px-3 py-3 hidden lg:table-cell">
+
+                                Actualizado
+
+                            </th>
+
                         </tr>
 
                     </thead>
@@ -691,9 +747,9 @@
 
                         @foreach($permisos_filtrados as $permiso)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
-                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
@@ -701,7 +757,7 @@
 
                                 </td>
 
-                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
@@ -709,7 +765,7 @@
 
                                 </td>
 
-                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
 
@@ -725,7 +781,7 @@
 
                                 </td>
 
-                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fehca Final</span>
 
@@ -741,7 +797,7 @@
 
                                 </td>
 
-                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo Consumido</span>
 
@@ -754,6 +810,34 @@
                                         N/A
 
                                     @endif
+
+                                </td>
+
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
+
+                                    @if($permiso->created_by != null)
+
+                                        <span class="font-semibold">Registrado por: {{$permiso->createdBy->name}}</span> <br>
+
+                                    @endif
+
+                                    {{ $permiso->created_at }}
+
+                                </td>
+
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
+
+                                    @if($permiso->updated_by != null)
+
+                                        <span class="font-semibold">Actualizado por: {{$permiso->updatedBy->name}}</span> <br>
+
+                                    @endif
+
+                                    {{ $permiso->updated_at }}
 
                                 </td>
 
@@ -789,11 +873,11 @@
 
         @if(count($incapacidades_filtradas))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($incapacidades_filtradas) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('incapacidades')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('incapacidades')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -851,7 +935,7 @@
 
                         @foreach($incapacidades_filtradas as $incapacidad)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
                                 <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -877,7 +961,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
@@ -891,7 +975,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
@@ -936,11 +1020,11 @@
 
         @if(count($justificaciones_filtradas))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($justificaciones_filtradas) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('justificaciones')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('justificaciones')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -1001,7 +1085,7 @@
 
                         @foreach($justificaciones_filtradas as $justificacion)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
                                 <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -1035,7 +1119,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
@@ -1049,7 +1133,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
@@ -1094,11 +1178,11 @@
 
         @if(count($personal_filtradas))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($personal_filtradas) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('personal')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('personal')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -1231,7 +1315,7 @@
 
                         @foreach($personal_filtradas as $persona)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
                                 <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -1353,7 +1437,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
@@ -1367,7 +1451,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
@@ -1412,11 +1496,11 @@
 
         @if(count($faltas_filtradas))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($faltas_filtradas) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('faltas')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('faltas')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -1475,7 +1559,7 @@
 
                         @foreach($faltas_filtradas as $falta)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
                                 <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -1502,7 +1586,7 @@
                                 </td>
 
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
@@ -1516,7 +1600,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
@@ -1561,11 +1645,11 @@
 
         @if(count($retardos_filtrados))
 
-            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin flex items-center justify-between bg-white">
+            <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
                 <p class="text-xl font-extralight">Se encontraron: {{ count($retardos_filtrados) }} registros con los filtros seleccionados.</p>
 
-                <button wire:click="descargarExcel('retardos')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700">
+                <button wire:click="descargarExcel('retardos')" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -1618,7 +1702,7 @@
 
                         @foreach($retardos_filtrados as $retardo)
 
-                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
 
                                 <td class="capitalize w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
@@ -1638,7 +1722,7 @@
                                 </td>
 
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
@@ -1652,7 +1736,7 @@
 
                                 </td>
 
-                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                     <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 

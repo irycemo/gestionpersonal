@@ -655,6 +655,12 @@
 
                     @endif
 
+                    <div>
+
+                        @error('documento') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
                 </div>
 
             </div>

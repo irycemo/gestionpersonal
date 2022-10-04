@@ -18,55 +18,19 @@ class HorarioSeeder extends Seeder
         Horario::create([
             'falta' => 30,
             'Tipo' => 'Normal',
-            'entrada' => 8,
+            'entrada' => 9,
             'salida' => 15,
             'creado_por' => 1,
-            'tolerancia'=>'1'
+            'tolerancia'=>'15'
         ]);
 
         Horario::create([
             'falta' => 30,
             'Tipo' => 'Compensación',
-            'entrada' => 8,
+            'entrada' => 9,
             'salida' => 17,
             'creado_por' => 1,
-            'tolerancia'=>'1'
-        ]);
-
-        Horario::create([
-            'falta' => 30,
-            'Tipo' => 'Normal',
-            'entrada' => 8,
-            'salida' => 15,
-            'creado_por' => 1,
-            'tolerancia'=>'1'
-        ]);
-
-        Horario::create([
-            'falta' => 30,
-            'Tipo' => 'Intendencia',
-            'entrada' => 7,
-            'salida' => 13,
-            'creado_por' => 1,
-            'tolerancia'=>'1'
-        ]);
-
-        Horario::create([
-            'falta' => 30,
-            'Tipo' => 'Intendencia 2',
-            'entrada' => 7,
-            'salida' => 13.5,
-            'creado_por' => 1,
-            'tolerancia'=>'1'
-        ]);
-
-        Horario::create([
-            'falta' => 30,
-            'Tipo' => 'Intendencia 3',
-            'entrada' => 7,
-            'salida' => 14,
-            'creado_por' => 1,
-            'tolerancia'=>'1'
+            'tolerancia'=>'15'
         ]);
     }
 }

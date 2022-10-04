@@ -7,6 +7,7 @@ use App\Models\Falta;
 use App\Models\Persona;
 use App\Models\Retardo;
 use Livewire\Component;
+use App\Models\Incapacidad;
 use App\Models\Checador as CH;
 
 class Checador extends Component
@@ -32,6 +33,17 @@ class Checador extends Component
             $this->codigo = null;
             return;
 
+        }
+
+        $permiso = $this->persona->permisos()->where('tipo', 'oficial')->where('fecha_inicio','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
+
+        $incapacidad = Incapacidad::where('persona_id', $this->persona->id)->where('fecha_inicial','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
+
+        if($permiso->count() > 0 || $incapacidad->count() > 0){
+            $this->codigo = null;
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "El empleado no puede hacer registros mientras tenga permiso oficial o incapacidad."]);
+            $this->codigo = null;
+            return;
         }
 
         $this->checados = CH::where('persona_id', $this->persona->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->get();

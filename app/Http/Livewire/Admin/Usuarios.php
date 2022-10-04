@@ -23,7 +23,7 @@ class Usuarios extends Component
     protected function rules(){
         return [
             'nombre' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->selected_id,
+            'email' => 'required|email:rfc,dns|unique:users,email,' . $this->selected_id,
             'status' => 'required|in:activo,inactivo',
             'role' => 'required',
             'ubicacion' => 'required',
@@ -62,6 +62,18 @@ class Usuarios extends Component
 
         $this->validate();
 
+        $user = User::where('name', $this->nombre)->first();
+
+        if($user){
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "El usuario " . $this->nombre . " ya esta registrado."]);
+
+            $this->resetearTodo();
+
+            return;
+
+        }
+
         try {
 
             $usuario = User::create([
@@ -87,6 +99,8 @@ class Usuarios extends Component
     }
 
     public function actualizar(){
+
+        $this->validate();
 
         try{
 

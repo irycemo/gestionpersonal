@@ -37,28 +37,33 @@ class Personal extends Component
 
     protected function rules(){
         return [
-            'numero_empleado' => 'required',
-            'nombre' => 'required',
-            'paterno' => 'required',
-            'materno' => 'required',
+            'numero_empleado' => 'required|numeric|unique:personas,numero_empleado,' . $this->selected_id,
+            'nombre' => [
+                            'required',
+                            'regex:/^[a-zA-Z0-9\s]+$/'
+                        ],
+            'paterno' => 'required|regex:/^[\pL\s]+$/u|min:3',
+            'materno' => 'required|regex:/^[\pL\s]+$/u|min:3',
             'status' => 'required',
-            'codigo_barras' => 'sometimes',
+            'codigo_barras' => 'sometimes|numeric|unique:personas,codigo_barras,' . $this->selected_id,
             'localidad' => 'required',
             'area' => 'required',
             'tipo' => 'required',
-            'telefono' => 'required',
+            'telefono' => 'required|unique:personas,telefono,' . $this->selected_id,
             'domicilio' => 'required',
-            'email' => 'email',
+            'email' => 'required|email:rfc,dns|unique:personas,email,' . $this->selected_id,
             'fecha_ingreso' => 'required',
             'horario_id' => 'required',
             'foto' => 'nullable|mimes:jpg,png,jpeg',
             'rfc' => [
+                        'unique:personas,rfc,' . $this->selected_id,
                         'required',
                         'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/'
                     ],
             'curp' => [
+                        'unique:personas,curp,' . $this->selected_id,
                         'required',
-                        'regex:/^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/i'
+                        'regex:/^[A-Z]{1}[AEIOUX]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/i'
                     ],
          ];
     }
@@ -128,13 +133,24 @@ class Personal extends Component
         $this->fecha_ingreso = $modelo['fecha_ingreso'];
         $this->observaciones = $modelo['observaciones'];
         $this->horario_id = $modelo['horario_id'];
-        $this->foto = $modelo['foto'];
 
     }
 
     public function crear(){
 
         $this->validate();
+
+        $empleado = Persona::where('nombre', $this->nombre)->where('ap_paterno', $this->paterno)->where('ap_materno', $this->materno)->first();
+
+        if($empleado){
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ya esta registrado un empleado con ese nombre."]);
+
+            $this->resetearTodo();
+
+            return;
+
+        }
 
         try {
 
@@ -179,7 +195,7 @@ class Personal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La persona se creó con éxito."]);
 
         } catch (\Throwable $th) {
-
+            dd($th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -201,7 +217,7 @@ class Personal extends Component
                 'status' => $this->status,
                 'ap_paterno' => $this->paterno,
                 'ap_materno' => $this->materno,
-                'codigo_barras' => $this->numero_empleado,
+                'codigo_barras' => $this->codigo_barras,
                 'localidad' => $this->localidad,
                 'area' => $this->area,
                 'tipo' => $this->tipo,
@@ -225,14 +241,11 @@ class Personal extends Component
 
                 $this->dispatchBrowserEvent('removeFiles');
 
-            }else{
+                $persona->update([
+                    'foto' => $nombreArchivo
+                ]);
 
-                $nombreArchivo = null;
             }
-
-            $persona->update([
-                'foto' => $nombreArchivo
-            ]);
 
             $this->resetearTodo();
 
