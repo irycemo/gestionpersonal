@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Persona;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -14,12 +15,26 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 
-class PersonalExport implements FromCollection,  WithProperties, WithDrawings, ShouldAutoSize, WithEvents, WithCustomStartCell, WithColumnWidths, WithHeadings, WithMapping
+class PersonalExport implements FromCollection, WithProperties, WithDrawings, ShouldAutoSize, WithEvents, WithCustomStartCell, WithColumnWidths, WithHeadings, WithMapping
 {
 
-    public function __construct($coleccion)
+    public $status_empleado;
+    public $localidad_empleado;
+    public $area_empleado;
+    public $tipo_empleado;
+    public $horario_empleado;
+    public $fecha1;
+    public $fecha2;
+
+    public function __construct($status_empleado, $localidad_empleado, $area_empleado, $tipo_empleado, $horario_empleado, $fecha1, $fecha2)
     {
-        $this->coleccion = $coleccion;
+        $this->status_empleado = $status_empleado;
+        $this->localidad_empleado = $localidad_empleado;
+        $this->area_empleado = $area_empleado;
+        $this->tipo_empleado = $tipo_empleado;
+        $this->horario_empleado = $horario_empleado;
+        $this->fecha1 = $fecha1;
+        $this->fecha2 = $fecha2;
     }
 
     /**
@@ -27,7 +42,25 @@ class PersonalExport implements FromCollection,  WithProperties, WithDrawings, S
     */
     public function collection()
     {
-        return $this->coleccion;
+        return Persona::with('creadoPor', 'actualizadoPor','horario')
+                            ->when(isset($this->status_empleado) && $this->status_empleado != "", function($q){
+                                return $q->where('status', $this->status_empleado);
+
+                            })
+                            ->when(isset($this->localidad_empleado) && $this->localidad_empleado != "", function($q){
+                                return $q->where('localidad', $this->localidad_empleado);
+                            })
+                            ->when(isset($this->area_empleado) && $this->area_empleado != "", function($q){
+                                return $q->where('area', $this->area_empleado);
+                            })
+                            ->when(isset($this->tipo_empleado) && $this->tipo_empleado != "", function($q){
+                                return $q->where('tipo', $this->tipo_empleado);
+                            })
+                            ->when(isset($this->horario_empleado) && $this->horario_empleado != "", function($q){
+                                return $q->where('horario_id', $this->horario_empleado);
+                            })
+                            ->whereBetween('created_at', [$this->fecha1, $this->fecha2])
+                            ->get();
     }
 
     public function drawings()

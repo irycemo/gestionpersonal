@@ -2,8 +2,7 @@
 
     <div class="mb-5" >
 
-
-        <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Lista de horarios</h1>
+        <h1 class="text-3xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-thin mb-6  bg-white">Horarios</h1>
 
         <div class="flex justify-between">
 
@@ -24,7 +23,12 @@
 
             @can('Crear horario')
 
-                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Horario</button>
+                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">
+
+                    <img wire:loading wire:target="abrirModalCrear" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+                    Agregar nuevo horario
+
+                </button>
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
@@ -44,11 +48,11 @@
 
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                        <th wire:click="order('tipo')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('nombre')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Tipo
+                            Nombre
 
-                            @if($sort == 'tipo')
+                            @if($sort == 'nombre')
 
                                 @if($direction == 'asc')
 
@@ -71,6 +75,12 @@
                                 </svg>
 
                             @endif
+
+                        </th>
+
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Descripción
 
                         </th>
 
@@ -86,153 +96,63 @@
 
                         </th>
 
-                        <th wire:click="order('entrada')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            Entrada
-
-                            @if($sort == 'entrada')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-    width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
+                            Lunes Entrada
 
                         </th>
 
-                        <th wire:click="order('salida')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            Salida
-
-                            @if($sort == 'salida')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
+                            Lunes salida
 
                         </th>
 
-                        <th wire:click="order('entrada_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            Entrada Mixta
-
-                            @if($sort == 'entrada_mixta')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-    width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
+                            Martes Entrada
 
                         </th>
 
-                        <th wire:click="order('salida_mixta')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            Salida Mixta
-
-                            @if($sort == 'salida_mixta')
-
-                                @if($direction == 'asc')
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
-
-                                @else
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
-
-                                @endif
-
-                            @else
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-
-                            @endif
+                            Martes salida
 
                         </th>
 
-                        <th wire:click="order('descripcion')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            Descripción
+                            Miercoles Entrada
 
-                            @if($sort == 'descripcion')
+                        </th>
 
-                                @if($direction == 'asc')
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
-                                    </svg>
+                            Miercoles salida
 
-                                @else
+                        </th>
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                                    </svg>
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                                @endif
+                            Jueves Entrada
 
-                            @else
+                        </th>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
+                        <th class="px-3 py-3 hidden lg:table-cell">
 
-                            @endif
+                            Jueves salida
+
+                        </th>
+
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Viernes Entrada
+
+                        </th>
+
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Viernes salida
 
                         </th>
 
@@ -310,17 +230,25 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tipo</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
 
-                                <div class="flex items-center justify-center lg:justify-start">
+                                {{ $horario->nombre }}
 
-                                    <div class="ml-4">
+                            </td>
 
-                                        <div class="text-sm font-medium text-gray-900">{{ $horario->tipo }}</div>
+                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                    </div>
+                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
-                                </div>
+                                @if ($horario->descripcion)
+
+                                    {{ $horario->descripcion }}
+
+                                @else
+
+                                    N/A
+
+                                @endif
 
                             </td>
 
@@ -342,69 +270,87 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Lunes Entrada</span>
 
-                                {{ $horario->entrada }}
+                                {{ $horario->lunes_entrada }}
 
                             </td>
 
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Lunes Salida</span>
 
-                                {{ $horario->salida }}
-
-                            </td>
-
-                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center  lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Entrada</span>
-
-                                @if ($horario->entrada_mixta)
-
-                                    {{ $horario->entrada_mixta }}
-
-                                @else
-
-                                    N/A
-
-                                @endif
+                                {{ $horario->lunes_salida }}
 
                             </td>
 
-                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:border-0 border border-b block lg:table-cell relative lg:static">
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Martes Entrada</span>
 
-                                @if ($horario->salida_mixta)
-
-                                    {{ $horario->salida_mixta }}
-
-                                @else
-
-                                    N/A
-
-                                @endif
+                                {{ $horario->martes_entrada }}
 
                             </td>
 
-                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden  absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Salida</span>
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                @if ($horario->descripcion)
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Martes Salida</span>
 
-                                    {{ $horario->descripcion }}
-
-                                @else
-
-                                    N/A
-
-                                @endif
+                                {{ $horario->martes_salida }}
 
                             </td>
 
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Miercoles Entrada</span>
+
+                                {{ $horario->miercoles_entrada }}
+
+                            </td>
+
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Miercoles Salida</span>
+
+                                {{ $horario->miercoles_salida }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Jueves Entrada</span>
+
+                                {{ $horario->jueves_entrada }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Jueves Salida</span>
+
+                                {{ $horario->jueves_salida }}
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Viernes Entrada</span>
+
+                                {{ $horario->viernes_entrada }}
+
+                            </td>
+
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Viernes Salida</span>
+
+                                {{ $horario->viernes_salida }}
+
+                            </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -492,7 +438,7 @@
 
                     <tr>
 
-                        <td colspan="8" class="py-2 px-5">
+                        <td colspan="18" class="py-2 px-5">
                             {{ $horarios->links()}}
                         </td>
 
@@ -539,18 +485,18 @@
 
                     <div>
 
-                        <Label>Tipo</Label>
+                        <Label>Nombre</Label>
                     </div>
 
                     <div>
 
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="tipo">
+                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="nombre">
 
                     </div>
 
                     <div>
 
-                        @error('tipo') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('nombre') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -581,54 +527,6 @@
 
                     <div>
 
-                        <Label>Hora de Entrada</Label>
-
-                    </div>
-
-                    <div>
-
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="entrada">
-
-                    </div>
-
-                    <div>
-
-                        @error('entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto ">
-
-                    <div>
-
-                        <Label>Hora de Salida</Label>
-
-                    </div>
-
-                    <div>
-
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="salida">
-
-                    </div>
-
-                    <div>
-
-                        @error('salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
-
-                <div class="flex-auto ">
-
-                    <div>
-
                         <Label>Falta</Label>
                     </div>
 
@@ -646,49 +544,204 @@
 
                 </div>
 
-                <div class="flex-auto ">
+            </div>
 
-                    <div>
-
-                        <Label>Hora de Entrada Mixta</Label>
-
-                    </div>
-
-                    <div>
-
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="entrada_mixta">
-
-                    </div>
-
-                    <div>
-
-                        @error('entrada_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
                 <div class="flex-auto ">
 
-                    <div>
+                    <table class="mx-auto w-full table-auto">
 
-                        <Label>Hora de Salida Mixta</Label>
+                        <thead>
 
-                    </div>
+                            <tr class="text-xs font-medium text-gray-700 uppercase traling-wider text-center">
+                                <th>Día</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                            </tr>
 
-                    <div>
+                        </thead>
 
-                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="salida_mixta">
+                        <tbody class="space-y-4">
 
-                    </div>
+                            <tr class="">
 
-                    <div>
+                                <td class="px-3 py-2">
+                                    Lunes
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
 
-                        @error('salida_mixta') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="lunes_entrada">
 
-                    </div>
+                                    </div>
+
+                                    <div>
+
+                                        @error('lunes_entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="lunes_salida">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('lunes_salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td class="px-3 py-2">
+                                    Martes
+                                </td>
+
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="martes_entrada">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('martes_entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="martes_salida">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('martes_salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td class="px-3 py-2">
+                                    Miercoles
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="miercoles_entrada">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('miercoles_entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="miercoles_salida">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('miercoles_salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td class="px-3 py-2">
+                                    Jueves
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="jueves_entrada">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('jueves_entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="jueves_salida">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('jueves_salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td class="px-3 py-2">
+                                    Viernes
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="viernes_entrada">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('viernes_entrada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <div>
+
+                                        <input type="time" class="bg-white rounded text-sm w-full" wire:model.defer="viernes_salida">
+
+                                    </div>
+
+                                    <div>
+
+                                        @error('viernes_salida') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
+
+
 
             </div>
 
@@ -730,6 +783,9 @@
                         wire:loading.attr="disabled"
                         wire:target="crear"
                         class="bg-blue-400 text-white hover:shadow-lg font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+
+                        <img wire:loading wire:target="crear" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+
                         Guardar
                     </button>
 
@@ -740,6 +796,9 @@
                         wire:loading.attr="disabled"
                         wire:target="actualizar"
                         class="bg-blue-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+
+                        <img wire:loading wire:target="actualizar" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+
                         Actualizar
                     </button>
 

@@ -235,21 +235,33 @@
                             </p>
 
                             <p class="mb-2 px-4">
-                                <strong>Tipo:</strong> Es el nombre del horario.
+                                <strong>Nombre:</strong> Es el nombre del horario.
                                 <br>
                                 <strong>Tolerancia:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere un retardo (minutos).
                                 <br>
-                                <strong>Hora de entrada:</strong> Hora de entrada.
-                                <br>
-                                <strong>Hora de salida:</strong> Hora de salida.
-                                <br>
                                 <strong>Falta:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere una falta (minutos)..
                                 <br>
-                                <strong>Hora de entrada mixta</strong>: En caso de ser un horario mixto esta sera la hora de entrada.
-                                <br>
-                                <strong>Hora de salida mixta:</strong> En caso de ser un horario mixto esta sera la hora de salida.
-                                <br>
                                 <strong>Descripción:</strong> Descripción del horario.
+                                <br>
+                                <strong>Lunes entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Lunes salida:</strong> Hora de salida.
+                                <br>
+                                <strong>Martes entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Martes salida:</strong> Hora de salida.
+                                <br>
+                                <strong>Miercoles entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Miercoles salida:</strong> Hora de salida.
+                                <br>
+                                <strong>Jueves entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Jueves salida:</strong> Hora de salida.
+                                <br>
+                                <strong>Viernes entrada:</strong> Hora de entrada.
+                                <br>
+                                <strong>Viernes salida:</strong> Hora de salida.
                                 <br>
                             </p>
 

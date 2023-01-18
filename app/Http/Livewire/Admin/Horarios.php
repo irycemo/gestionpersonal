@@ -13,34 +13,75 @@ class Horarios extends Component
     use ComponentesTrait;
 
     public $descripcion;
-    public $tipo;
-    public $entrada;
-    public $salida;
+    public $nombre;
     public $tolerancia;
-    public $entrada_mixta;
-    public $salida_mixta;
     public $falta;
+    public $lunes_entrada;
+    public $lunes_salida;
+    public $martes_entrada;
+    public $martes_salida;
+    public $miercoles_entrada;
+    public $miercoles_salida;
+    public $jueves_entrada;
+    public $jueves_salida;
+    public $viernes_entrada;
+    public $viernes_salida;
 
     protected function rules(){
         return [
             'descripcion' => 'required',
-            'tipo' => 'required|unique:horarios,tipo,' . $this->selected_id,
-            'entrada' => 'required',
-            'salida' => 'required|after:entrada',
-            'tolerancia' => 'required',
-            'falta' => 'required',
-            'entrada_mixta' => 'nullable|after:salida',
-            'salida_mixta' => 'nullable|required_with:entrada_mixta|after:entrada_mixta',
+            'nombre' => 'required|unique:horarios,nombre,' . $this->selected_id,
+            'lunes_entrada' => 'required',
+            'lunes_salida' => 'required|after:lunes_entrada',
+            'martes_entrada' => 'required',
+            'martes_salida' => 'required|after:martes_entrada',
+            'miercoles_entrada' => 'required',
+            'miercoles_salida' => 'required|after:miercoles_entrada',
+            'jueves_entrada' => 'required',
+            'jueves_salida' => 'required|after:jueves_entrada',
+            'viernes_entrada' => 'required',
+            'viernes_salida' => 'required|after:viernes_entrada',
+            'tolerancia' => 'required|numeric|min:10',
+            'falta' => 'required|gt:tolerancia'
          ];
     }
 
     protected $validationAttributes  = [
         'descripcion' => 'descripción',
+        'lunes_entrada' => 'entrada',
+        'lunes_salida' => 'salida',
+        'martes_entrada' => 'entrada',
+        'martes_salida' => 'salida',
+        'miercoles_entrada' => 'entrada',
+        'miercoles_salida' => 'salida',
+        'jueves_entrada' => 'entrada',
+        'jueves_salida' => 'salida',
+        'viernes_entrada' => 'entrada',
+        'viernes_salida' => 'salida',
     ];
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'descripcion', 'tipo', 'entrada', 'salida','tolerancia','entrada_mixta','salida_mixta','falta']);
+        $this->reset([
+                        'modalBorrar',
+                        'crear',
+                        'editar',
+                        'modal',
+                        'descripcion',
+                        'nombre',
+                        'tolerancia',
+                        'falta',
+                        'lunes_entrada',
+                        'lunes_salida',
+                        'martes_entrada',
+                        'martes_salida',
+                        'miercoles_entrada',
+                        'miercoles_salida',
+                        'jueves_entrada',
+                        'jueves_salida',
+                        'viernes_entrada',
+                        'viernes_salida',
+                    ]);
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -53,13 +94,20 @@ class Horarios extends Component
 
         $this->selected_id = $horario['id'];
         $this->descripcion = $horario['descripcion'];
-        $this->tipo = $horario['tipo'];
-        $this->entrada = $horario['entrada'];
-        $this->salida = $horario['salida'];
+        $this->nombre = $horario['nombre'];
         $this->tolerancia = $horario['tolerancia'];
-        $this->entrada_mixta = $horario['entrada_mixta'];
-        $this->salida_mixta = $horario['salida_mixta'];
         $this->falta = $horario['falta'];
+        $this->lunes_entrada = $horario['lunes_entrada'];
+        $this->lunes_salida = $horario['lunes_salida'];
+        $this->martes_entrada = $horario['martes_entrada'];
+        $this->martes_salida = $horario['martes_salida'];
+        $this->miercoles_entrada = $horario['miercoles_entrada'];
+        $this->miercoles_salida = $horario['miercoles_salida'];
+        $this->jueves_entrada = $horario['jueves_entrada'];
+        $this->jueves_salida = $horario['jueves_salida'];
+        $this->viernes_entrada = $horario['viernes_entrada'];
+        $this->viernes_salida = $horario['viernes_salida'];
+
     }
 
     public function crear(){
@@ -68,15 +116,21 @@ class Horarios extends Component
 
         try {
 
-            $horario = Horario::create([
+            Horario::create([
                 'descripcion' => $this->descripcion,
-                'tipo' => $this->tipo,
-                'entrada' => $this->entrada,
-                'salida' => $this->salida,
+                'nombre' => $this->nombre,
                 'tolerancia' => $this->tolerancia,
-                'entrada_mixta' => $this->entrada_mixta,
-                'salida_mixta' => $this->salida_mixta,
                 'falta' => $this->falta,
+                'lunes_entrada' => $this->lunes_entrada,
+                'lunes_salida' => $this->lunes_salida,
+                'martes_entrada' => $this->martes_entrada,
+                'martes_salida' => $this->martes_salida,
+                'miercoles_entrada' => $this->miercoles_entrada,
+                'miercoles_salida' => $this->miercoles_salida,
+                'jueves_entrada' => $this->jueves_entrada,
+                'jueves_salida' => $this->jueves_salida,
+                'viernes_entrada' => $this->viernes_entrada,
+                'viernes_salida' => $this->viernes_salida,
                 'creado_por' => auth()->user()->id
             ]);
 
@@ -101,13 +155,19 @@ class Horarios extends Component
 
             $horario->update([
                 'descripcion' => $this->descripcion,
-                'tipo' => $this->tipo,
-                'entrada' => $this->entrada,
-                'salida' => $this->salida,
+                'nombre' => $this->nombre,
                 'tolerancia' => $this->tolerancia,
-                'entrada_mixta' => $this->entrada_mixta,
-                'salida_mixta' => $this->salida_mixta,
                 'falta' => $this->falta,
+                'lunes_entrada' => $this->lunes_entrada,
+                'lunes_salida' => $this->lunes_salida,
+                'martes_entrada' => $this->martes_entrada,
+                'martes_salida' => $this->martes_salida,
+                'miercoles_entrada' => $this->miercoles_entrada,
+                'miercoles_salida' => $this->miercoles_salida,
+                'jueves_entrada' => $this->jueves_entrada,
+                'jueves_salida' => $this->jueves_salida,
+                'viernes_entrada' => $this->viernes_entrada,
+                'viernes_salida' => $this->viernes_salida,
                 'actualizado_por' => auth()->user()->id
             ]);
 
@@ -116,7 +176,7 @@ class Horarios extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
-
+            dd($th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -147,9 +207,8 @@ class Horarios extends Component
 
         $horarios = horario::with('creadoPor', 'actualizadoPor')
                                 ->where('descripcion', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('entrada', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('salida', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('nombre', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('descripcion', 'LIKE', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);
 

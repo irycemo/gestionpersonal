@@ -104,9 +104,16 @@ class Checador extends Component
 
     public function retardoFalta($checador){
 
+        /* Horario del empleado */
         $horario = $this->persona->horario;
 
-        $hr = $checador->created_at->diffInMinutes($horario->entrada);
+        /* Si la hora de checada es menor a la hora de entrada finaliza la función */
+        if($checador->created_at->lt($this->obtenerDia($horario))){
+            return;
+        }
+
+        /* Diferencia en minutos de la hora de checada y la hora de entrada */
+        $hr = $checador->created_at->diffInMinutes($this->obtenerDia($horario));
 
         if($horario->falta < $hr){
 
@@ -122,6 +129,20 @@ class Checador extends Component
                 'persona_id' => $this->persona->id
             ]);
         }
+
+    }
+
+    public function obtenerDia($horario){
+
+        $a =  [
+            'Monday' => 'lunes_entrada',
+            'Tuesday' => 'martes_entrada',
+            'Wednesday' => 'miercoles_entrada',
+            'Thursday' => 'jueves_entrada',
+            'friday' => 'viernes_entrada'
+        ][now()->format('l')];
+
+        return $horario[$a];
 
     }
 
@@ -146,6 +167,8 @@ class Checador extends Component
 
     public function render()
     {
+
         return view('livewire.checador');
+
     }
 }

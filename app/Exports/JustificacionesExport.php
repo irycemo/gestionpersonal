@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Justificacion;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -17,9 +18,17 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 class JustificacionesExport implements FromCollection,  WithProperties, WithDrawings, ShouldAutoSize, WithEvents, WithCustomStartCell, WithColumnWidths, WithHeadings, WithMapping
 {
 
-    public function __construct($coleccion)
+    public $justificaciones_folio;
+    public $justificaciones_empleado;
+    public $fecha1;
+    public $fecha2;
+
+    public function __construct($justificaciones_folio, $justificaciones_empleado, $fecha1, $fecha2)
     {
-        $this->coleccion = $coleccion;
+        $this->justificaciones_folio = $justificaciones_folio;
+        $this->justificaciones_empleado = $justificaciones_empleado;
+        $this->fecha1 = $fecha1;
+        $this->fecha2 = $fecha2;
     }
 
     /**
@@ -27,7 +36,16 @@ class JustificacionesExport implements FromCollection,  WithProperties, WithDraw
     */
     public function collection()
     {
-        return $this->coleccion;
+        return Justificacion::with('creadoPor', 'actualizadoPor','persona', 'falta', 'retardo')
+                                ->when(isset($this->justificaciones_folio) && $this->justificaciones_folio != "", function($q){
+                                    return $q->where('folio', $this->justificaciones_folio);
+
+                                })
+                                ->when(isset($this->justificaciones_empleado) && $this->justificaciones_empleado != "", function($q){
+                                    return $q->where('persona_id', $this->justificaciones_empleado);
+                                })
+                                ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
+                                ->get();
     }
 
     public function drawings()

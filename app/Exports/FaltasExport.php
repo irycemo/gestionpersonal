@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exports;
+use App\Models\Falta;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -16,9 +17,19 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 class FaltasExport implements FromCollection,  WithProperties, WithDrawings, ShouldAutoSize, WithEvents, WithCustomStartCell, WithColumnWidths, WithHeadings, WithMapping
 {
 
-    public function __construct($coleccion)
+    public $falta_empleado;
+    public $falta_tipo;
+    public $fecha1;
+    public $fecha2;
+
+
+    public function __construct($falta_empleado, $falta_tipo, $fecha1, $fecha2)
     {
-        $this->coleccion = $coleccion;
+        $this->falta_empleado = $falta_empleado;
+        $this->falta_tipo = $falta_tipo;
+        $this->fecha1 = $fecha1;
+        $this->fecha2 = $fecha2;
+
     }
 
     /**
@@ -26,7 +37,15 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     */
     public function collection()
     {
-        return $this->coleccion;
+        return Falta::with('persona', 'creadoPor', 'actualizadoPor')
+                        ->when(isset($this->falta_empleado) && $this->falta_empleado != "", function($q){
+                            return $q->where('persona_id', $this->falta_empleado);
+                        })
+                        ->when(isset($this->falta_tipo) && $this->falta_tipo != "", function($q){
+                            return $q->where('tipo', 'like','%'.$this->falta_tipo.'%');
+                        })
+                        ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
+                        ->get();
     }
 
     public function drawings()

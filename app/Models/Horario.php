@@ -11,16 +11,9 @@ class Horario extends Model
     use HasFactory;
     use ModelosTrait;
 
-    protected $fillable  = [
-        'tipo',
-        'entrada',
-        'salida',
-        'entrada_mixta',
-        'salida_mixta',
-        'tolerancia',
-        'falta',
-        'descripcion',
-        'creado_por',
-        'actualizado_por'
+    protected $guarded  = [
+        'id',
+        'created_at',
+        'updated_at'
     ];
 }

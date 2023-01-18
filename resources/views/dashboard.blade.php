@@ -22,7 +22,7 @@
 
                 </div>
 
-                <a href="{{ route('reportes') . "?area=faltas&fecha1=" . now()->startOfMonth()->format('Y-m-d') . '+00%3A00%3A00' . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') . '+23%3A59%3A59' }}" class="mx-auto rounded-full border border-blue-600 py-1 px-4 text-blue-500 hover:bg-blue-600 hover:text-white transition-all ease-in-out"> Ver faltas</a>
+                <a href="{{ route('reportes') . "?area=faltas&fecha1=" . now()->startOfMonth()->format('Y-m-d') . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') }}" class="mx-auto rounded-full border border-blue-600 py-1 px-4 text-blue-500 hover:bg-blue-600 hover:text-white transition-all ease-in-out"> Ver faltas</a>
 
             </div>
 
@@ -40,7 +40,7 @@
 
                 </div>
 
-                <a href="{{ route('reportes') . "?area=retardos&fecha1=" . now()->startOfMonth()->format('Y-m-d') . '+00%3A00%3A00' . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') . '+23%3A59%3A59'  }}" class="mx-auto rounded-full border border-green-600 py-1 px-4 text-green-500 hover:bg-green-600 hover:text-white transition-all ease-in-out"> Ver retardos</a>
+                <a href="{{ route('reportes') . "?area=retardos&fecha1=" . now()->startOfMonth()->format('Y-m-d') . "&fecha2=" . now()->endOfMonth()->format('Y-m-d')  }}" class="mx-auto rounded-full border border-green-600 py-1 px-4 text-green-500 hover:bg-green-600 hover:text-white transition-all ease-in-out"> Ver retardos</a>
 
             </div>
 
@@ -58,7 +58,7 @@
 
                 </div>
 
-                <a href="{{ route('reportes') . "?area=permisos&fecha1=" . now()->startOfMonth()->format('Y-m-d') . '+00%3A00%3A00' . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') . '+23%3A59%3A59' }}" class="mx-auto rounded-full border border-indigo-600 py-1 px-4 text-indigo-500 hover:bg-indigo-600 hover:text-white transition-all ease-in-out"> Ver permisos</a>
+                <a href="{{ route('reportes') . "?area=permisos&fecha1=" . now()->startOfMonth()->format('Y-m-d') . "&fecha2=" . now()->endOfMonth()->format('Y-m-d') }}" class="mx-auto rounded-full border border-indigo-600 py-1 px-4 text-indigo-500 hover:bg-indigo-600 hover:text-white transition-all ease-in-out"> Ver permisos</a>
 
             </div>
 

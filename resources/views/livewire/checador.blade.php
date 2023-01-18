@@ -106,7 +106,7 @@
             <p  class="text-lg text-center mb-2" id="clock"></p>
         </div>
 
-        <input class="bg-white rounded text-sm w-full" type="number" wire:model="codigo" wire:keydown.enter="capturarCodigo" id="codigo"  autofocus onblur="this.focus()">
+        <input class="bg-white rounded text-sm w-full" type="password" wire:model="codigo" wire:keydown.enter="capturarCodigo" id="codigo"  autofocus onblur="this.focus()">
 
     </div>
 

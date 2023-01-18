@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Retardo;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -17,9 +18,17 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 class RetardosExport implements FromCollection,  WithProperties, WithDrawings, ShouldAutoSize, WithEvents, WithCustomStartCell, WithColumnWidths, WithHeadings, WithMapping
 {
 
-    public function __construct($coleccion)
+    public $retardo_empleado;
+    public $fecha1;
+    public $fecha2;
+
+    public function __construct($retardo_empleado, $fecha1, $fecha2)
     {
-        $this->coleccion = $coleccion;
+
+        $this->retardo_empleado = $retardo_empleado;
+        $this->fecha1 = $fecha1;
+        $this->fecha2 = $fecha2;
+
     }
 
     /**
@@ -27,7 +36,12 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     */
     public function collection()
     {
-        return $this->coleccion;
+        return Retardo::with('persona', 'creadoPor', 'actualizadoPor')
+                            ->when(isset($this->retardo_empleado) && $this->retardo_empleado != "", function($q){
+                                return $q->where('persona_id', $this->retardo_empleado);
+                            })
+                            ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
+                            ->get();
     }
 
     public function drawings()
