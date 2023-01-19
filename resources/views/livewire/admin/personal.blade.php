@@ -930,7 +930,7 @@
                         <select class="bg-white rounded text-sm w-full" wire:model.defer="horario_id">
                             <option value="" selected>Selecciona una opción</option>
                             @foreach($horarios as $horario)
-                                <option value="{{$horario->id }}" >{{ $horario->tipo }}</option>
+                                <option value="{{$horario->id }}" >{{ $horario->nombre }}</option>
                            @endforeach
 
                          </select>

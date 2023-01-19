@@ -5,11 +5,14 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Persona;
 use App\Models\Retardo;
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Exports\RetardosExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteRetardo extends Component
 {
+
+    use WithPagination;
 
     public $retardo_empleado;
     public $fecha1;

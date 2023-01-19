@@ -312,7 +312,7 @@ class Personal extends Component
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);
 
-        $horarios = Horario::all();
+        $horarios = Horario::select('id', 'nombre')->orderBy('nombre')->get();
 
         return view('livewire.admin.personal', compact('personal', 'horarios'))->extends('layouts.admin');
     }

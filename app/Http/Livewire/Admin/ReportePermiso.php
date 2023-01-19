@@ -6,12 +6,15 @@ use Carbon\Carbon;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Models\Permisos;
+use Livewire\WithPagination;
 use App\Models\PermisoPersona;
 use App\Exports\PermisosExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportePermiso extends Component
 {
+
+    use WithPagination;
 
     public $personaPermiso;
     public $permisoPermiso;

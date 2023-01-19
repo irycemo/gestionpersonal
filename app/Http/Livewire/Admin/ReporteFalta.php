@@ -6,10 +6,13 @@ use App\Models\Falta;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Exports\FaltasExport;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteFalta extends Component
 {
+
+    use WithPagination;
 
     public $falta_empleado;
     public $falta_tipo;

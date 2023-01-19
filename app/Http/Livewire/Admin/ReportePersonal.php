@@ -6,12 +6,14 @@ use App\Models\Horario;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Http\Constantes;
+use Livewire\WithPagination;
 use App\Exports\PersonalExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportePersonal extends Component
 {
-    protected $listeners = ['api'];
+
+    use WithPagination;
 
     public $status_empleado;
     public $localidad_empleado;

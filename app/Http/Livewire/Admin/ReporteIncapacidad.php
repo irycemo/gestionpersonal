@@ -5,11 +5,14 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Models\Incapacidad;
+use Livewire\WithPagination;
 use App\Exports\IncapacidadesExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteIncapacidad extends Component
 {
+
+    use WithPagination;
 
     public $incapacidades_folio;
     public $incapacidades_tipo;

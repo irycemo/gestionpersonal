@@ -124,7 +124,7 @@
 
                     <p class="tracking-widest font-semibold text-lg">Horario</p>
 
-                    <p>{{ $persona->horario->tipo }}</p>
+                    <p>{{ $persona->horario->nombre }}</p>
 
                 </div>
 

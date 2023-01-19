@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Persona;
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Justificacion;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JustificacionesExport;
 
 class ReporteJustificacion extends Component
 {
+
+    use WithPagination;
 
     public $justificaciones_folio;
     public $justificaciones_empleado;
