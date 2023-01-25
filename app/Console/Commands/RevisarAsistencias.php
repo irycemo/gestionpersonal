@@ -33,50 +33,61 @@ class RevisarAsistencias extends Command
     public function handle()
     {
 
-        $inhabil = Inhabil::whereDate('fecha', '=', Carbon::yesterday()->toDateString())->first();
+        try {
 
-        if(!$inhabil){
+            $inhabil = Inhabil::whereDate('fecha', '=', Carbon::yesterday()->toDateString())->first();
 
-            $empleados = Persona::select('personas.id')->leftJoin('checadors', function($q){
-                                        return $q->on('personas.id', 'checadors.persona_id')
-                                                    ->whereDate('checadors.created_at', '=', Carbon::yesterday()->toDateString());
-                                    })
-                                    ->where('status', 'activo')
-                                    ->where('personas.tipo', '!=', 'Estructura')
-                                    ->where('checadors.persona_id', null)
-                                    ->get();
+            if(!$inhabil){
 
-            foreach($empleados as $empleado){
+                $empleados = Persona::select('personas.id')->leftJoin('checadors', function($q){
+                                            return $q->on('personas.id', 'checadors.persona_id')
+                                                        ->whereDate('checadors.created_at', '=', Carbon::yesterday()->toDateString());
+                                        })
+                                        ->where('status', 'activo')
+                                        ->where('personas.tipo', '!=', 'Estructura')
+                                        ->where('checadors.persona_id', null)
+                                        ->get();
 
-                $permiso = $empleado->permisos()
-                                        ->whereDate('fecha_inicio', '<=', Carbon::yesterday()->toDateString())
-                                        ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
-                                        ->first();
+                foreach($empleados as $empleado){
 
-                $incapacidad = $empleado->incapacidades()
-                                        ->whereDate('fecha_inicial', '<=', Carbon::yesterday()->toDateString())
-                                        ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
-                                        ->first();
+                    $permiso = $empleado->permisos()
+                                            ->whereDate('fecha_inicio', '<=', Carbon::yesterday()->toDateString())
+                                            ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
+                                            ->first();
 
-                if($permiso && $permiso->tiempo >= 24)
-                    continue;
+                    $incapacidad = $empleado->incapacidades()
+                                            ->whereDate('fecha_inicial', '<=', Carbon::yesterday()->toDateString())
+                                            ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
+                                            ->first();
 
-                if($incapacidad)
-                    continue;
+                    if($permiso && $permiso->tiempo >= 24)
+                        continue;
 
-                Falta::create([
-                    'tipo' => 'No se presento',
-                    'persona_id' => $empleado->id
-                ]);
+                    if($incapacidad)
+                        continue;
+
+                    Falta::create([
+                        'tipo' => 'No se presento',
+                        'persona_id' => $empleado->id,
+                        'create_at' => Carbon::yesterday()->toDateString()
+                    ]);
+
+                }
+
+                Log::info('Proceso para checar faltas completo.');
+
+            }else{
+
+                Log::info('Día inhabil.');
 
             }
 
-            Log::info('Proceso completo.');
+        } catch (\Throwable $th) {
 
-        }else{
-
-            Log::info('Día inhabil.');
+            Log::error('Error en proceso para checar faltas. ' . $th->getMessage());
 
         }
+
+
     }
 }

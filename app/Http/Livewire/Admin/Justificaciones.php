@@ -9,6 +9,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Justificacion;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -103,41 +105,46 @@ class Justificaciones extends Component
 
         try {
 
-            $justificacion = Justificacion::create([
-                'folio' => $this->folio,
-                'documento' => '',
-                'persona_id' => $this->persona_id,
-                'creado_por' => auth()->user()->id
-            ]);
+            DB::transaction(function () {
 
-            if($this->documento){
-
-                $nombredocumento = $this->documento->store('/', 'justificacion');
-
-                $this->dispatchBrowserEvent('removeFiles');
-
-                $justificacion->update([
-                    'documento' => $nombredocumento
+                $justificacion = Justificacion::create([
+                    'folio' => $this->folio,
+                    'documento' => '',
+                    'persona_id' => $this->persona_id,
+                    'creado_por' => auth()->user()->id
                 ]);
 
-            }
+                if($this->documento){
 
-            if($this->falta_id){
-                $falta = Falta::find($this->falta_id);
-                $falta->update(['justificacion_id' => $justificacion->id]);
-            }
+                    $nombredocumento = $this->documento->store('/', 'justificacion');
 
-            if($this->retardo_id){
-                $retardo = Retardo::find($this->retardo_id);
-                $retardo->update(['justificacion_id' => $justificacion->id]);
-            }
+                    $this->dispatchBrowserEvent('removeFiles');
 
-            $this->resetearTodo();
+                    $justificacion->update([
+                        'documento' => $nombredocumento
+                    ]);
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se creó con éxito."]);
+                }
+
+                if($this->falta_id){
+                    $falta = Falta::find($this->falta_id);
+                    $falta->update(['justificacion_id' => $justificacion->id]);
+                }
+
+                if($this->retardo_id){
+                    $retardo = Retardo::find($this->retardo_id);
+                    $retardo->update(['justificacion_id' => $justificacion->id]);
+                }
+
+                $this->resetearTodo();
+
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se creó con éxito."]);
+
+            });
 
         } catch (\Throwable $th) {
 
+            Log::error("Error al crear justificación por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -151,63 +158,68 @@ class Justificaciones extends Component
 
         try{
 
-            $justificacion = Justificacion::find($this->selected_id);
+            DB::transaction(function () {
 
-            $justificacion->update([
-                'folio' => $this->folio,
-                'persona_id' => $this->persona_id,
-                'actualizado_por' => auth()->user()->id
-
-            ]);
-
-            if($this->documento){
-
-                Storage::disk('justificacion')->delete($justificacion->documento);
-
-                $nombredocumento = $this->documento->store('/', 'justificacion');
+                $justificacion = Justificacion::find($this->selected_id);
 
                 $justificacion->update([
-                    'documento' => $nombredocumento
+                    'folio' => $this->folio,
+                    'persona_id' => $this->persona_id,
+                    'actualizado_por' => auth()->user()->id
+
                 ]);
 
-                $this->dispatchBrowserEvent('removeFiles');
+                if($this->documento){
 
-            }
+                    Storage::disk('justificacion')->delete($justificacion->documento);
 
-            if($this->falta_id){
+                    $nombredocumento = $this->documento->store('/', 'justificacion');
 
-                if($justificacion->retardo)
-                    $justificacion->retardo->update(['justificacion_id' => null]);
+                    $justificacion->update([
+                        'documento' => $nombredocumento
+                    ]);
 
-                if($justificacion->falta)
-                    $justificacion->falta->update(['justificacion_id' => null]);
+                    $this->dispatchBrowserEvent('removeFiles');
 
-                $falta = Falta::find($this->falta_id);
+                }
 
-                $falta->update(['justificacion_id' => $justificacion->id]);
+                if($this->falta_id){
 
-            }
+                    if($justificacion->retardo)
+                        $justificacion->retardo->update(['justificacion_id' => null]);
 
-            if($this->retardo_id){
+                    if($justificacion->falta)
+                        $justificacion->falta->update(['justificacion_id' => null]);
 
-                if($justificacion->falta)
-                    $justificacion->falta->update(['justificacion_id' => null]);
+                    $falta = Falta::find($this->falta_id);
 
-                if($justificacion->retardo)
-                    $justificacion->retardo->update(['justificacion_id' => null]);
+                    $falta->update(['justificacion_id' => $justificacion->id]);
 
-                $retardo = Retardo::find($this->retardo_id);
+                }
 
-                $retardo->update(['justificacion_id' => $justificacion->id]);
+                if($this->retardo_id){
 
-            }
+                    if($justificacion->falta)
+                        $justificacion->falta->update(['justificacion_id' => null]);
 
-            $this->resetearTodo();
+                    if($justificacion->retardo)
+                        $justificacion->retardo->update(['justificacion_id' => null]);
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se actualizó con éxito."]);
+                    $retardo = Retardo::find($this->retardo_id);
+
+                    $retardo->update(['justificacion_id' => $justificacion->id]);
+
+                }
+
+                $this->resetearTodo();
+
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificación se actualizó con éxito."]);
+
+            });
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al actualizar justificación por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -231,7 +243,8 @@ class Justificaciones extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La justificacion se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al borrar justificación por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -244,7 +257,7 @@ class Justificaciones extends Component
 
         $personas = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('status', 'activo')->orderBy('nombre')->get();
 
-        $justificaciones = Justificacion::with('falta', 'retardo')->where('folio', 'LIKE', '%' . $this->search . '%')
+        $justificaciones = Justificacion::with('falta', 'retardo', 'persona', 'creadoPor', 'actualizadoPor')->where('folio', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('persona_id', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('creado_por', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('actualizado_por', 'LIKE', '%' . $this->search . '%')

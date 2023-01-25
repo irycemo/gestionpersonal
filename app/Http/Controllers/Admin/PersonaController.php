@@ -14,6 +14,8 @@ class PersonaController extends Controller
 {
     public function __invoke(Persona $persona)
     {
+        $persona->load('faltas.justificacion', 'retardos.justificacion', 'justificaciones.retardo', 'justificaciones.falta', 'justificaciones.creadoPor', 'justificaciones.actualizadoPor', 'incapacidades.creadoPor', 'incapacidades.actualizadoPor');
+
         return view('admin.personal.show', compact('persona'));
     }
 }

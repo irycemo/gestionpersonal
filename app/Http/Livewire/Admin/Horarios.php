@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Http\Traits\ComponentesTrait;
-use Livewire\Component;
 use App\Models\Horario;
+use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
+use App\Http\Traits\ComponentesTrait;
 
 class Horarios extends Component
 {
@@ -41,7 +42,7 @@ class Horarios extends Component
             'jueves_salida' => 'required|after:jueves_entrada',
             'viernes_entrada' => 'required',
             'viernes_salida' => 'required|after:viernes_entrada',
-            'tolerancia' => 'required|numeric|min:10',
+            'tolerancia' => 'required|numeric',
             'falta' => 'required|gt:tolerancia'
          ];
     }
@@ -139,7 +140,9 @@ class Horarios extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se creó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al crear horario por el usuario: " . auth()->user()->name . ". " . $th->getMessage());
+
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -176,7 +179,8 @@ class Horarios extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al actualizar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -197,8 +201,11 @@ class Horarios extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El horario se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al borrar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
+
         }
     }
 

@@ -6,6 +6,7 @@ use App\Models\Persona;
 use Livewire\Component;
 use App\Models\Incapacidad;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 use App\Exports\IncapacidadesExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -27,7 +28,19 @@ class ReporteIncapacidad extends Component
         $this->fecha1 = $this->fecha1 . ' 00:00:00';
         $this->fecha2 = $this->fecha2 . ' 23:59:59';
 
-        return Excel::download(new IncapacidadesExport($this->incapacidades_folio, $this->incapacidades_tipo, $this->incapacidades_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_incapacidades_' . now()->format('d-m-Y') . '.xlsx');
+
+        try {
+
+            return Excel::download(new IncapacidadesExport($this->incapacidades_folio, $this->incapacidades_tipo, $this->incapacidades_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_incapacidades_' . now()->format('d-m-Y') . '.xlsx');
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error generar archivo de reporte de incapacidades por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+
+        }
+
 
     }
 

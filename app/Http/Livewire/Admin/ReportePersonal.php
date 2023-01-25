@@ -6,8 +6,10 @@ use App\Models\Horario;
 use App\Models\Persona;
 use Livewire\Component;
 use App\Http\Constantes;
+
 use Livewire\WithPagination;
 use App\Exports\PersonalExport;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportePersonal extends Component
@@ -30,7 +32,17 @@ class ReportePersonal extends Component
         $this->fecha1 = $this->fecha1 . ' 00:00:00';
         $this->fecha2 = $this->fecha2 . ' 23:59:59';
 
-        return Excel::download(new PersonalExport($this->status_empleado, $this->localidad_empleado, $this->area_empleado, $this->tipo_empleado, $this->horario_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_personal_' . now()->format('d-m-Y') . '.xlsx');
+        try {
+
+            return Excel::download(new PersonalExport($this->status_empleado, $this->localidad_empleado, $this->area_empleado, $this->tipo_empleado, $this->horario_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_personal_' . now()->format('d-m-Y') . '.xlsx');
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error generar archivo de reporte de personal por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+
+        }
 
     }
 
@@ -39,11 +51,11 @@ class ReportePersonal extends Component
 
         $localidades = Constantes::LOCALIDADES;
 
-        $areas = Constantes::AREAS_ADSCRIPCION;
+        $areas = collect(Constantes::AREAS_ADSCRIPCION)->sort();
 
-        $horarios = Horario::all();
+        $horarios = Horario::select('id', 'nombre')->orderBy('nombre')->get();
 
-        $tipos = Constantes::TIPO;
+        $tipos = collect(Constantes::TIPO)->sort();
 
         $personal = Persona::with('creadoPor', 'actualizadoPor','horario')
                                 ->when(isset($this->status_empleado) && $this->status_empleado != "", function($q){

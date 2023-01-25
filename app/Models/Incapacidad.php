@@ -13,7 +13,12 @@ class Incapacidad extends Model
     use HasFactory;
     use ModelosTrait;
 
-    protected $fillable = ['folio', 'documento', 'tipo', 'persona_id', 'creado_por', 'actualizdo_por', 'fecha_inicial', 'fecha_final'];
+    protected $fillable = ['folio', 'documento', 'tipo', 'persona_id', 'creado_por', 'actualizado_por', 'fecha_inicial', 'fecha_final'];
+
+    /* protected $casts = [
+        'fecha_inicial' => 'date:d-m-Y',
+        'fecha_final' => 'date:d-m-Y',
+    ]; */
 
     public function persona(){
         return $this->belongsTo(Persona::class);

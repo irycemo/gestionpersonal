@@ -14,7 +14,7 @@ class Justificacion extends Model
     use HasFactory;
     use ModelosTrait;
 
-    protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizdo_por'];
+    protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizado_por'];
 
     public function persona(){
         return $this->belongsTo(Persona::class);

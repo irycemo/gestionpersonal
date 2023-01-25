@@ -29,7 +29,7 @@
 
             @can('Crear incapacidad')
 
-                <button wire:click="abrirModalCrear" class="bg-gray500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">
+                <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">
 
                     <img wire:loading wire:target="abrirModalCrear" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
 
@@ -325,7 +325,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Empleado</span>
 
-                                {{ $incapacidad->persona->nombre }} {{ $incapacidad->persona->ap_paterno }} {{ $incapacidad->persona->materno }}
+                               <a href="{{ route('personal') . '?search=' . $incapacidad->persona->curp }}">{{ $incapacidad->persona->nombre }} {{ $incapacidad->persona->ap_paterno }} {{ $incapacidad->persona->ap_materno }}</a>
 
                             </td>
 

@@ -193,7 +193,7 @@
                     @foreach ($horarios as $horario)
 
 
-                        <option value="{{ $horario->id}}">{{ $horario->tipo}}</option>
+                        <option value="{{ $horario->id}}">{{ $horario->nombre}}</option>
 
                     @endforeach
 
@@ -473,7 +473,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Horario</span>
 
-                                {{ $persona->horario->tipo }}
+                                {{ $persona->horario->nombre }}
 
                             </td>
 
@@ -489,9 +489,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($persona->created_by != null)
+                                @if($persona->creado_por != null)
 
-                                    <span class="font-semibold">Registrado por: {{$persona->createdBy->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$persona->creadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -503,9 +503,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($persona->updated_by != null)
+                                @if($persona->actualizado_por != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$persona->updatedBy->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$persona->actualizadoPor->name}}</span> <br>
 
                                 @endif
 

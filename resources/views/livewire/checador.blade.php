@@ -26,31 +26,15 @@
 
                         <p class="tracking-widest font-semibold text-lg">Horario</p>
 
-                        <p class="font-semibold">{{ $persona->horario->tipo }}</p>
+                        <p class="">{{ $persona->horario->nombre }}</p>
 
-                        <strong>Entrada:</strong>
+                        {{-- <strong>Entrada:</strong>
 
                         <p>{{ $persona->horario->entrada }}</p>
 
                         <strong>Salida:</strong>
 
-                        <p>{{ $persona->horario->salida }}</p>
-
-                        @if($persona->horario->entrada_mixta)
-
-                            <strong>Entrada (mixta):</strong>
-
-                            <p>{{ $persona->horario->entrada_mixta }}</p>
-
-                        @endif
-
-                        @if ($persona->horario->salida_mixta)
-
-                            <strong>Salida (mixta):</strong>
-
-                            <p>{{ $persona->horario->salida_mixta }}</p>
-
-                        @endif
+                        <p>{{ $persona->horario->salida }}</p> --}}
 
                         @if ($persona->horario->tolerancia)
 
@@ -76,7 +60,7 @@
 
                             @foreach ($checados as $ch)
 
-                                <p class="capitalize">{{ $ch->tipo }} - {{ $ch->hora }}</p>
+                                <p class="capitalize">{{ $ch->tipo }} {{ $ch->created_at->format('H:i:s') }}</p>
 
                             @endforeach
 

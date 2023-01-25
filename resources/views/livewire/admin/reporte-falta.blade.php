@@ -201,12 +201,6 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($falta->created_by != null)
-
-                                    <span class="font-semibold">Registrado por: {{$falta->createdBy->name}}</span> <br>
-
-                                @endif
-
                                 {{ $falta->created_at }}
 
                             </td>
@@ -215,11 +209,6 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($falta->updated_by != null)
-
-                                    <span class="font-semibold">Actualizado por: {{$falta->updatedBy->name}}</span> <br>
-
-                                @endif
 
                                 {{ $falta->updated_at }}
 

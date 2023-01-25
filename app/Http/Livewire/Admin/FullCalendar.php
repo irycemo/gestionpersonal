@@ -30,7 +30,7 @@ class FullCalendar extends Component
         $events = $events->map(function($event){
 
             return collect([
-                'title' => ucfirst($event->tipo) . ' ' . $event->created_at->format('H:m:s'),
+                'title' => ucfirst($event->tipo) . ' ' . $event->created_at->format('H:i:s'),
                 'start' => $event->created_at->format('Y-m-d')
             ]);
 

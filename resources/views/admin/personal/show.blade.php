@@ -227,7 +227,6 @@
 
                             </thead>
 
-
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                                 @foreach($persona->incapacidades as $incapacidad)
@@ -238,7 +237,7 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Folio</span>
 
-                                            {{ $incapacidad->folio }}
+                                            <a href="{{ route('incapacidades') . '?search=' . $incapacidad->folio }}">{{ $incapacidad->folio }}</a>
 
                                         </td>
 
@@ -401,7 +400,7 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Motivo</span>
 
-                                            {{ $justificacion->folio }}
+                                            <a href="{{ route('justificaciones') . '?search=' . $justificacion->folio }}">{{ $justificacion->folio }}</a>
 
                                         </td>
 
@@ -546,7 +545,7 @@
 
                                             @if ($retardo->justificacion)
 
-                                                {{ $retardo->justificacion->folio }}
+                                            <a href="{{ route('justificaciones') . '?search=' . $retardo->justificacion->folio }}">{{ $retardo->justificacion->folio }}</a>
 
                                             @else
 
@@ -658,7 +657,7 @@
 
                                             @if ($falta->justificacion)
 
-                                                {{ $falta->justificacion->folio }}
+                                            <a href="{{ route('justificaciones') . '?search=' . $falta->justificacion->folio }}">{{ $falta->justificacion->folio }}</a>
 
                                             @else
 
@@ -782,7 +781,7 @@
 
                                             @if ($permiso->pivot->fecha_inicio)
 
-                                                {{ $permiso->pivot->fecha_inicio }}
+                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $permiso->pivot->fecha_inicio)->format('d-m-Y') }}
 
                                             @else
 
@@ -798,7 +797,7 @@
 
                                             @if ($permiso->pivot->fecha_final)
 
-                                                {{ $permiso->pivot->fecha_final }}
+                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $permiso->pivot->fecha_final)->format('d-m-Y') }}
 
                                             @else
 

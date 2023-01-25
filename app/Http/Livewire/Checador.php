@@ -28,9 +28,10 @@ class Checador extends Component
 
         if($this->persona == null || $this->codigo == null){
 
-            $this->codigo = null;
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "No se encuentra la persona ó código incorrecto."]);
+
             $this->codigo = null;
+
             return;
 
         }
@@ -40,9 +41,11 @@ class Checador extends Component
         $incapacidad = Incapacidad::where('persona_id', $this->persona->id)->where('fecha_inicial','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
 
         if($permiso->count() > 0 || $incapacidad->count() > 0){
-            $this->codigo = null;
+
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "El empleado no puede hacer registros mientras tenga permiso oficial o incapacidad."]);
+
             $this->codigo = null;
+
             return;
         }
 

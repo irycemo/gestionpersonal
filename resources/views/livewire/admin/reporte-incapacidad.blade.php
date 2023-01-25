@@ -200,9 +200,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($incapacidad->created_by != null)
+                                @if($incapacidad->creado_por != null)
 
-                                    <span class="font-semibold">Registrado por: {{$incapacidad->createdBy->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$incapacidad->creadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -214,9 +214,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($incapacidad->updated_by != null)
+                                @if($incapacidad->actualizado_por != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$incapacidad->updatedBy->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$incapacidad->actualizadoPor->name}}</span> <br>
 
                                 @endif
 

@@ -7,6 +7,7 @@ use App\Models\Retardo;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Exports\RetardosExport;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteRetardo extends Component
@@ -25,7 +26,18 @@ class ReporteRetardo extends Component
         $this->fecha1 = $this->fecha1 . ' 00:00:00';
         $this->fecha2 = $this->fecha2 . ' 23:59:59';
 
-        return Excel::download(new RetardosExport($this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
+
+        try {
+
+            return Excel::download(new RetardosExport($this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error generar archivo de reporte de retardos por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+
+        }
 
     }
 
@@ -34,7 +46,7 @@ class ReporteRetardo extends Component
 
         $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
-        $retardos = Retardo::with('persona', 'creadoPor', 'actualizadoPor')
+        $retardos = Retardo::with('persona', 'justificacion')
                                 ->when(isset($this->retardo_empleado) && $this->retardo_empleado != "", function($q){
                                     return $q->where('persona_id', $this->retardo_empleado);
                                 })

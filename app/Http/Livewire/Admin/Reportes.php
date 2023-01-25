@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\Horario;
 use Livewire\Component;
-use App\Http\Constantes;
 
 class Reportes extends Component
 {

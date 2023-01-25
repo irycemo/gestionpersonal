@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Falta;
 use App\Models\Horario;
 use App\Models\Retardo;
@@ -53,6 +54,10 @@ class Persona extends Model
                     ? Storage::disk('personal')->url($this->foto)
                     : Storage::disk('public')->url('img/unknown_user.png');
 
+    }
+
+    public function getFechaIngresoAttribute(){
+        return Carbon::createFromFormat('Y-m-d', $this->attributes['fecha_ingreso'])->format('d-m-Y');
     }
 }
 

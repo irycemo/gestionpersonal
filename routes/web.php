@@ -9,7 +9,6 @@ use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Inhabiles;
 use App\Http\Controllers\ManualController;
-use App\Http\Livewire\Admin\Inasistencias;
 use App\Http\Livewire\Admin\Incapacidades;
 use App\Http\Controllers\ChecadorController;
 use App\Http\Livewire\Admin\Justificaciones;
@@ -47,27 +46,27 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
 
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
-    Route::get('usuarios', Usuarios::class)->name('usuarios');
+    Route::get('usuarios', Usuarios::class)->middleware('permission:Lista de usuarios')->name('usuarios');
 
-    Route::get('permisos', Permisos::class)->name('permisos');
+    Route::get('permisos', Permisos::class)->middleware('permission:Lista de permisos')->name('permisos');
 
-    Route::get('roles', Roles::class)->name('roles');
+    Route::get('roles', Roles::class)->middleware('permission:Lista de roles')->name('roles');
 
-    Route::get('horarios', Horarios::class)->name('horarios');
+    Route::get('horarios', Horarios::class)->middleware('permission:Lista de horarios')->name('horarios');
 
-    Route::get('permisos_personal', Permisospersonal::class)->name('permisos_personal');
+    Route::get('permisos_personal', Permisospersonal::class)->middleware('permission:Lista de permisos personal')->name('permisos_personal');
 
-    Route::get('incapacidadess', Incapacidades::class)->name('incapacidades');
+    Route::get('incapacidadess', Incapacidades::class)->middleware('permission:Lista de incapacidades')->name('incapacidades');
 
-    Route::get('personals', Personal::class)->name('personal');
+    Route::get('personals', Personal::class)->middleware('permission:Lista de personal')->name('personal');
 
-    Route::get('personal_detalle/{persona}', PersonaController::class)->name('personal_detalle');
+    Route::get('personal_detalle/{persona}', PersonaController::class)->middleware('permission:Ver personal')->name('personal_detalle');
 
-    Route::get('justificaciones', Justificaciones::class)->name('justificaciones');
+    Route::get('justificaciones', Justificaciones::class)->middleware('permission:Lista de justificaciones')->name('justificaciones');
 
-    Route::get('inhabiles', Inhabiles::class)->name('inhabiles');
+    Route::get('inhabiles', Inhabiles::class)->middleware('permission:Lista de inhabiles')->name('inhabiles');
 
-    Route::get('reportes', Reportes::class)->name('reportes');
+    Route::get('reportes', Reportes::class)->middleware('permission:Reportes')->name('reportes');
 
 });
 

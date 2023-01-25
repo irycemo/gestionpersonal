@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Incapacidad;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -118,7 +119,8 @@ class Incapacidades extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se creó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al crear incapacidad por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -163,6 +165,7 @@ class Incapacidades extends Component
 
         } catch (\Throwable $th) {
 
+            Log::error("Error al actualizar incapacidad por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -185,6 +188,8 @@ class Incapacidades extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al borrar incapacidad por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -194,7 +199,8 @@ class Incapacidades extends Component
 
     public function render()
     {
-        $incapacidades = Incapacidad::where('folio', 'LIKE', '%' . $this->search . '%')
+        $incapacidades = Incapacidad::with('persona', 'creadoPor', 'actualizadoPor')
+                                        ->where('folio', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('documento', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('created_at','like', '%'.$this->search.'%')

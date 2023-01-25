@@ -9,6 +9,7 @@ use App\Models\Permisos;
 use Livewire\WithPagination;
 use App\Models\PermisoPersona;
 use App\Exports\PermisosExport;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportePermiso extends Component
@@ -30,7 +31,17 @@ class ReportePermiso extends Component
         $this->fecha1 = $this->fecha1 . ' 00:00:00';
         $this->fecha2 = $this->fecha2 . ' 23:59:59';
 
-        return Excel::download(new PermisosExport($this->personaPermiso, $this->permisoPermiso, $this->fecha_inicioPermiso, $this->fecha_finalPermiso, $this->fecha1, $this->fecha2), 'Reporte_de_permisos_' . now()->format('d-m-Y') . '.xlsx');
+        try {
+
+            return Excel::download(new PermisosExport($this->personaPermiso, $this->permisoPermiso, $this->fecha_inicioPermiso, $this->fecha_finalPermiso, $this->fecha1, $this->fecha2), 'Reporte_de_permisos_' . now()->format('d-m-Y') . '.xlsx');
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error generar archivo de reporte de incapacidades por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
+
+        }
 
     }
 

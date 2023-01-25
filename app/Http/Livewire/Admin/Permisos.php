@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 use Spatie\Permission\Models\Permission;
 
@@ -64,6 +65,8 @@ class Permisos extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se creó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al crear permiso (spatie) por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -91,6 +94,7 @@ class Permisos extends Component
 
         } catch (\Throwable $th) {
 
+            Log::error("Error al actualizar permiso (spatie) por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -111,6 +115,7 @@ class Permisos extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+            Log::error("Error al borrar permiso (spatie) por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -121,7 +126,8 @@ class Permisos extends Component
     public function render()
     {
 
-        $permisos = Permission::where('name', 'LIKE', '%' . $this->search . '%')
+        $permisos = Permission::with('creadoPor', 'actualizadoPor')
+                                ->where('name', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('area', 'LIKE', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Persona;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RevisarPermisosPersonalesActivos extends Command
 {
@@ -30,26 +31,55 @@ class RevisarPermisosPersonalesActivos extends Command
     public function handle()
     {
 
-        $empleados = Persona::where('status', 'activo')->get();
+        try {
 
-        foreach($empleados as $empleado){
+            $empleados = Persona::where('status', 'activo')->get();
 
-            $permisos = $empleado->permisos()->where('tipo', 'personal')
-                                            ->where('tiempo_consumido', null)
-                                            ->where('status', null)
-                                            ->whereDate('fecha_inicio', Carbon::yesterday()->toDateString())
-                                            ->get();
+            foreach($empleados as $empleado){
 
-            $ultimaChecada = $empleado->checados->last()->created_at->format('H:m:s');
+                $permisos = $empleado->permisos()->where('tipo', 'personal')
+                                                ->where('tiempo_consumido', null)
+                                                ->where('status', null)
+                                                ->whereDate('fecha_inicio', Carbon::yesterday()->toDateString())
+                                                ->get();
 
-            foreach ($permisos as $permiso) {
+                if($empleado->checados->count()){
 
-                $permiso->pivot->tiempo_consumido = floor((strtotime($empleado->horario->salida) - strtotime($ultimaChecada)) / 60);
-                $permiso->pivot->status = 1;
-                $permiso->pivot->save();
+                    $ultimaChecada = $empleado->checados->last()->created_at->format('H:i:s');
+
+                    foreach ($permisos as $permiso) {
+
+                        $permiso->pivot->tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario)) - strtotime($ultimaChecada)) / 60);
+                        $permiso->pivot->status = 1;
+                        $permiso->pivot->save();
+
+                    }
+
+                }
 
             }
 
+            Log::info('Proceso completo para calcular tiempo consumido por permisos sin checada de regrso.');
+
+        } catch (\Throwable $th) {
+
+            Log::error('Error en proceso para calcular tiempo consumido por permisos sin checada de regrso. ' . $th->getMessage());
+
         }
+
+    }
+
+    public function obtenerDia($horario){
+
+        $a =  [
+            'Monday' => 'lunes_salida',
+            'Tuesday' => 'martes_salida',
+            'Wednesday' => 'miercoles_salida',
+            'Thursday' => 'jueves_salida',
+            'friday' => 'viernes_salida'
+        ][now()->format('l')];
+
+        return $horario[$a];
+
     }
 }

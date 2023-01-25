@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Admin;
 
+use Carbon\Carbon;
 use App\Models\Horario;
 use App\Models\Persona;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,6 +36,8 @@ class Personal extends Component
     public $horario_id;
     public $foto;
     public $status;
+
+    protected $queryString = ['search'];
 
     protected function rules(){
         return [
@@ -130,7 +134,7 @@ class Personal extends Component
         $this->telefono = $modelo['telefono'];
         $this->domicilio = $modelo['domicilio'];
         $this->email = $modelo['email'];
-        $this->fecha_ingreso = $modelo['fecha_ingreso'];
+        $this->fecha_ingreso = Carbon::createFromFormat('d-m-Y', $modelo['fecha_ingreso'])->format('Y-m-d');
         $this->observaciones = $modelo['observaciones'];
         $this->horario_id = $modelo['horario_id'];
 
@@ -195,7 +199,8 @@ class Personal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La persona se creó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al crear empleado por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -253,8 +258,7 @@ class Personal extends Component
 
         } catch (\Throwable $th) {
 
-            dd($th);
-
+            Log::error("Error al actualizar empleado por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -279,6 +283,7 @@ class Personal extends Component
 
         } catch (\Throwable $th) {
 
+            Log::error("Error al borrar empleado por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -288,7 +293,8 @@ class Personal extends Component
 
     public function render()
     {
-        $personal = Persona::where('numero_empleado', 'LIKE', '%' . $this->search . '%')
+        $personal = Persona::with('horario', 'creadoPor', 'actualizadoPor')
+                                ->where('numero_empleado', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('nombre', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('status', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('ap_paterno', 'LIKE', '%' . $this->search . '%')

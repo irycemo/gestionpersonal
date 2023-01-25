@@ -306,11 +306,6 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($permiso->created_by != null)
-
-                                    <span class="font-semibold">Registrado por: {{$permiso->createdBy->name}}</span> <br>
-
-                                @endif
 
                                 {{ $permiso->created_at }}
 
@@ -320,11 +315,6 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($permiso->updated_by != null)
-
-                                    <span class="font-semibold">Actualizado por: {{$permiso->updatedBy->name}}</span> <br>
-
-                                @endif
 
                                 {{ $permiso->updated_at }}
 

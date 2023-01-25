@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Resources\EmpleadoResource;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Resources\EmpleadoResource;
+use Opcodes\LogViewer\Facades\LogViewer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +27,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         EmpleadoResource::withoutWrapping();
+
+        Model::shouldBeStrict();
+
+        LogViewer::auth(function ($request) {
+            return auth()->user()->hasRole('Administrador');
+        });
     }
 }

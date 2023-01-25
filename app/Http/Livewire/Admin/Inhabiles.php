@@ -2,14 +2,13 @@
 
 namespace App\Http\Livewire\Admin;
 
+use Carbon\Carbon;
 use App\Models\Inhabil;
-use App\Models\Persona;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Justificacion;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
-use Illuminate\Support\Facades\Storage;
 
 class Inhabiles extends Component
 {
@@ -49,7 +48,7 @@ class Inhabiles extends Component
         $this->editar = true;
 
         $this->selected_id = $modelo['id'];
-        $this->fecha = $modelo['fecha'];
+        $this->fecha = Carbon::createFromFormat('d-m-Y', $modelo['fecha'])->format('Y-m-d');
         $this->descripcion = $modelo['descripcion'];
 
 
@@ -73,6 +72,8 @@ class Inhabiles extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El día inhábil se creó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al crear día inhabil por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -102,6 +103,7 @@ class Inhabiles extends Component
 
         } catch (\Throwable $th) {
 
+            Log::error("Error al actualizar día inhabil por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -125,6 +127,8 @@ class Inhabiles extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El día inhábil se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al borrar día inhabil por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -137,7 +141,8 @@ class Inhabiles extends Component
 
 
 
-        $inhabiles = Inhabil::where('fecha', 'LIKE', '%' . $this->search . '%')
+        $inhabiles = Inhabil::with('creadoPor','actualizadoPor')
+                                ->where('fecha', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('descripcion', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('creado_por', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('actualizado_por', 'LIKE', '%' . $this->search . '%')

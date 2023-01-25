@@ -210,9 +210,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
-                                @if($justificacion->created_by != null)
+                                @if($justificacion->creado_por != null)
 
-                                    <span class="font-semibold">Registrado por: {{$justificacion->createdBy->name}}</span> <br>
+                                    <span class="font-semibold">Registrado por: {{$justificacion->creadoPor->name}}</span> <br>
 
                                 @endif
 
@@ -224,9 +224,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualizado</span>
 
-                                @if($justificacion->updated_by != null)
+                                @if($justificacion->actualizado_por != null)
 
-                                    <span class="font-semibold">Actualizado por: {{$justificacion->updatedBy->name}}</span> <br>
+                                    <span class="font-semibold">Actualizado por: {{$justificacion->actualizadoPor->name}}</span> <br>
 
                                 @endif
 

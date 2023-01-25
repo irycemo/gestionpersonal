@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\Permisos;
 use Livewire\WithPagination;
 use App\Models\PermisoPersona;
+use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 
 class Permisospersonal extends Component
@@ -156,7 +157,8 @@ class Permisospersonal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se creó con éxito."]);
 
         } catch (\Throwable $th) {
-            dd($th);
+
+            Log::error("Error al crear permiso por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -186,6 +188,8 @@ class Permisospersonal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se actualizó con éxito."]);
 
         } catch (\Throwable $th) {
+
+            Log::error("Error al actualizar permiso (spatie) por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -205,6 +209,7 @@ class Permisospersonal extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['success', "El permiso se eliminó con éxito."]);
 
         } catch (\Throwable $th) {
+            Log::error("Error al borrar permiso (spatie) por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
         }
@@ -214,7 +219,7 @@ class Permisospersonal extends Component
     public function asignarPermiso(){
 
         $this->validate([
-            'fecha_asignada' => 'sometimes|date|after:yesterday',
+            'fecha_asignada' => 'sometimes|date',
             'empleado_id' => 'required',
         ]);
 
@@ -231,8 +236,6 @@ class Permisospersonal extends Component
         }
 
         if($this->permiso_tiempo > 24){
-
-
 
             $dias = $this->permiso_tiempo / 24;
 
@@ -267,14 +270,17 @@ class Permisospersonal extends Component
                     'fecha_final' => $final
                 ]);
 
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
+
             } catch (\Throwable $th) {
+
+                Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
+
             }
 
         }else{
-
-
 
             try {
 
@@ -284,9 +290,14 @@ class Permisospersonal extends Component
                     'fecha_final' => $this->fecha_asignada
                 ]);
 
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
+
             } catch (\Throwable $th) {
+
+                Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
+
             }
 
         }
@@ -300,7 +311,8 @@ class Permisospersonal extends Component
 
         $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
-        $permisos = Permisos::where('descripcion','like', '%'.$this->search.'%')
+        $permisos = Permisos::with('creadoPor', 'actualizadoPor')
+                            ->where('descripcion','like', '%'.$this->search.'%')
                             ->orWhere('tipo','like', '%'.$this->search.'%')
                             ->orWhere('created_at','like', '%'.$this->search.'%')
                             ->orderBy($this->sort, $this->direction)
