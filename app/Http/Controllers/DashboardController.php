@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
         $personalRegional7Total = Persona::where('status', 'activo')->where('localidad', 'Regional 7')->count();
 
-        $checados = Checador::with('persona')->whereDay('created_at', Carbon::today())->get()->groupBy('persona_id');
+        $checados = Checador::with('persona')->whereDay('created_at', Carbon::today())->get()->groupBy('persona');
 
         $personalCatastroPresente = 0;
 

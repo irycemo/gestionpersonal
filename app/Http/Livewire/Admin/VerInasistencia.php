@@ -20,7 +20,7 @@ class VerInasistencia extends Component
 
         $this->modal = true;
 
-        $this->empleados = Persona::select('personas.nombre', 'personas.ap_paterno', 'personas.ap_materno')->leftJoin('checadors', function($q){
+        $this->empleados = Persona::with('checados')->select('personas.id', 'personas.nombre', 'personas.ap_paterno', 'personas.ap_materno')->leftJoin('checadors', function($q){
                                                         return $q->on('personas.id', 'checadors.persona_id')
                                                                     ->whereDate('checadors.created_at', '=', Carbon::today());
                                                     })

@@ -6,10 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\HorarioSeeder;
-use Database\Seeders\InhabilSeeder;
 use Database\Seeders\PermisoSeeder;
-use Database\Seeders\PersonaSeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
