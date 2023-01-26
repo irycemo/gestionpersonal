@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
 use App\Models\PermisoPersona;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -94,8 +95,8 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
             $permiso->fecha_inicio,
             $permiso->fecha_final,
             $permiso->tiempo_consumido,
-            $permiso->createdBy ? $permiso->createdBy->name : 'N/A',
-            $permiso->updatedBy ? $permiso->updatedBy->name : 'N/A',
+            $permiso->creado_por ? $permiso->creadoPor->name : 'N/A',
+            $permiso->actualizado_por ? $permiso->actualizadoPor->name : 'N/A',
             $permiso->created_at,
             $permiso->updated_at,
         ];

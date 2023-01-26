@@ -124,8 +124,8 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
             $empleado->fecha_ingreso,
             $empleado->horario->tipo,
             $empleado->observaciones,
-            $empleado->createdBy ? $empleado->createdBy->name : 'N/A',
-            $empleado->updatedBy ? $empleado->updatedBy->name : 'N/A',
+            $empleado->creado_por ? $empleado->creadoPor->name : 'N/A',
+            $empleado->actualizado_por ? $empleado->actualizadoPor->name : 'N/A',
             $empleado->created_at,
             $empleado->updated_at,
         ];

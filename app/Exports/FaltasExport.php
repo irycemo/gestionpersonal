@@ -81,8 +81,8 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
             $falta->tipo,
             $falta->persona->nombre,
             $falta->justificacion ? 'Justificada':'Sin Justificar' ,
-            $falta->createdBy ? $falta->createdBy->name : 'N/A',
-            $falta->updatedBy ? $falta->updatedBy->name : 'N/A',
+            $falta->creado_por ? $falta->creadoPor->name : 'N/A',
+            $falta->actualizado_por ? $falta->actualizadoPor->name : 'N/A',
             $falta->created_at,
             $falta->updated_at,
         ];

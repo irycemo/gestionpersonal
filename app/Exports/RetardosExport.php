@@ -75,8 +75,8 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
         return [
             $retardo->persona->nombre,
             $retardo->justificacion ? 'Justificado':'Sin Justificar' ,
-            $retardo->createdBy ? $retardo->createdBy->name : 'N/A',
-            $retardo->updatedBy ? $retardo->updatedBy->name : 'N/A',
+            $retardo->creado_por ? $retardo->creadoPor->name : 'N/A',
+            $retardo->actualizado_por ? $retardo->actualizadoPor->name : 'N/A',
             $retardo->created_at,
             $retardo->updated_at,
         ];
