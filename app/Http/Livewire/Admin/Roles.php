@@ -127,7 +127,7 @@ class Roles extends Component
     public function render()
     {
 
-        $roles = Role::with('permissions')->where('name', 'LIKE', '%' . $this->search . '%')
+        $roles = Role::with('permissions', 'creadoPor', 'actualizadoPor')->where('name', 'LIKE', '%' . $this->search . '%')
                             ->paginate($this->pagination);
 
         $permisos = Permission::all();

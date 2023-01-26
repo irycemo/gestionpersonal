@@ -69,7 +69,7 @@ class RevisarAsistencias extends Command
                     Falta::create([
                         'tipo' => 'No se presento',
                         'persona_id' => $empleado->id,
-                        'create_at' => Carbon::yesterday()->toDateString()
+                        'created_at' => Carbon::yesterday()->toDateString()
                     ]);
 
                 }
