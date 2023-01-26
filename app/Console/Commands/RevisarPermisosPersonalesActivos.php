@@ -33,7 +33,7 @@ class RevisarPermisosPersonalesActivos extends Command
 
         try {
 
-            $empleados = Persona::where('status', 'activo')->get();
+            $empleados = Persona::with('permisos')->where('status', 'activo')->get();
 
             foreach($empleados as $empleado){
 

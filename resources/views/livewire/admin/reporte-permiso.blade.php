@@ -162,7 +162,7 @@
 
         <div class="rounded-lg shadow-xl mb-5 p-4 font-thin md:flex items-center justify-between bg-white">
 
-            <p class="text-xl font-extralight">Se encontraron: {{ $permisos->total() }} registros con los filtros seleccionados.</p>
+            <p class="text-xl font-extralight">Se encontraron: {{ number_format($permisos->total()) }} registros con los filtros seleccionados.</p>
 
             <button wire:click="descargarExcel()" class="text-white flex items-center border rounded-full px-4 py-2 bg-green-500 hover:bg-green-700 mt-2 md:mt-0 w-full md:w-auto justify-center">
 
