@@ -41,7 +41,7 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
     */
     public function collection()
     {
-        return PermisoPersona::with('persona', 'permiso')
+        return PermisoPersona::with('persona', 'permiso', 'creadoPor', 'actualizadoPor')
                                 ->when (isset($this->personaPermiso) && $this->personaPermiso != "", function($q){
                                     return $q->where('persona_id', $this->personaPermiso);
                                 })
