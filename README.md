@@ -19,10 +19,11 @@
 ## Local
 
 - Clonar repostorio "git clone https://github.com/irycemo/gestionpersonal.git"
-- Correr  "composer update", dentro de la carpeta del desarrollo
+- Correr  "composer install", dentro de la carpeta del desarrollo
 - Correr "npm install".
 - Correr "npm run dev".
 - Crear la base de datos con el nombre "gestionpersonal".
+- Configurar archivo .env
 - Correr "php artisan key:generate", para generar llave de identificación de Laravel.
 - Correr "php artisan migrate:fresh --seed", para llenar la base de datos.
 - Correr "php artisan storage:link", para hacer link simbólico de la carpeta de imágenes.

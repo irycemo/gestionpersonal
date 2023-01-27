@@ -34,7 +34,7 @@ class CalcularTiempoPermisos extends Command
 
         try {
 
-            $empleados = Persona::with('checados')->where('status', 'activo')->get();
+            $empleados = Persona::with('checados', 'permisos')->where('status', 'activo')->get();
 
             foreach($empleados as $empleado){
 
