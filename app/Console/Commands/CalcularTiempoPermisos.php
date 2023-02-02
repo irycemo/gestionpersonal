@@ -57,9 +57,8 @@ class CalcularTiempoPermisos extends Command
 
                 if($dias >= 1){
 
-                    $diaEconomico = Permisos::where('descripcion', 'Permiso económico')->first();
-
-                    $empleado->permisos()->attach($diaEconomico->id, ['fecha_inicio' => now()->format('Y-m-d')]);
+                    /* Se asigna día económico al trabajador id: 1 */
+                    $empleado->permisos()->attach(1, ['fecha_inicio' => now()->format('Y-m-d')]);
 
                 }
 
