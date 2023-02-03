@@ -59,11 +59,11 @@ class RevisarPermisosPersonalesActivos extends Command
 
             }
 
-            Log::info('Proceso completo para calcular tiempo consumido por permisos sin checada de regrso.');
+            Log::info('Proceso completo para calcular tiempo consumido por permisos sin checada de regreso.');
 
         } catch (\Throwable $th) {
 
-            Log::error('Error en proceso para calcular tiempo consumido por permisos sin checada de regrso. ' . $th->getMessage());
+            Log::error('Error en proceso para calcular tiempo consumido por permisos sin checada de regreso. ' . $th->getMessage());
 
         }
 
