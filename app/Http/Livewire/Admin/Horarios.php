@@ -28,6 +28,8 @@ class Horarios extends Component
     public $viernes_entrada;
     public $viernes_salida;
 
+    protected $queryString = ['search'];
+
     protected function rules(){
         return [
             'descripcion' => 'required',

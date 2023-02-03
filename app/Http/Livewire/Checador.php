@@ -142,7 +142,7 @@ class Checador extends Component
             'Tuesday' => 'martes_entrada',
             'Wednesday' => 'miercoles_entrada',
             'Thursday' => 'jueves_entrada',
-            'friday' => 'viernes_entrada'
+            'Friday' => 'viernes_entrada'
         ][now()->format('l')];
 
         return $horario[$a];

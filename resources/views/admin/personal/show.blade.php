@@ -124,7 +124,7 @@
 
                     <p class="tracking-widest font-semibold text-lg">Horario</p>
 
-                    <p>{{ $persona->horario->nombre }}</p>
+                    <a href="{{ route('horarios') . '?search=' . $persona->horario->nombre }}">{{ $persona->horario->nombre }}</a>
 
                 </div>
 

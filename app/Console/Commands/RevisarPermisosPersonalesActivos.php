@@ -76,7 +76,7 @@ class RevisarPermisosPersonalesActivos extends Command
             'Tuesday' => 'martes_salida',
             'Wednesday' => 'miercoles_salida',
             'Thursday' => 'jueves_salida',
-            'friday' => 'viernes_salida'
+            'Friday' => 'viernes_salida'
         ][now()->format('l')];
 
         return $horario[$a];
