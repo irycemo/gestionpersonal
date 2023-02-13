@@ -4,15 +4,18 @@ namespace App\Models;
 
 use App\Models\Falta;
 use App\Models\Retardo;
+use OwenIt\Auditing\Contracts\Auditable;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Justificacion extends Model
+class Justificacion extends Model implements Auditable
 {
+
     use HasFactory;
     use ModelosTrait;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizado_por'];
 

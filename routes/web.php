@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\Personal;
 use App\Http\Livewire\Admin\Reportes;
 use App\Http\Livewire\Admin\Usuarios;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Admin\Auditoria;
 use App\Http\Livewire\Admin\Inhabiles;
 use App\Http\Controllers\ManualController;
 use App\Http\Livewire\Admin\Incapacidades;
@@ -67,6 +68,8 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
     Route::get('inhabiles', Inhabiles::class)->middleware('permission:Lista de inhabiles')->name('inhabiles');
 
     Route::get('reportes', Reportes::class)->middleware('permission:Reportes')->name('reportes');
+
+    Route::get('auditoria', Auditoria::class)->middleware('permission:Auditoria')->name('auditoria');
 
 });
 

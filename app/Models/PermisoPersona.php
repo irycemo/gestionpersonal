@@ -5,16 +5,18 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\Persona;
 use App\Models\Permisos;
+use OwenIt\Auditing\Contracts\Auditable;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PermisoPersona extends Model
+class PermisoPersona extends Model implements Auditable
 {
     use HasFactory;
     use ModelosTrait;
+    use \OwenIt\Auditing\Auditable;
 
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $fillable = ['persona_id', 'permisos_id', 'creado_por', 'fecha_inicio', 'fecha_final', 'tiempo_consumido', 'status'];
 
     protected $table = 'permisos_persona';
 

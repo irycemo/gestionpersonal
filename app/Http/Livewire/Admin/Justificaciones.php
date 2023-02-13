@@ -20,7 +20,6 @@ class Justificaciones extends Component
     use ComponentesTrait;
     use WithFileUploads;
 
-    public $folio;
     public $documento;
     public $persona_id;
     public $retardos;
@@ -35,7 +34,6 @@ class Justificaciones extends Component
 
     protected function rules(){
         return [
-            'folio' => 'required',
             'documento' => 'required|mimes:jpg,jpeg,png',
             'persona_id' => 'required',
             'retardo_id' => 'required_without:falta_id',
@@ -44,7 +42,6 @@ class Justificaciones extends Component
     }
 
     protected $messages = [
-        'folio.required' => 'El campo folio es obligatorio',
         'documento.required' => 'El campo documento es obligatorio',
         'documento.mimes' => 'Formato de documento inválido',
         'persona_id.required' => 'El campo empleado es obligatorio',
@@ -78,7 +75,7 @@ class Justificaciones extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'folio', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos', 'imagen']);
+        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos', 'imagen']);
         $this->resetErrorBag();
         $this->resetValidation();
         $this->dispatchBrowserEvent('removeFiles');
@@ -91,7 +88,6 @@ class Justificaciones extends Component
         $this->editar = true;
 
         $this->selected_id = $modelo['id'];
-        $this->folio = $modelo['folio'];
         $this->persona_id = $modelo['persona_id'];
         $this->imagen = Storage::disk('justificacion')->url($modelo['documento']);
 
@@ -107,8 +103,10 @@ class Justificaciones extends Component
 
             DB::transaction(function () {
 
+                $folio = Justificacion::orderBy('folio', 'desc')->value('folio');
+
                 $justificacion = Justificacion::create([
-                    'folio' => $this->folio,
+                    'folio' => $folio ? $folio + 1 : 1,
                     'documento' => '',
                     'persona_id' => $this->persona_id,
                     'creado_por' => auth()->user()->id
@@ -163,7 +161,6 @@ class Justificaciones extends Component
                 $justificacion = Justificacion::find($this->selected_id);
 
                 $justificacion->update([
-                    'folio' => $this->folio,
                     'persona_id' => $this->persona_id,
                     'actualizado_por' => auth()->user()->id
 

@@ -264,10 +264,18 @@ class Permisospersonal extends Component
 
             try {
 
-                $this->empleado->permisos()->attach($this->permiso_id, [
+                /* $this->empleado->permisos()->attach($this->permiso_id, [
                     'creado_por' => auth()->user()->id,
                     'fecha_inicio' => $this->fecha_asignada,
                     'fecha_final' => $final
+                ]); */
+
+                PermisoPersona::create([
+                    'creado_por' => auth()->user()->id,
+                    'fecha_inicio' => $this->fecha_asignada,
+                    'fecha_final' => $final,
+                    'permisos_id' => $this->permiso_id,
+                    'persona_id' => $this->empleado->id
                 ]);
 
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
@@ -282,12 +290,20 @@ class Permisospersonal extends Component
 
         }else{
 
-            try {
+            try {/*
 
                 $this->empleado->permisos()->attach($this->permiso_id, [
                     'creado_por' => auth()->user()->id,
                     'fecha_inicio' => $this->fecha_asignada,
                     'fecha_final' => $this->fecha_asignada
+                ]); */
+
+                PermisoPersona::create([
+                    'creado_por' => auth()->user()->id,
+                    'fecha_inicio' => $this->fecha_asignada,
+                    'fecha_final' => $this->fecha_asignada,
+                    'permisos_id' => $this->permiso_id,
+                    'persona_id' => $this->empleado->id
                 ]);
 
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);

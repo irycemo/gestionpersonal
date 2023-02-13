@@ -68,37 +68,32 @@ class DashboardController extends Controller
 
         foreach($checados as $checado){
 
-            if($checado->last()->tipo == 'entrada'){
+            if($checado->last()->persona->localidad == 'Catastro' && $checado->last()->tipo == 'entrada')
+                $personalCatastroPresente ++;
 
-                if($checado->last()->persona->localidad == 'Catastro')
-                    $personalCatastroPresente ++;
+            if($checado->last()->persona->localidad == 'RPP' && $checado->last()->tipo == 'entrada')
+                $personalRppPresente ++;
 
-                if($checado->last()->persona->localidad == 'RPP')
-                    $personalRppPresente ++;
+            if($checado->last()->persona->localidad == 'Regional 1' && $checado->last()->tipo == 'entrada')
+                $personalRegional1Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 1')
-                    $personalRegional1Presente ++;
+            if($checado->last()->persona->localidad == 'Regional 2' && $checado->last()->tipo == 'entrada')
+                $personalRegional2Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 2')
-                    $personalRegional2Presente ++;
+            if($checado->last()->persona->localidad == 'Regional 3' && $checado->last()->tipo == 'entrada')
+                $personalRegional3Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 3')
-                    $personalRegional3Presente ++;
+            if($checado->last()->persona->localidad == 'Regional 4' && $checado->last()->tipo == 'entrada')
+                $personalRegional4Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 4')
-                    $personalRegional4Presente ++;
+            if($checado->last()->persona->localidad == 'Regional 5' && $checado->last()->tipo == 'entrada')
+                $personalRegional5Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 5')
-                    $personalRegional5Presente ++;
+            if($checado->last()->persona->localidad == 'Regional 6' && $checado->last()->tipo == 'entrada')
+                $personalRegional6Presente ++;
 
-                if($checado->last()->persona->localidad == 'Regional 6')
-                    $personalRegional6Presente ++;
-
-                if($checado->last()->persona->localidad == 'Regional 7')
-                    $personalRegional7Presente ++;
-
-            }
-
+            if($checado->last()->persona->localidad == 'Regional 7' && $checado->last()->tipo == 'entrada')
+                $personalRegional7Presente ++;
 
         }
 

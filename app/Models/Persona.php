@@ -8,6 +8,7 @@ use App\Models\Horario;
 use App\Models\Retardo;
 use App\Models\Checador;
 use App\Models\Permisos;
+use App\Models\PermisoPersona;
 use App\Http\Traits\ModelosTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -46,6 +47,10 @@ class Persona extends Model
 
     public function permisos(){
         return $this->belongsToMany(Permisos::class)->withPivot(['fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
+    }
+
+    public function permisos2(){
+        return $this->hasMany(PermisoPersona::class);
     }
 
     public function imagenUrl(){

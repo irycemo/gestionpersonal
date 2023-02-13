@@ -507,27 +507,6 @@
 
                     <div>
 
-                        <Label>Folio</Label>
-                    </div>
-
-                    <div>
-
-                        <input type="text" class="bg-white rounded text-sm w-full" wire:model.defer="folio">
-
-                    </div>
-
-                    <div>
-
-                        @error('folio') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto ">
-
-                    <div>
-
                         <Label>Empleado</Label>
                     </div>
 

@@ -15,7 +15,8 @@ class Constantes{
         'Incapacidades',
         'Personal',
         'Reportes',
-        'Checador'
+        'Checador',
+        'Auditoria'
     ];
 
     /* Usuarios */

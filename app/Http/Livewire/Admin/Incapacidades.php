@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Incapacidad;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,6 @@ class Incapacidades extends Component
     use WithFileUploads;
     use ComponentesTrait;
 
-    public $folio;
     public $documento;
     public $tipo;
     public $persona;
@@ -31,7 +31,6 @@ class Incapacidades extends Component
     protected function rules(){
         return [
             'documento' => 'required',
-            'folio' => 'required',
             'documento' => 'nullable|mimes:jpg,png,jpeg',
             'tipo' => 'required',
             'persona' => 'required',
@@ -52,7 +51,7 @@ class Incapacidades extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal', 'folio', 'documento', 'tipo', 'persona', 'imagen', 'fecha_inicial', 'fecha_final']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal','documento', 'tipo', 'persona', 'imagen', 'fecha_inicial', 'fecha_final']);
         $this->resetErrorBag();
         $this->resetValidation();
 
@@ -66,7 +65,6 @@ class Incapacidades extends Component
         $this->editar = true;
 
         $this->selected_id = $modelo['id'];
-        $this->folio = $modelo['folio'];
         $this->tipo = $modelo['tipo'];
         $this->fecha_inicial = Carbon::createFromFormat('d-m-Y', $modelo['fecha_inicial'])->format('Y-m-d');
         $this->fecha_final = Carbon::createFromFormat('d-m-Y', $modelo['fecha_final'])->format('Y-m-d');
@@ -93,30 +91,36 @@ class Incapacidades extends Component
 
         try {
 
-            $incapacidad = Incapacidad::create([
-                'folio' => $this->folio,
-                'tipo' => $this->tipo,
-                'fecha_inicial' => $this->fecha_inicial,
-                'fecha_final' => $this->fecha_final,
-                'persona_id' => $this->persona,
-                'creado_por' => auth()->user()->id
-            ]);
+            DB::transaction(function () {
 
-            if($this->documento){
+                $folio = Incapacidad::orderBy('folio', 'desc')->value('folio');
 
-                $nombreArchivo = $this->documento->store('/', 'incapacidades');
-
-                $this->dispatchBrowserEvent('removeFiles');
-
-                $incapacidad->update([
-                    'documento' => $nombreArchivo
+                $incapacidad = Incapacidad::create([
+                    'folio' =>  $folio ? $folio + 1 : 1,
+                    'tipo' => $this->tipo,
+                    'fecha_inicial' => $this->fecha_inicial,
+                    'fecha_final' => $this->fecha_final,
+                    'persona_id' => $this->persona,
+                    'creado_por' => auth()->user()->id
                 ]);
 
-            }
+                if($this->documento){
 
-            $this->resetearTodo();
+                    $nombreArchivo = $this->documento->store('/', 'incapacidades');
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se creó con éxito."]);
+                    $this->dispatchBrowserEvent('removeFiles');
+
+                    $incapacidad->update([
+                        'documento' => $nombreArchivo
+                    ]);
+
+                }
+
+                $this->resetearTodo();
+
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se creó con éxito."]);
+
+            });
 
         } catch (\Throwable $th) {
 
@@ -134,34 +138,37 @@ class Incapacidades extends Component
 
         try{
 
-            $incapacidad = Incapacidad::find($this->selected_id);
+            DB::transaction(function () {
 
-            $incapacidad->update([
-                'folio' => $this->folio,
-                'tipo' => $this->tipo,
-                'fecha_inicial' => $this->fecha_inicial,
-                'fecha_final' => $this->fecha_final,
-                'persona_id' => $this->persona,
-                'actualizado_por' => auth()->user()->id
-            ]);
-
-            if($this->documento){
-
-                Storage::disk('incapacidades')->delete($incapacidad->documento);
-
-                $nombreArchivo = $this->documento->store('/', 'incapacidades');
-
-                $this->dispatchBrowserEvent('removeFiles');
+                $incapacidad = Incapacidad::find($this->selected_id);
 
                 $incapacidad->update([
-                    'documento' => $nombreArchivo
+                    'tipo' => $this->tipo,
+                    'fecha_inicial' => $this->fecha_inicial,
+                    'fecha_final' => $this->fecha_final,
+                    'persona_id' => $this->persona,
+                    'actualizado_por' => auth()->user()->id
                 ]);
 
-            }
+                if($this->documento){
 
-            $this->resetearTodo();
+                    Storage::disk('incapacidades')->delete($incapacidad->documento);
 
-            $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se actualizó con éxito."]);
+                    $nombreArchivo = $this->documento->store('/', 'incapacidades');
+
+                    $this->dispatchBrowserEvent('removeFiles');
+
+                    $incapacidad->update([
+                        'documento' => $nombreArchivo
+                    ]);
+
+                }
+
+                $this->resetearTodo();
+
+                $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se actualizó con éxito."]);
+
+            });
 
         } catch (\Throwable $th) {
 

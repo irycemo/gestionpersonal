@@ -307,6 +307,12 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
 
 
+                                @if($permiso->creado_por != null)
+
+                                    <span class="font-semibold">Registrado por: {{$permiso->creadoPor->name}}</span> <br>
+
+                                @endif
+
                                 {{ $permiso->created_at }}
 
                             </td>

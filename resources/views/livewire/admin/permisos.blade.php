@@ -358,7 +358,7 @@
 
                         <select wire:model.defer="area" class="bg-white rounded text-sm w-full">
 
-                            @foreach (App\Http\Constantes::AREAS as $area)
+                            @foreach ($areas as $area)
 
                                 <option value="{{ $area }}">{{ $area }}</option>
 

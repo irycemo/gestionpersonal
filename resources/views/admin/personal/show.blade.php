@@ -44,7 +44,11 @@
 
                     <p class="tracking-widest font-semibold text-lg">Código de Barras</p>
 
-                    <p>{{ $persona->codigo_barras }}</p>
+                    @if(auth()->user()->hasRole('Administrador'))
+                        <p>{{ $persona->codigo_barras }}</p>
+                    @else
+                        ******
+                    @endif
 
                 </div>
 
@@ -545,7 +549,7 @@
 
                                             @if ($retardo->justificacion)
 
-                                            <a href="{{ route('justificaciones') . '?search=' . $retardo->justificacion->folio }}">{{ $retardo->justificacion->folio }}</a>
+                                            <a href="{{ route('justificaciones') . '?search=' . $retardo->justificacion->folio }}">Folio: {{ $retardo->justificacion->folio }}</a>
 
                                             @else
 
@@ -657,7 +661,7 @@
 
                                             @if ($falta->justificacion)
 
-                                            <a href="{{ route('justificaciones') . '?search=' . $falta->justificacion->folio }}">{{ $falta->justificacion->folio }}</a>
+                                            <a href="{{ route('justificaciones') . '?search=' . $falta->justificacion->folio }}">Folio: {{ $falta->justificacion->folio }}</a>
 
                                             @else
 
@@ -709,7 +713,7 @@
                 :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
             >
 
-                @if($persona->permisos->count())
+                @if($persona->permisos2->count())
 
                     <div class="relative overflow-x-auto rounded-lg shadow-xl">
 
@@ -749,13 +753,19 @@
 
                                     </th>
 
+                                    <th class=" px-3 hidden lg:table-cell py-2">
+
+                                        Registro
+
+                                    </th>
+
                                 </tr>
 
                             </thead>
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->permisos as $permiso)
+                                @foreach($persona->permisos2 as $permiso)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
@@ -763,7 +773,7 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
-                                            {{ $permiso->descripcion }}
+                                            {{ $permiso->permiso->descripcion }}
 
                                         </td>
 
@@ -771,7 +781,7 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Límite</span>
 
-                                            {{ $permiso->limite }}
+                                            {{ $permiso->permiso->limite }}
 
                                         </td>
 
@@ -779,9 +789,9 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha Inicial</span>
 
-                                            @if ($permiso->pivot->fecha_inicio)
+                                            @if ($permiso->fecha_inicio)
 
-                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $permiso->pivot->fecha_inicio)->format('d-m-Y') }}
+                                                {{ $permiso->fecha_inicio }}
 
                                             @else
 
@@ -795,9 +805,9 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fehca Final</span>
 
-                                            @if ($permiso->pivot->fecha_final)
+                                            @if ($permiso->fecha_final)
 
-                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $permiso->pivot->fecha_final)->format('d-m-Y') }}
+                                                {{ $permiso->fecha_final }}
 
                                             @else
 
@@ -811,15 +821,29 @@
 
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo Consumido</span>
 
-                                            @if ($permiso->pivot->tiempo_consumido)
+                                            @if ($permiso->tiempo_consumido)
 
-                                                {{ $permiso->pivot->tiempo_consumido }} min.
+                                                {{ $permiso->tiempo_consumido }} min.
 
                                             @else
 
                                                 N/A
 
                                             @endif
+
+                                        </td>
+
+                                        <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo Consumido</span>
+
+                                            @if($permiso->creado_por != null)
+
+                                                <span class="font-semibold">Registrado por: {{$permiso->creadoPor->name}}</span> <br>
+
+                                            @endif
+
+                                            {{ $permiso->created_at }}
 
                                         </td>
 
