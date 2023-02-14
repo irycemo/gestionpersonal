@@ -85,7 +85,7 @@ class IncapacidadesExport implements FromCollection,  WithProperties, WithDrawin
         return [
             $incapacidad->folio,
             $incapacidad->tipo,
-            $incapacidad->persona->nombre,
+            $incapacidad->persona->nombre . ' ' . $incapacidad->persona->ap_paterno . ' ' . $incapacidad->persona->ap_materno,
             $incapacidad->creado_por ? $incapacidad->creadoPor->name : 'N/A',
             $incapacidad->actualizado_por ? $incapacidad->actualizadoPor->name : 'N/A',
             $incapacidad->created_at,

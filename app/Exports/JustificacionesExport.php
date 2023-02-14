@@ -78,7 +78,7 @@ class JustificacionesExport implements FromCollection,  WithProperties, WithDraw
     {
         return [
             $justificacion->folio,
-            $justificacion->persona->nombre,
+            $justificacion->persona->nombre . ' ' . $justificacion->persona->ap_paterno . ' ' . $justificacion->persona->ap_materno,
             $justificacion->creado_por ? $justificacion->creadoPor->name : 'N/A',
             $justificacion->actualizado_por ? $justificacion->actualizadoPor->name : 'N/A',
             $justificacion->created_at,

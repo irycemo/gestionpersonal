@@ -24,7 +24,7 @@ class RetardoObserver
         if($retardos->count() >= 3){
 
             Falta::create([
-                'tipo' => 'Más de 30 min tarde',
+                'tipo' => 'Falta por acomulación de 3 retardos en el mes actual.',
                 'persona_id' => $retardo->persona->id
             ]);
 

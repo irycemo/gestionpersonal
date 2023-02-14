@@ -12,7 +12,7 @@
 
         <x-slot name="content">
 
-            <div class=" mb-5">
+            <div class="mb-5">
 
                 <p>Total de empleados: {{ $personalTotal }}</p>
 
@@ -22,11 +22,11 @@
 
             </div>
 
-             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5 overflow-y-auto">
 
                 <table class="rounded-lg w-full">
 
-                    <thead class="border-b border-gray-300 bg-gray-50">
+                    <thead class="border-b border-gray-300 bg-gray-50 text-left">
 
                         <tr>
 
@@ -38,7 +38,7 @@
 
                     </thead>
 
-                    <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+                    <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none">
 
                         @foreach ($empleados as $empleado)
 

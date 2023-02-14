@@ -36,7 +36,7 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     */
     public function collection()
     {
-        return Retardo::with('persona', 'creadoPor', 'actualizadoPor')
+        return Retardo::with('persona')
                             ->when(isset($this->retardo_empleado) && $this->retardo_empleado != "", function($q){
                                 return $q->where('persona_id', $this->retardo_empleado);
                             })
@@ -63,22 +63,16 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
         return [
             'Empleado',
             'Justificación',
-            'Registrado por',
-            'Actualizado por',
             'Registrado en',
-            'Actualizado en'
         ];
     }
 
     public function map($retardo): array
     {
         return [
-            $retardo->persona->nombre,
+            $retardo->persona->nombre . ' ' . $retardo->persona->ap_paterno . ' ' . $retardo->persona->ap_materno,
             $retardo->justificacion ? 'Justificado':'Sin Justificar' ,
-            $retardo->creado_por ? $retardo->creadoPor->name : 'N/A',
-            $retardo->actualizado_por ? $retardo->actualizadoPor->name : 'N/A',
             $retardo->created_at,
-            $retardo->updated_at,
         ];
     }
 
@@ -95,10 +89,10 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->mergeCells('A1:F1');
+                $event->sheet->mergeCells('A1:C1');
                 $event->sheet->setCellValue('A1', "Instituto Registral Y Catastral Del Estado De Michoacán De Ocampo\nReporte de retardos (Sistema de Gestión Personal)\n" . now()->format('d-m-Y'));
                 $event->sheet->getStyle('A1')->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A1:F1')->applyFromArray([
+                $event->sheet->getStyle('A1:C1')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 13

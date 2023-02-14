@@ -37,7 +37,7 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     */
     public function collection()
     {
-        return Falta::with('persona', 'creadoPor', 'actualizadoPor')
+        return Falta::with('persona')
                         ->when(isset($this->falta_empleado) && $this->falta_empleado != "", function($q){
                             return $q->where('persona_id', $this->falta_empleado);
                         })
@@ -68,10 +68,7 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
             'Tipo',
             'Empleado',
             'Justificación',
-            'Registrado por',
-            'Actualizado por',
             'Registrado en',
-            'Actualizado en'
         ];
     }
 
@@ -79,12 +76,9 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     {
         return [
             $falta->tipo,
-            $falta->persona->nombre,
+            $falta->persona->nombre . ' ' . $falta->persona->ap_paterno . ' ' . $falta->persona->ap_materno,
             $falta->justificacion ? 'Justificada':'Sin Justificar' ,
-            $falta->creado_por ? $falta->creadoPor->name : 'N/A',
-            $falta->actualizado_por ? $falta->actualizadoPor->name : 'N/A',
             $falta->created_at,
-            $falta->updated_at,
         ];
     }
 
@@ -101,10 +95,10 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->mergeCells('A1:G1');
+                $event->sheet->mergeCells('A1:D1');
                 $event->sheet->setCellValue('A1', "Instituto Registral Y Catastral Del Estado De Michoacán De Ocampo\nReporte de faltas (Sistema de Gestión Personal)\n" . now()->format('d-m-Y'));
                 $event->sheet->getStyle('A1')->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A1:G1')->applyFromArray([
+                $event->sheet->getStyle('A1:D1')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 13
