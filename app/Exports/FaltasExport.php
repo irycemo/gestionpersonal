@@ -37,7 +37,7 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     */
     public function collection()
     {
-        return Falta::with('persona', 'jsutificacion')
+        return Falta::with('persona', 'justificacion')
                         ->when(isset($this->falta_empleado) && $this->falta_empleado != "", function($q){
                             return $q->where('persona_id', $this->falta_empleado);
                         })
