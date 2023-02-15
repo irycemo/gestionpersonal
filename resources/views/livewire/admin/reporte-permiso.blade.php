@@ -222,12 +222,6 @@
 
                         </th>
 
-                        <th class="px-3 py-3 hidden lg:table-cell">
-
-                            Actualizado
-
-                        </th>
-
                     </tr>
 
                 </thead>

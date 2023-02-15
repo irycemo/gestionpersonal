@@ -122,7 +122,7 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
             $empleado->domicilio,
             $empleado->email,
             $empleado->fecha_ingreso,
-            $empleado->horario->tipo,
+            $empleado->horario->nombre,
             $empleado->observaciones,
             $empleado->creado_por ? $empleado->creadoPor->name : 'N/A',
             $empleado->actualizado_por ? $empleado->actualizadoPor->name : 'N/A',

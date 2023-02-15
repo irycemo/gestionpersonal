@@ -209,18 +209,6 @@
 
         </div>
 
-        <div>
-            <button
-                class="bg-blue-500 hover:shadow-lg hover:bg-blue-700  text-sm py-2 px-4 text-white rounded-full focus:outline-none mt-3 w-full"
-                wire:click="filtrarPersonal"
-                wire:loading.attr="disabled"
-                wire:target="filtrarPersonal"
-            >
-                Filtrar
-            </button>
-
-        </div>
-
     </div>
 
     @if(count($personal))
