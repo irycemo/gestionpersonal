@@ -52,7 +52,7 @@ class ReportePermiso extends Component
 
         $permisosLista = Permisos::select('id', 'descripcion')->orderBy('descripcion')->get();
 
-        $permisos = PermisoPersona::with('persona', 'permiso')
+        $permisos = PermisoPersona::with('persona', 'permiso', 'creadoPor')
                                         ->when (isset($this->personaPermiso) && $this->personaPermiso != "", function($q){
                                             return $q->where('persona_id', $this->personaPermiso);
                                         })

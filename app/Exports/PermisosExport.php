@@ -82,7 +82,6 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
             'Tiempo Consumido (min)',
             'Registrado Por',
             'Registrado en',
-            'Actualizado en'
         ];
     }
 
@@ -96,7 +95,6 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
             $permiso->tiempo_consumido,
             $permiso->creado_por ? $permiso->creadoPor->name : 'N/A',
             $permiso->created_at,
-            $permiso->updated_at,
         ];
     }
 

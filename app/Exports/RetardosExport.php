@@ -36,7 +36,7 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     */
     public function collection()
     {
-        return Retardo::with('persona')
+        return Retardo::with('persona', 'justificacion')
                             ->when(isset($this->retardo_empleado) && $this->retardo_empleado != "", function($q){
                                 return $q->where('persona_id', $this->retardo_empleado);
                             })
