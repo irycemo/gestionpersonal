@@ -92,7 +92,7 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
             $permiso->permiso->descripcion,
             $permiso->fecha_inicio,
             $permiso->fecha_final,
-            $permiso->tiempo_consumido,
+            $permiso->tiempo_consumido ? $permiso->tiempo_consumido : 'N/A',
             $permiso->creado_por ? $permiso->creadoPor->name : 'N/A',
             $permiso->created_at,
         ];

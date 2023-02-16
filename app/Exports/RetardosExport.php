@@ -121,6 +121,7 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     public function columnWidths(): array
     {
         return [
+            'A' => 75,
             'E' => 20,
             'F' => 20,
 

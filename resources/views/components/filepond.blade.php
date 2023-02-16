@@ -2,11 +2,7 @@
 
     @push('styles')
 
-
-
-            <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-
-
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 
     @endpush
 
@@ -15,7 +11,9 @@
         x-data
         x-init="
             FilePond.registerPlugin(FilePondPluginFileValidateSize);
+            FilePond.registerPlugin(FilePondPluginFileValidateType);
             FilePond.setOptions({
+                acceptedFileTypes: ['image/jpg', 'image/jpeg', 'image/png'],
                 allowMultiple: {{ isset($attributes['multiple']) ? 'true' : 'false' }},
                 allowFileSizeValidation: true,
                 server: {
@@ -26,6 +24,8 @@
                         @this.removeUpload('{{ $attributes['wire:model'] }}', filename, load);
                     }
                 },
+                labelFileTypeNotAllowed: 'Formato de archivo invalido',
+                fileValidateTypeLabelExpectedTypes: 'Formatos validos: {allTypes}',
                 labelIdle: 'Selecciona o arrastra los archivos aquí.',
                 labelInvalidField: 'El campo contiene archivos invalidos',
                 labelTapToCancel: 'Click para cancelar',
@@ -66,12 +66,9 @@
 
     @push('scripts')
 
-
-
-            <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-            <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-
-
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
     @endpush
 
