@@ -218,10 +218,22 @@ class Permisospersonal extends Component
 
     public function asignarPermiso(){
 
-        $this->validate([
-            'fecha_asignada' => 'sometimes|date',
-            'empleado_id' => 'required',
-        ]);
+        /* Si el permiso es de salida ($this->permiso_tiempo == 0) la fecha asignada no puede ser mayor a el día actual */
+        if($this->permiso_tiempo == 0){
+
+            $this->validate([
+                'fecha_asignada' => 'sometimes|date|before:tomorrow',
+                'empleado_id' => 'required',
+            ]);
+
+        }else{
+
+            $this->validate([
+                'fecha_asignada' => 'sometimes|date',
+                'empleado_id' => 'required',
+            ]);
+
+        }
 
         $permiso = PermisoPersona::where('persona_id', $this->empleado_id)->where('fecha_inicio', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->first();
 
@@ -234,6 +246,7 @@ class Permisospersonal extends Component
             return;
 
         }
+
 
         if($this->permiso_tiempo > 24){
 
@@ -298,13 +311,28 @@ class Permisospersonal extends Component
                     'fecha_final' => $this->fecha_asignada
                 ]); */
 
-                PermisoPersona::create([
-                    'creado_por' => auth()->user()->id,
-                    'fecha_inicio' => $this->fecha_asignada,
-                    'fecha_final' => $this->fecha_asignada,
-                    'permisos_id' => $this->permiso_id,
-                    'persona_id' => $this->empleado->id
-                ]);
+                if(now()->isSameDay($this->fecha_asignada)){
+
+                    PermisoPersona::create([
+                        'creado_por' => auth()->user()->id,
+                        'fecha_inicio' => $this->fecha_asignada,
+                        'fecha_final' => $this->fecha_asignada,
+                        'permisos_id' => $this->permiso_id,
+                        'persona_id' => $this->empleado->id
+                    ]);
+
+                }else{
+
+                    PermisoPersona::create([
+                        'creado_por' => auth()->user()->id,
+                        'fecha_inicio' => $this->fecha_asignada,
+                        'fecha_final' => $this->fecha_asignada,
+                        'permisos_id' => $this->permiso_id,
+                        'persona_id' => $this->empleado->id,
+                        'status' => 1,
+                        'tiempo_consumido' => $this->tiempoConsumido()
+                    ]);
+                }
 
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
 
@@ -325,11 +353,29 @@ class Permisospersonal extends Component
     public function tiempoConsumido()
     {
 
-        $empleado = Persona::with('checados', 'horario')->where('id', $this->empelado->id)->first();
+        $empleado = Persona::with('checados', 'horario')->where('id', $this->empleado->id)->first();
 
-        $ultimaChecada = $empleado->checados->whereDate('created_at', $this->fecha_asignada)->where('tipo', 'salida')->created_at->format('H:i:s');
+        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('H:i:s');
 
-        dd($ultimaChecada);
+        $dia = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('l');
+
+        $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecada)) / 60);
+
+        return $tiempo_consumido;
+
+    }
+
+    public function obtenerDia($horario, $dia){
+
+        $a =  [
+            'Monday' => 'lunes_salida',
+            'Tuesday' => 'martes_salida',
+            'Wednesday' => 'miercoles_salida',
+            'Thursday' => 'jueves_salida',
+            'Friday' => 'viernes_salida'
+        ][$dia];
+
+        return $horario[$a];
 
     }
 

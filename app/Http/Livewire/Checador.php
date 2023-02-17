@@ -158,14 +158,18 @@ class Checador extends Component
                                     ->whereDate('fecha_inicio', now()->format('Y-m-d'))
                                     ->first();
 
-        /* dd($this->persona->checados->last()->created_at == now()); */
-
-
         if($permiso && $tipo == 'entrada'){
 
-            $permiso->pivot->status = 1;
-            $permiso->pivot->tiempo_consumido = now()->diffInMinutes($this->persona->checados->last()->created_at);
-            $permiso->pivot->save();
+            if(count($this->persona->checados) > 0){
+
+                if($this->persona->checados->last()->created_at->isSameDay(now()) && $this->persona->checados->last()->tipo == 'salida'){
+
+                    $permiso->pivot->status = 1;
+                    $permiso->pivot->tiempo_consumido = now()->diffInMinutes($this->persona->checados->last()->created_at);
+                    $permiso->pivot->save();
+                }
+
+            }
 
         }
 

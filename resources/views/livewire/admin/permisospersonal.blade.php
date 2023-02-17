@@ -236,7 +236,9 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo</span>
 
-                                @if($permiso->tiempo < 24)
+                                @if($permiso->tiempo == 0)
+                                    Variable
+                                @elseif($permiso->tiempo < 24)
                                     {{ $permiso->tiempo  }} Horas
                                 @else
                                      {{ $permiso->tiempo / 24 }} Días
@@ -615,7 +617,7 @@
 
                     <div>
 
-                        <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada" @if($permiso_tiempo == 0) disabled @endif>
+                        <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada">
 
                     </div>
 
