@@ -274,8 +274,10 @@
                                     Actualización
                                 @elseif($audit->event  == 'created' )
                                     Creado
-                                @else
+                                @elseif($audit->event  == 'deleted')
                                     Borrado
+                                @elseif($audit->event  == 'sync')
+                                    Actualización
                                 @endif
 
                             </td>
@@ -415,33 +417,69 @@
                 <strong>Registrado:</strong>
                 <p>{{ $selecetedAudit['created_at'] }}</p>
 
-                <div class="grid grid-cols-2 gap-3 my-4">
+                @if($selecetedAudit['event'] == 'sync')
 
-                    <div class="break-words">
+                    <p class="mt-4 capitalize"><strong>Relacion:</strong> {{ key(json_decode($selecetedAudit['old_values'])) }}</p>
 
-                        <strong>Valores anteriores</strong>
+                    <div class="grid grid-cols-2 gap-3 my-4">
 
-                        @foreach (json_decode($selecetedAudit['old_values']) as $key => $value)
+                        <div class="break-words">
 
-                            <p>{{ $key }} = {{ $value ?? 'null' }}</p>
+                            <strong>Valores anteriores</strong>
 
-                        @endforeach
+                            {{-- @foreach (json_decode($selecetedAudit['old_values'])->roles as  $value)
+
+                                <p> = {{ $value ?? 'null' }}</p>
+
+                            @endforeach --}}
+
+                        </div>
+
+                        <div class="break-words">
+
+                            <strong>Valores nuevos</strong>
+
+                            {{-- @foreach (json_decode($selecetedAudit['new_values']) as $key => $value)
+
+                                <p>{{ $key }} = {{ $value ?? 'null' }}</p>
+
+                            @endforeach --}}
+
+                        </div>
 
                     </div>
 
-                    <div class="break-words">
+                @else
 
-                        <strong>Valores nuevos</strong>
+                    <div class="grid grid-cols-2 gap-3 my-4">
 
-                        @foreach (json_decode($selecetedAudit['new_values']) as $key => $value)
+                        <div class="break-words">
 
-                            <p>{{ $key }} = {{ $value ?? 'null' }}</p>
+                            <strong>Valores anteriores</strong>
 
-                        @endforeach
+                            @foreach (json_decode($selecetedAudit['old_values']) as $key => $value)
+
+                                <p>{{ $key }} = {{ $value ?? 'null' }}</p>
+
+                            @endforeach
+
+                        </div>
+
+                        <div class="break-words">
+
+                            <strong>Valores nuevos</strong>
+
+                            @foreach (json_decode($selecetedAudit['new_values']) as $key => $value)
+
+                                <p>{{ $key }} = {{ $value ?? 'null' }}</p>
+
+                            @endforeach
+
+                        </div>
 
                     </div>
 
-                </div>
+                @endif
 
             </x-slot>
 

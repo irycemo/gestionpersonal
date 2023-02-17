@@ -233,7 +233,7 @@
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->incapacidades as $incapacidad)
+                                @foreach($persona->incapacidades->reverse() as $incapacidad)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
@@ -396,7 +396,7 @@
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->justificaciones as $justificacion)
+                                @foreach($persona->justificaciones->reverse() as $justificacion)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
@@ -531,7 +531,7 @@
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->retardos as $retardo)
+                                @foreach($persona->retardos->reverse() as $retardo)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
@@ -635,7 +635,7 @@
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->faltas as $falta)
+                                @foreach($persona->faltas->reverse() as $falta)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
@@ -765,7 +765,7 @@
 
                             <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
-                                @foreach($persona->permisos2 as $permiso)
+                                @foreach($persona->permisos2->reverse() as $permiso)
 
                                     <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 

@@ -117,7 +117,9 @@ class Usuarios extends Component
                 'actualizado_por' => auth()->user()->id
             ]);
 
-            $usuario->roles()->sync($this->role);
+            /* $usuario->roles()->sync($this->role); */
+
+            $usuario->auditSync('roles', $this->role);
 
             $this->resetearTodo();
 

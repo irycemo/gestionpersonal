@@ -156,7 +156,12 @@ class Checador extends Component
                                     ->where('tiempo_consumido', null)
                                     ->where('status', null)
                                     ->whereDate('fecha_inicio', now()->format('Y-m-d'))
-                                    ->first();
+                                    ->dd();
+
+       /*  $ultimaChecada = $this->persona->checados->whereDate('created_at', $permiso->fecha_asignada)->where('tipo', 'salida')->created_at->format('H:i:s');
+
+        dd($ultimaChecada); */
+
 
         if($permiso && $tipo == 'entrada'){
 

@@ -210,7 +210,6 @@
 
                 </thead>
 
-
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                     @foreach($permisos as $permiso)

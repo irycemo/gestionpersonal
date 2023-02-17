@@ -69,7 +69,9 @@ class Constantes{
         'Base',
         'Sindicalizado',
         'Contrato',
-        'Eventual'
+        'Eventual',
+        'Comisionado',
+        'Interinato'
     ];
 
 }

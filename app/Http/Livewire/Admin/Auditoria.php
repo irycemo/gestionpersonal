@@ -28,6 +28,10 @@ class Auditoria extends Component
 
     public function ver($audit){
 
+        $old =json_decode($audit['old_values']);
+
+        /* dd($old->roles[0]->id); */
+
         $this->selecetedAudit = $audit;
 
         $this->modal = true;

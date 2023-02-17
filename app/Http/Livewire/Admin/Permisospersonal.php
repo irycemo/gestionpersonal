@@ -322,6 +322,17 @@ class Permisospersonal extends Component
 
     }
 
+    public function tiempoConsumido()
+    {
+
+        $empleado = Persona::with('checados', 'horario')->where('id', $this->empelado->id)->first();
+
+        $ultimaChecada = $empleado->checados->whereDate('created_at', $this->fecha_asignada)->where('tipo', 'salida')->created_at->format('H:i:s');
+
+        dd($ultimaChecada);
+
+    }
+
     public function render()
     {
 

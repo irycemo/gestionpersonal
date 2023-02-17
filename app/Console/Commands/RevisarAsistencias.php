@@ -8,6 +8,7 @@ use App\Models\Inhabil;
 use App\Models\Persona;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
 
 class RevisarAsistencias extends Command
 {
@@ -82,12 +83,23 @@ class RevisarAsistencias extends Command
 
             }
 
+            $this->changePermissionsToLogs();
+
         } catch (\Throwable $th) {
 
             Log::error('Error en proceso para checar faltas. ' . $th->getMessage());
 
+            $this->changePermissionsToLogs();
+
         }
 
 
+    }
+
+    public function changePermissionsToLogs():void
+    {
+        $process = new Process(['sudo chown -R www-data:www-data /var/www/html/gestionpersonal/storage/logs']);
+
+        $process->run();
     }
 }
