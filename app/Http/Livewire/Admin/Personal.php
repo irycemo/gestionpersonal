@@ -49,7 +49,7 @@ class Personal extends Component
             'paterno' => 'required|regex:/^[\pL\s]+$/u|min:3',
             'materno' => 'required|regex:/^[\pL\s]+$/u|min:3',
             'status' => 'required',
-            'codigo_barras' => 'sometimes|numeric|unique:personas,codigo_barras,' . $this->selected_id,
+            'codigo_barras' => 'min:1|sometimes|numeric|unique:personas,codigo_barras,' . $this->selected_id,
             'localidad' => 'required',
             'area' => 'required',
             'tipo' => 'required',

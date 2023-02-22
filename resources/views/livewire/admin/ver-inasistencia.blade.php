@@ -14,8 +14,6 @@
 
             <div class="mb-5">
 
-                <p>Total de empleados: {{ $personalTotal }}</p>
-
                 <p>Total de empleados presentes: {{ $personalPresente }}</p>
 
                 <p>Total de empleados sin presentarse: {{ count($empleados) }}</p>

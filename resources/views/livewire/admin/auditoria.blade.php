@@ -395,12 +395,14 @@
                     <p>Actualización</p>
                 @elseif($selecetedAudit['event'] == 'created')
                    <p>Creado</p>
+                @elseif($selecetedAudit['event'] == 'sync')
+                    <p>Sync</p>
                 @else
-                    <p>Borrado</p>
+                    Borrado
                 @endif
 
                 <strong>Usuario:</strong>
-                <p>{{ $selecetedAudit['user']['name'] }}</p>
+                <p>{{ $selecetedAudit['user']['name'] ?? 'N/A' }}</p>
 
                 <strong>Modelo:</strong>
                 <p>{{ Str::substr($selecetedAudit['auditable_type'], 11) }}, id: {{ $selecetedAudit['auditable_id'] }}</p>
@@ -427,11 +429,7 @@
 
                             <strong>Valores anteriores</strong>
 
-                            {{-- @foreach (json_decode($selecetedAudit['old_values'])->roles as  $value)
-
-                                <p> = {{ $value ?? 'null' }}</p>
-
-                            @endforeach --}}
+                            <p>Role => {{ $oldRole }}</p>
 
                         </div>
 
@@ -439,11 +437,7 @@
 
                             <strong>Valores nuevos</strong>
 
-                            {{-- @foreach (json_decode($selecetedAudit['new_values']) as $key => $value)
-
-                                <p>{{ $key }} = {{ $value ?? 'null' }}</p>
-
-                            @endforeach --}}
+                            <p>Role => {{ $newRole }}</p>
 
                         </div>
 

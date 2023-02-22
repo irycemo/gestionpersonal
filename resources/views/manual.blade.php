@@ -237,9 +237,9 @@
                             <p class="mb-2 px-4">
                                 <strong>Nombre:</strong> Es el nombre del horario.
                                 <br>
-                                <strong>Tolerancia:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere un retardo (minutos).
+                                <strong>Tolerancia:</strong> El tiempo limite que tiene el empleado para registrar su entrada sin que se genere un retardo (minutos).
                                 <br>
-                                <strong>Falta:</strong> El tiempo limite que tiene el empleado para registrar su entreada sin que se genere una falta (minutos)..
+                                <strong>Falta:</strong> El tiempo limite que tiene el empleado para registrar su entrada sin que se genere una falta (minutos)..
                                 <br>
                                 <strong>Descripción:</strong> Descripción del horario.
                                 <br>

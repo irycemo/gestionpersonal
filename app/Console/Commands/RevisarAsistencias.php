@@ -9,6 +9,7 @@ use App\Models\Persona;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class RevisarAsistencias extends Command
 {
@@ -98,7 +99,13 @@ class RevisarAsistencias extends Command
 
     public function changePermissionsToLogs():void
     {
+
         $process = new Process(['sudo chown -R www-data:www-data /var/www/html/gestionpersonal/storage/logs']);
+
+        if (!$process->isSuccessful()) {
+            Log::error(throw new ProcessFailedException($process));
+            Log::info($process->getOutput());
+        }
 
         $process->run();
     }
