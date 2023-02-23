@@ -21,7 +21,7 @@
 
             </div>
 
-            @can('Crear role')
+            @can('Crear rol')
 
                 <button wire:click="abrirModalCrear" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">
 
@@ -194,7 +194,7 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    @can('Editar usuario')
+                                    @can('Editar rol')
 
                                         <button
                                             wire:click="abrirModalEditar({{$permiso}})"
@@ -214,7 +214,7 @@
 
                                     @endcan
 
-                                    @can('Borrar usuario')
+                                    @can('Borrar rol')
 
                                         <button
                                             wire:click="abrirModalBorrar({{$permiso}})"
