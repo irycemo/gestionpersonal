@@ -84,29 +84,13 @@ class RevisarAsistencias extends Command
 
             }
 
-            $this->changePermissionsToLogs();
 
         } catch (\Throwable $th) {
 
             Log::error('Error en proceso para checar faltas. ' . $th->getMessage());
 
-            $this->changePermissionsToLogs();
-
         }
 
 
-    }
-
-    public function changePermissionsToLogs():void
-    {
-
-        $process = new Process(['sudo chown -R www-data:www-data /var/www/html/gestionpersonal/storage/logs']);
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            Log::error(throw new ProcessFailedException($process));
-            Log::info($process->getOutput());
-        }
     }
 }
