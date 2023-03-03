@@ -17,7 +17,7 @@ class EmpleadosController extends Controller
                                 ->whereHas('persona', function($q) use ($area){
                                     return $q->where('area', $area);
                                 })
-                                ->whereDay('created_at', Carbon::today())
+                                ->whereDate('created_at', Carbon::today())
                                 ->get()
                                 ->groupBy('persona_id');
 
