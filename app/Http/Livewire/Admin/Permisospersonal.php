@@ -235,7 +235,10 @@ class Permisospersonal extends Component
 
         }
 
-        $permiso = PermisoPersona::where('persona_id', $this->empleado_id)->where('fecha_inicio', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada))->first();
+        $permiso = PermisoPersona::where('persona_id', $this->empleado_id)
+                                        ->where('fecha_inicio', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada)->toDateString())
+                                        ->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada)->toDateString())
+                                        ->first();
 
         if($permiso){
 
