@@ -299,7 +299,7 @@ class Permisospersonal extends Component
             } catch (\Throwable $th) {
 
                 /* Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage()); */
-                Log::error($th);
+
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
 
@@ -341,7 +341,7 @@ class Permisospersonal extends Component
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
 
             } catch (\Throwable $th) {
-                Log::error($th);
+
                 Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
@@ -359,13 +359,23 @@ class Permisospersonal extends Component
 
         $empleado = Persona::with('checados', 'horario')->where('id', $this->empleado->id)->first();
 
-        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('H:i:s');
+        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=', $this->fecha_asignada)->where('tipo', 'salida')->first();
 
-        $dia = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('l');
+        if($ultimaChecada){
 
-        $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecada)) / 60);
+            $ultimaChecada = $ultimaChecada->created_at->format('H:i:s');
 
-        return $tiempo_consumido;
+            $dia = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('l');
+
+            $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecada)) / 60);
+
+            return $tiempo_consumido;
+
+        }else{
+
+            return null;
+
+        }
 
     }
 
