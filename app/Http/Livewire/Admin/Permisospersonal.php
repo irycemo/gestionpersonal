@@ -298,7 +298,8 @@ class Permisospersonal extends Component
 
             } catch (\Throwable $th) {
 
-                Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+                /* Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage()); */
+                Log::error($th);
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
 
@@ -340,7 +341,7 @@ class Permisospersonal extends Component
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
 
             } catch (\Throwable $th) {
-
+                Log::error($th);
                 Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
