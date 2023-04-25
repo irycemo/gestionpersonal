@@ -321,6 +321,7 @@ class Permisospersonal extends Component
                         'permisos_id' => $this->permiso_id,
                         'persona_id' => $this->empleado->id,
                         'status' => 1,
+                        'tiempo_consumido' => $this->tiempoConsumido()
                     ]);
                 }
 
@@ -345,17 +346,20 @@ class Permisospersonal extends Component
 
         $empleado = Persona::with('checados', 'horario')->where('id', $this->empleado->id)->first();
 
-        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=', $this->fecha_asignada)->where('tipo', 'salida')->first();
+        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=', $this->fecha_asignada)->get()->last();
 
-        if($ultimaChecada){
+        if($ultimaChecada && $ultimaChecada->tipo == 'salida'){
 
             $ultimaChecada = $ultimaChecada->created_at->format('H:i:s');
 
-            $dia = $empleado->checados()->whereDate('created_at', '=',$this->fecha_asignada)->where('tipo', 'salida')->first()->created_at->format('l');
+            $dia = $ultimaChecada->created_at->format('l');
 
             $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecada)) / 60);
 
-            return $tiempo_consumido;
+            if($tiempo_consumido < 0)
+                return null;
+            else
+                return $tiempo_consumido;
 
         }else{
 
