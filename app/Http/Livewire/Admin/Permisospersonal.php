@@ -251,7 +251,7 @@ class Permisospersonal extends Component
         }
 
 
-        if($this->permiso_tiempo > 24){
+        if($this->permiso_tiempo >= 24){
 
             $dias = $this->permiso_tiempo / 24;
 
@@ -280,12 +280,6 @@ class Permisospersonal extends Component
 
             try {
 
-                /* $this->empleado->permisos()->attach($this->permiso_id, [
-                    'creado_por' => auth()->user()->id,
-                    'fecha_inicio' => $this->fecha_asignada,
-                    'fecha_final' => $final
-                ]); */
-
                 PermisoPersona::create([
                     'creado_por' => auth()->user()->id,
                     'fecha_inicio' => $this->fecha_asignada,
@@ -298,8 +292,7 @@ class Permisospersonal extends Component
 
             } catch (\Throwable $th) {
 
-                /* Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage()); */
-
+                Log::error("Error al asignar permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
                 $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
                 $this->resetearTodo();
 
@@ -307,13 +300,7 @@ class Permisospersonal extends Component
 
         }else{
 
-            try {/*
-
-                $this->empleado->permisos()->attach($this->permiso_id, [
-                    'creado_por' => auth()->user()->id,
-                    'fecha_inicio' => $this->fecha_asignada,
-                    'fecha_final' => $this->fecha_asignada
-                ]); */
+            try {
 
                 if(now()->isSameDay($this->fecha_asignada)){
 
@@ -334,7 +321,6 @@ class Permisospersonal extends Component
                         'permisos_id' => $this->permiso_id,
                         'persona_id' => $this->empleado->id,
                         'status' => 1,
-                        'tiempo_consumido' => $this->tiempoConsumido()
                     ]);
                 }
 
