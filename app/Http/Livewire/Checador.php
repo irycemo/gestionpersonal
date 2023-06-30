@@ -120,10 +120,12 @@ class Checador extends Component
 
         if($horario->falta < $hr){
 
-            $falta = Falta::create([
-                'tipo' => 'Más de 30 min tarde',
-                'persona_id' => $this->persona->id
-            ]);
+            if($this->persona->tipo != 'Estructura')
+
+                Falta::create([
+                    'tipo' => 'LLegada despues de la hora de tolerancia para falta.',
+                    'persona_id' => $this->persona->id
+                ]);
 
         }elseif($horario->tolerancia < $hr){
 

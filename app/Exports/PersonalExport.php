@@ -95,12 +95,17 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
             'Domicilio',
             'eMail',
             'Fecha de ingreso',
-            'Horario',
-            'Observaciones',
             'Registrado por',
             'Actualizado por',
             'Registrado en',
-            'Actualizado en'
+            'Actualizado en',
+            'Horario',
+            'Lunes',
+            'Martes',
+            'Miercoles',
+            'Juevez',
+            'Viernes',
+            'Observaciones'
         ];
     }
 
@@ -122,12 +127,17 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
             $empleado->domicilio,
             $empleado->email,
             $empleado->fecha_ingreso,
-            $empleado->horario->nombre,
-            $empleado->observaciones,
             $empleado->creado_por ? $empleado->creadoPor->name : 'N/A',
             $empleado->actualizado_por ? $empleado->actualizadoPor->name : 'N/A',
             $empleado->created_at,
             $empleado->updated_at,
+            $empleado->horario->nombre,
+            $empleado->horario->lunes_entrada . ' - ' . $empleado->horario->lunes_salida,
+            $empleado->horario->martes_entrada . ' - ' . $empleado->horario->martes_salida,
+            $empleado->horario->miercoles_entrada . ' - ' . $empleado->horario->miercoles_salida,
+            $empleado->horario->jueves_entrada . ' - ' . $empleado->horario->jueves_salida,
+            $empleado->horario->viernes_entrada . ' - ' . $empleado->horario->viernes_salida,
+            $empleado->observaciones
         ];
     }
 
@@ -144,10 +154,10 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->mergeCells('A1:U1');
+                $event->sheet->mergeCells('A1:Z1');
                 $event->sheet->setCellValue('A1', "Instituto Registral Y Catastral Del Estado De Michoacán De Ocampo\nReporte de empleados (Sistema de Gestión Personal)\n" . now()->format('d-m-Y'));
                 $event->sheet->getStyle('A1')->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A1:U1')->applyFromArray([
+                $event->sheet->getStyle('A1:Z1')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 13
@@ -158,7 +168,7 @@ class PersonalExport implements FromCollection, WithProperties, WithDrawings, Sh
                     ],
                 ]);
                 $event->sheet->getRowDimension('1')->setRowHeight(90);
-                $event->sheet->getStyle('A2:U2')->applyFromArray([
+                $event->sheet->getStyle('A2:Z2')->applyFromArray([
                         'font' => [
                             'bold' => true
                         ]
