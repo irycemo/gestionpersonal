@@ -143,7 +143,7 @@ class Horarios extends Component
 
         } catch (\Throwable $th) {
 
-            Log::error("Error al crear horario por el usuario: " . auth()->user()->name . ". " . $th->getMessage());
+            Log::error("Error al crear horario por el usuario: " . auth()->user()->name . ". " . $th);
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
@@ -182,7 +182,7 @@ class Horarios extends Component
 
         } catch (\Throwable $th) {
 
-            Log::error("Error al actualizar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+            Log::error("Error al actualizar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
@@ -204,7 +204,7 @@ class Horarios extends Component
 
         } catch (\Throwable $th) {
 
-            Log::error("Error al borrar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th->getMessage());
+            Log::error("Error al borrar horario por el usuario: " . "(id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
 
