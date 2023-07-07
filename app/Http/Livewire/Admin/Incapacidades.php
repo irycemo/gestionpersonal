@@ -30,8 +30,7 @@ class Incapacidades extends Component
 
     protected function rules(){
         return [
-            'documento' => 'required',
-            'documento' => 'nullable|mimes:jpg,png,jpeg',
+            'documento' => 'required|mimes:jpg,png,jpeg',
             'tipo' => 'required',
             'persona' => 'required',
             'fecha_inicial' => 'required|date|after:yesterday',

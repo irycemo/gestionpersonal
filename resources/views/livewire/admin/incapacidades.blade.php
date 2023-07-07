@@ -620,12 +620,6 @@
 
                     </div>
 
-                    <div>
-
-                        @error('documento') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
                     @if ($documento)
 
                         <a href="{{ $documento->temporaryUrl() }}" data-lightbox="imagen" data-title="Documento">
