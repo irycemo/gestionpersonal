@@ -29,12 +29,13 @@ class Justificaciones extends Component
     public $retardoFlag = true;
     public $faltaFlag = true;
     public $imagen;
+    public $observaciones;
 
     protected $queryString = ['search'];
 
     protected function rules(){
         return [
-            'documento' => 'required|mimes:jpg,jpeg,png',
+            'documento' => 'nullable|mimes:jpg,jpeg,png',
             'persona_id' => 'required',
             'retardo_id' => 'required_without:falta_id',
             'falta_id' => 'required_without:retardo_id',
@@ -75,7 +76,7 @@ class Justificaciones extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar','crear', 'editar', 'modal', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos', 'imagen']);
+        $this->reset(['modalBorrar','crear', 'observaciones', 'editar', 'modal', 'documento', 'persona_id', 'faltaFlag', 'retardoFlag', 'falta_id', 'retardo_id', 'faltas', 'retardos', 'imagen']);
         $this->resetErrorBag();
         $this->resetValidation();
         $this->dispatchBrowserEvent('removeFiles');
@@ -89,6 +90,7 @@ class Justificaciones extends Component
 
         $this->selected_id = $modelo['id'];
         $this->persona_id = $modelo['persona_id'];
+        $this->observaciones = $modelo['observaciones'];
         $this->imagen = Storage::disk('justificacion')->url($modelo['documento']);
 
         $this->updatedPersonaId();
@@ -109,6 +111,7 @@ class Justificaciones extends Component
                     'folio' => $folio ? $folio + 1 : 1,
                     'documento' => '',
                     'persona_id' => $this->persona_id,
+                    'observaciones' => $this->observaciones,
                     'creado_por' => auth()->user()->id
                 ]);
 
@@ -162,8 +165,8 @@ class Justificaciones extends Component
 
                 $justificacion->update([
                     'persona_id' => $this->persona_id,
+                    'observaciones' => $this->observaciones,
                     'actualizado_por' => auth()->user()->id
-
                 ]);
 
                 if($this->documento){

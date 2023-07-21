@@ -29,7 +29,7 @@
 
     </head>
 
-    <body class="font-gibson antialiased">
+    <body class="antialiased">
 
 
         <div class="min-h-screen bg-gray-200">

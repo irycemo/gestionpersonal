@@ -46,6 +46,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'Editar permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'Borrar permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1]);
         Permission::create(['name' => 'Asignar permiso personal', 'area' => 'Permisos Personal'])->syncRoles([$role1, $role3]);
+        Permission::create(['name' => 'Formatos', 'area' => 'Permisos Personal'])->syncRoles([$role1]);
 
         Permission::create(['name' => 'Lista de incapacidades', 'area' => 'Incapacidades'])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'Crear incapacidad', 'area' => 'Incapacidades'])->syncRoles([$role1, $role2, $role3]);

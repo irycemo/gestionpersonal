@@ -53,7 +53,7 @@
 
                 <thead class="border-b border-gray-300 bg-gray-50">
 
-                    <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                    <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                         <th wire:click="order('folio')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
@@ -129,6 +129,12 @@
 
                         </th>
 
+                        <th class="px-3 py-3 hidden lg:table-cell">
+
+                            Observaciones
+
+                        </th>
+
                         <th wire:click="order('created_at')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Registro
@@ -199,7 +205,7 @@
 
                     @foreach($justificaciones as $justificacion)
 
-                        <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                        <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -242,6 +248,14 @@
                                     Falta: {{ $justificacion->falta->tipo }} / {{ $justificacion->falta->created_at }}
 
                                 @endif
+
+                            </td>
+
+                            <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Observaciones</span>
+
+                                {{ $justificacion->observaciones }}
 
                             </td>
 
@@ -480,6 +494,31 @@
                     </div>
 
                 @endif
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Observaciones</Label>
+                    </div>
+
+                    <div>
+
+                        <textarea class="bg-white rounded text-sm w-full" wire:model.defer="observaciones">{{ $observaciones }}</textarea>
+
+                    </div>
+
+                    <div>
+
+                        @error('observaciones') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
 
             </div>
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Admin\Permisospersonal;
 use App\Http\Controllers\SetPasswordController;
 use App\Http\Controllers\Admin\PersonaController;
+use App\Http\Livewire\Admin\Formatos;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,8 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
     Route::get('reportes', Reportes::class)->middleware('permission:Reportes')->name('reportes');
 
     Route::get('auditoria', Auditoria::class)->middleware('permission:Auditoria')->name('auditoria');
+
+    Route::get('formatos', Formatos::class)->middleware('permission:Formatos')->name('formatos');
 
 });
 

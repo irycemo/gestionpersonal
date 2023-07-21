@@ -130,7 +130,7 @@
 
                 <thead class="border-b border-gray-300 bg-gray-50">
 
-                    <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                    <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                         <th class="px-3 py-3 hidden lg:table-cell">
 
@@ -172,7 +172,7 @@
 
                     @foreach($justificaciones as $justificacion)
 
-                        <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
+                        <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0 text-center">
 
                             <td class="w-full lg:w-auto p-3 text-gray-800  md:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 

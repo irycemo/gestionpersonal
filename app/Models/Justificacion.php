@@ -17,7 +17,7 @@ class Justificacion extends Model implements Auditable
     use ModelosTrait;
     use \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizado_por'];
+    protected $fillable = ['folio', 'documento', 'persona_id', 'creado_por', 'actualizado_por', 'observaciones'];
 
     public function persona(){
         return $this->belongsTo(Persona::class);

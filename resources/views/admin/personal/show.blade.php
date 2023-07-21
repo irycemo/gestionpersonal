@@ -183,7 +183,7 @@
 
                             <thead class="border-b border-gray-300 bg-gray-50 ">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider ">
+                                <tr class="text-xs text-gray-500 uppercase text-left traling-wider ">
 
                                     <th class="px-3 hidden lg:table-cell py-2">
 
@@ -217,6 +217,12 @@
 
                                     <th  class=" px-3 hidden lg:table-cell py-2">
 
+                                        Observaciones
+
+                                    </th>
+
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
+
                                         Registro
 
                                     </th>
@@ -235,7 +241,7 @@
 
                                 @foreach($persona->incapacidades->reverse() as $incapacidad)
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                    <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                                         <td class="px-3  w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -277,6 +283,14 @@
                                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Fecha final</span>
 
                                             {{ $incapacidad->fecha_final }}
+
+                                        </td>
+
+                                        <td class="px-3  w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Observaciones</span>
+
+                                            {{ $incapacidad->observaciones }}
 
                                         </td>
 
@@ -358,7 +372,7 @@
 
                             <thead class="border-b border-gray-300 bg-gray-50">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                                <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                                     <th class=" px-3 hidden lg:table-cell py-2">
 
@@ -375,6 +389,12 @@
                                     <th  class=" px-3 hidden lg:table-cell py-2">
 
                                         Retardo / Falta
+
+                                    </th>
+
+                                    <th  class=" px-3 hidden lg:table-cell py-2">
+
+                                        Observaciones
 
                                     </th>
 
@@ -398,7 +418,7 @@
 
                                 @foreach($persona->justificaciones->reverse() as $justificacion)
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                    <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                                         <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -431,6 +451,14 @@
                                                 Falta: {{ $justificacion->falta->tipo }} / {{ $justificacion->falta->created_at }}
 
                                             @endif
+
+                                        </td>
+
+                                        <td class="px-3 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Observaciones</span>
+
+                                            {{ $justificacion->observaciones }}
 
                                         </td>
 
@@ -511,7 +539,7 @@
 
                             <thead class="border-b border-gray-300 bg-gray-50">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                                <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                                     <th class=" px-3 hidden lg:table-cell py-2">
 
@@ -533,7 +561,7 @@
 
                                 @foreach($persona->retardos->reverse() as $retardo)
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                    <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                                         <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -609,7 +637,7 @@
 
                             <thead class="border-b border-gray-300 bg-gray-50">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                                <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                                     <th class=" px-3 hidden lg:table-cell py-2">
 
@@ -637,7 +665,7 @@
 
                                 @foreach($persona->faltas->reverse() as $falta)
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                    <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                                         <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -721,7 +749,7 @@
 
                             <thead class="border-b border-gray-300 bg-gray-50">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                                <tr class="text-xs text-gray-500 uppercase text-left traling-wider">
 
                                     <th class=" px-3 hidden lg:table-cell py-2">
 
@@ -767,7 +795,7 @@
 
                                 @foreach($persona->permisos2->reverse() as $permiso)
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                    <tr class="text-sm text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                                         <td class="p-2 w-full lg:w-auto text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 

@@ -25,15 +25,17 @@ class Incapacidades extends Component
     public $imagen;
     public $fecha_inicial;
     public $fecha_final;
+    public $observaciones;
 
     protected $queryString = ['search'];
 
     protected function rules(){
         return [
-            'documento' => 'required|mimes:jpg,png,jpeg',
+            'documento' => 'nullable|mimes:jpg,png,jpeg',
             'tipo' => 'required',
             'persona' => 'required',
-            'fecha_inicial' => 'required|date|after:yesterday',
+            /* 'fecha_inicial' => 'required|date|after:yesterday', */
+            'fecha_inicial' => 'required|date',
             'fecha_final' => 'required|date|after:fecha_inicial|after:fecha_inicial'
          ];
     }
@@ -50,7 +52,7 @@ class Incapacidades extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['modalBorrar', 'crear', 'editar', 'modal','documento', 'tipo', 'persona', 'imagen', 'fecha_inicial', 'fecha_final']);
+        $this->reset(['modalBorrar', 'crear', 'editar', 'modal','documento', 'tipo', 'persona', 'imagen', 'fecha_inicial', 'fecha_final', 'observaciones']);
         $this->resetErrorBag();
         $this->resetValidation();
 
@@ -65,6 +67,7 @@ class Incapacidades extends Component
 
         $this->selected_id = $modelo['id'];
         $this->tipo = $modelo['tipo'];
+        $this->observaciones = $modelo['observaciones'];
         $this->fecha_inicial = Carbon::createFromFormat('d-m-Y', $modelo['fecha_inicial'])->format('Y-m-d');
         $this->fecha_final = Carbon::createFromFormat('d-m-Y', $modelo['fecha_final'])->format('Y-m-d');
         $this->persona = $modelo['persona_id'];
@@ -100,6 +103,7 @@ class Incapacidades extends Component
                     'fecha_inicial' => $this->fecha_inicial,
                     'fecha_final' => $this->fecha_final,
                     'persona_id' => $this->persona,
+                    'observaciones' => $this->observaciones,
                     'creado_por' => auth()->user()->id
                 ]);
 
@@ -146,6 +150,7 @@ class Incapacidades extends Component
                     'fecha_inicial' => $this->fecha_inicial,
                     'fecha_final' => $this->fecha_final,
                     'persona_id' => $this->persona,
+                    'observaciones' => $this->observaciones,
                     'actualizado_por' => auth()->user()->id
                 ]);
 

@@ -15,7 +15,7 @@ class Incapacidad extends Model implements Auditable
     use ModelosTrait;
     use \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['folio', 'documento', 'tipo', 'persona_id', 'creado_por', 'actualizado_por', 'fecha_inicial', 'fecha_final'];
+    protected $fillable = ['folio', 'documento', 'tipo', 'persona_id', 'creado_por', 'actualizado_por', 'fecha_inicial', 'fecha_final', 'observaciones'];
 
     public function persona(){
         return $this->belongsTo(Persona::class);

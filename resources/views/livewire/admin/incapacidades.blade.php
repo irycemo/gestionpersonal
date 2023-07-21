@@ -53,7 +53,7 @@
 
                 <thead class="border-b border-gray-300 bg-gray-50">
 
-                    <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                    <tr class="text-xs  text-gray-500 uppercase text-left traling-wider">
 
                         <th wire:click="order('folio')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
@@ -311,7 +311,7 @@
 
                     @foreach($incapacidades as $incapacidad)
 
-                        <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                        <tr class="text-sm  text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
@@ -599,6 +599,31 @@
                     <div>
 
                         @error('fecha_final') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label>Observaciones</Label>
+                    </div>
+
+                    <div>
+
+                        <textarea class="bg-white rounded text-sm w-full" wire:model.defer="observaciones">{{ $observaciones }}</textarea>
+
+                    </div>
+
+                    <div>
+
+                        @error('observaciones') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
