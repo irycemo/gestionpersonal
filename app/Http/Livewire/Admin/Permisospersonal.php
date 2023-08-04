@@ -350,11 +350,11 @@ class Permisospersonal extends Component
 
         if($ultimaChecada && $ultimaChecada->tipo == 'salida'){
 
-            $ultimaChecada = $ultimaChecada->created_at->format('H:i:s');
+            $ultimaChecadaFormateada = $ultimaChecada->created_at->format('H:i:s');
 
             $dia = $ultimaChecada->created_at->format('l');
 
-            $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecada)) / 60);
+            $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecadaFormateada)) / 60);
 
             if($tiempo_consumido < 0)
                 return null;
