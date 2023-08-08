@@ -36,7 +36,7 @@ class Checador extends Component
 
         }
 
-        $permiso = $this->persona->permisos()->where('tipo', 'oficial')->where('fecha_inicio','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
+        $permiso = $this->persona->permisos()->where('tipo', 'oficial')->where('tiempo', '!=', 0)->where('fecha_inicio','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
 
         $incapacidad = Incapacidad::where('persona_id', $this->persona->id)->where('fecha_inicial','<=', now()->format('Y-m-d'))->where('fecha_final','>=', now()->format('Y-m-d'))->get();
 

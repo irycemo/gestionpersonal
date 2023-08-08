@@ -16,7 +16,8 @@
 
           events: JSON.parse(@this.events),
           initialView: 'dayGridMonth',
-          headerToolbar: false
+          headerToolbar: false,
+          locales: 'es',
 
         });
 
