@@ -59,12 +59,6 @@ class ReportePermiso extends Component
                                         ->when (isset($this->permisoPermiso) && $this->permisoPermiso != "", function($q){
                                             return $q->where('permisos_id', $this->permisoPermiso);
                                         })
-                                        ->when (isset($this->fecha_inicioPermiso) && $this->fecha_inicioPermiso != "", function($q){
-                                            return $q->whereDate('fecha_inicio','<=', Carbon::createFromFormat('Y-m-d', $this->fecha_inicioPermiso));
-                                        })
-                                        ->when (isset($this->fecha_finalPermiso) && $this->fecha_finalPermiso != "", function($q){
-                                            return $q->whereDate('fecha_final','>=', Carbon::createFromFormat('Y-m-d', $this->fecha_finalPermiso));
-                                        })
                                         ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
                                         ->paginate($this->pagination);
 
