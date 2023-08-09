@@ -122,7 +122,7 @@
 
             <div>
 
-                <input type="date" class="bg-white rounded text-sm " wire:model="incapacidades_empleado">
+                <input type="date" class="bg-white rounded text-sm " wire:model="fecha_inicioPermiso">
 
             </div>
 
