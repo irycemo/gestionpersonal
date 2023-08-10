@@ -106,7 +106,7 @@ class Justificaciones extends Component
             DB::transaction(function () {
 
                 $justificacion = Justificacion::create([
-                    'folio' => intval(Justificacion::max('folio')) + 1,
+                    'folio' => intval(Justificacion::latest()->first()->folio) + 1,
                     'documento' => '',
                     'persona_id' => $this->persona_id,
                     'observaciones' => $this->observaciones,
