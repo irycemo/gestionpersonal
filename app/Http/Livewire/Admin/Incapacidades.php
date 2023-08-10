@@ -95,10 +95,8 @@ class Incapacidades extends Component
 
             DB::transaction(function () {
 
-                $folio = Incapacidad::orderBy('folio', 'desc')->value('folio');
-
                 $incapacidad = Incapacidad::create([
-                    'folio' =>  $folio ? $folio + 1 : 1,
+                    'folio' =>  intval(Incapacidad::max('folio')) + 1,
                     'tipo' => $this->tipo,
                     'fecha_inicial' => $this->fecha_inicial,
                     'fecha_final' => $this->fecha_final,
