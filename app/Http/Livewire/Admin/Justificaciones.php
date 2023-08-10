@@ -105,10 +105,8 @@ class Justificaciones extends Component
 
             DB::transaction(function () {
 
-                $folio = Justificacion::orderBy('folio', 'desc')->value('folio');
-
                 $justificacion = Justificacion::create([
-                    'folio' => $folio ? $folio + 1 : 1,
+                    'folio' => Justificacion::max('folio') + 1,
                     'documento' => '',
                     'persona_id' => $this->persona_id,
                     'observaciones' => $this->observaciones,
