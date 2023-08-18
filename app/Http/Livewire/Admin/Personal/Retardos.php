@@ -14,7 +14,7 @@ class Retardos extends Component
     public function render()
     {
 
-        $retardos = Retardo::with('creadoPor', 'actualizadoPor')
+        $retardos = Retardo::with('justificacion')
                                     ->where('persona_id', $this->persona->id)
                                     ->latest()
                                     ->paginate($this->paginator);

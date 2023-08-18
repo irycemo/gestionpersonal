@@ -14,7 +14,7 @@ class Faltas extends Component
     public function render()
     {
 
-        $faltas = Falta::with('creadoPor', 'actualizadoPor')
+        $faltas = Falta::with('justificacion')
                                     ->where('persona_id', $this->persona->id)
                                     ->latest()
                                     ->paginate($this->paginator);
