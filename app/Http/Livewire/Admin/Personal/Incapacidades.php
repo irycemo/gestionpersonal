@@ -4,10 +4,13 @@ namespace App\Http\Livewire\Admin\Personal;
 
 use Livewire\Component;
 use App\Models\Incapacidad;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 
 class Incapacidades extends Component
 {
+
+    use WithPagination;
 
     public $persona;
     public $paginator = 10;

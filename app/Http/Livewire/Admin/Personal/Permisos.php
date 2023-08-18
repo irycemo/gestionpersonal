@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Admin\Personal;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\PermisoPersona;
 use Illuminate\Support\Facades\Log;
 
 class Permisos extends Component
 {
+
+    use WithPagination;
 
     public $persona;
     public $paginator = 10;

@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Admin\Personal;
 
-use App\Models\Justificacion;
 use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\Justificacion;
 
 class Justificaciones extends Component
 {
+
+    use WithPagination;
 
     public $persona;
     public $paginator;

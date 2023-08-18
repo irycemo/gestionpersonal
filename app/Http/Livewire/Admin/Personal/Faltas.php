@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Admin\Personal;
 
 use App\Models\Falta;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Faltas extends Component
 {
+
+    use WithPagination;
 
     public $persona;
     public $paginator;

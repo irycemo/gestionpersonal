@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Admin\Personal;
 
 use App\Models\Retardo;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Retardos extends Component
 {
+
+    use WithPagination;
 
     public $persona;
     public $paginator;
