@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Personal;
 
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Checador;
 
-class FullCalendar extends Component
+class FullCallendar extends Component
 {
     public $persona_id;
     public $mes;
@@ -51,6 +51,6 @@ class FullCalendar extends Component
     public function render()
     {
 
-        return view('livewire.admin.full-calendar');
+        return view('livewire.admin.personal.full-callendar');
     }
 }
