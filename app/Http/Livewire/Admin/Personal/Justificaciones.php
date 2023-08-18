@@ -14,7 +14,7 @@ class Justificaciones extends Component
     public function render()
     {
 
-        $justificaciones = Justificacion::with('creadoPor', 'actualizadoPor')
+        $justificaciones = Justificacion::with('creadoPor', 'actualizadoPor', 'retardo', 'falta')
                                     ->where('persona_id', $this->persona->id)
                                     ->latest()
                                     ->paginate($this->paginator);
