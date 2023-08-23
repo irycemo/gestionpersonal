@@ -1,8 +1,8 @@
-<div>
+<div class="overflow-y-auto">
 
     @if($faltas->count())
 
-        <div class="relative overflow-x-auto overflow-y-auto rounded-lg shadow-xl">
+        <div class="relative overflow-x-auto rounded-lg shadow-xl">
 
             <table class="rounded-lg w-full">
 
