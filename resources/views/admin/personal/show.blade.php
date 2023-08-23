@@ -242,7 +242,7 @@
             </div>
 
             <div
-                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                class="text-center mb-2 overflow-auto max-h-0 transition-all duration-500"
                 x-ref="tab5"
                 :style="selected == 5 ? 'max-height: ' + $refs.tab5.scrollHeight + 'px;' :  ''"
             >
