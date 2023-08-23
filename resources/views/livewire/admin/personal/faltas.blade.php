@@ -1,4 +1,4 @@
-<div class="overflow-y-auto">
+<div class="overflow-y-scroll">
 
     @if($faltas->count())
 
