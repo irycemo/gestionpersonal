@@ -68,6 +68,9 @@ class ReporteChecados extends Component
     {
 
         $personal = Persona::with('horario', 'checados')
+                                ->whereHas('checados', function($q){
+                                    $q->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59']);
+                                })
                                 ->when(isset($this->status) && $this->status != "", function($q){
                                     return $q->where('status', $this->status);
                                 })
@@ -87,9 +90,6 @@ class ReporteChecados extends Component
                                     return $q->WhereHas('horario', function($q){
                                         $q->where('id', $this->horario_id);
                                     });
-                                })
-                                ->whereHas('checados', function($q){
-                                    $q->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59']);
                                 })
                                 ->paginate($this->pagination);
 
