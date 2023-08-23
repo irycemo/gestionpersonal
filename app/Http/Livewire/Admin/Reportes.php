@@ -17,6 +17,7 @@ class Reportes extends Component
     public $verPersonal;
     public $verFaltas;
     public $verRetardos;
+    public $verChecados;
 
     protected function rules(){
         return [
@@ -40,6 +41,7 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = false;
             $this->verFaltas = false;
+            $this->verChecados = false;
 
         }elseif($this->area == 'permisos'){
 
@@ -49,7 +51,7 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = false;
             $this->verFaltas = false;
-
+            $this->verChecados = false;
 
         }elseif($this->area == 'incapacidades'){
 
@@ -59,6 +61,7 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = false;
             $this->verFaltas = false;
+            $this->verChecados = false;
 
         }elseif($this->area == 'justificaciones'){
 
@@ -68,6 +71,7 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = false;
             $this->verFaltas = false;
+            $this->verChecados = false;
 
         }elseif($this->area == 'personal'){
 
@@ -77,7 +81,7 @@ class Reportes extends Component
             $this->verPersonal = true;
             $this->verRetardos = false;
             $this->verFaltas = false;
-
+            $this->verChecados = false;
 
         }elseif($this->area == 'faltas'){
 
@@ -87,8 +91,7 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = false;
             $this->verFaltas = true;
-
-
+            $this->verChecados = false;
 
         }elseif($this->area == 'retardos'){
 
@@ -98,6 +101,17 @@ class Reportes extends Component
             $this->verPersonal = false;
             $this->verRetardos = true;
             $this->verFaltas = false;
+            $this->verChecados = false;
+
+        }elseif($this->area == 'checados'){
+
+            $this->verPermisos = false;
+            $this->verIncapacidades = false;
+            $this->verJustificaciones = false;
+            $this->verPersonal = false;
+            $this->verRetardos = false;
+            $this->verFaltas = false;
+            $this->verChecados = true;
 
         }
 

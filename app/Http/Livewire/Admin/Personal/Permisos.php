@@ -13,7 +13,7 @@ class Permisos extends Component
     use WithPagination;
 
     public $persona;
-    public $paginator = 10;
+    public $pagination = 10;
     public $selected_id;
     public $modal = false;
 
@@ -53,7 +53,7 @@ class Permisos extends Component
         $permisos = PermisoPersona::with('permiso', 'creadoPor')
                                     ->where('persona_id', $this->persona->id)
                                     ->latest()
-                                    ->paginate($this->paginator);
+                                    ->paginate($this->pagination);
 
         return view('livewire.admin.personal.permisos', compact('permisos'));
     }

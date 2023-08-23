@@ -12,7 +12,7 @@ class Justificaciones extends Component
     use WithPagination;
 
     public $persona;
-    public $paginator;
+    public $pagination;
 
     public function render()
     {
@@ -20,7 +20,7 @@ class Justificaciones extends Component
         $justificaciones = Justificacion::with('creadoPor', 'actualizadoPor', 'retardo', 'falta')
                                     ->where('persona_id', $this->persona->id)
                                     ->latest()
-                                    ->paginate($this->paginator);
+                                    ->paginate($this->pagination);
 
         return view('livewire.admin.personal.justificaciones', compact('justificaciones'));
     }

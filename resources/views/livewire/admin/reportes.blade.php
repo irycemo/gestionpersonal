@@ -20,6 +20,7 @@
                 <option value="justificaciones">Justificaciones</option>
                 <option value="faltas">Faltas</option>
                 <option value="retardos">Retardos</option>
+                <option value="checados">Checados</option>
 
 
             </select>
@@ -61,6 +62,12 @@
     @if ($verRetardos)
 
         @livewire('admin.reporte-retardo', ['fecha1' => $this->fecha1, 'fecha2' => $this->fecha2])
+
+    @endif
+
+    @if ($verChecados)
+
+        @livewire('admin.reporte-checados', ['fecha1' => $this->fecha1, 'fecha2' => $this->fecha2])
 
     @endif
 
