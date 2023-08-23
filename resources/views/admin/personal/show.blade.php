@@ -247,7 +247,9 @@
                 :style="selected == 5 ? 'max-height: ' + $refs.tab5.scrollHeight + 'px;' :  ''"
             >
 
+            <div class="overflow-y-auto">
                 @livewire('admin.personal.faltas', ['persona' => $persona])
+            </div>
 
             </div>
 
