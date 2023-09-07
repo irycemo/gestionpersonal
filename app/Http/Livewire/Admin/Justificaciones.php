@@ -99,14 +99,20 @@ class Justificaciones extends Component
 
     public function crear(){
 
+        $h = Justificacion::latest();
+
+        dd($j);
+
         $this->validate();
 
         try {
 
             DB::transaction(function () {
 
+                $jus = Justificacion::latest();
+
                 $justificacion = Justificacion::create([
-                    'folio' => intval(Justificacion::latest()->folio) + 1,
+                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
                     'documento' => '',
                     'persona_id' => $this->persona_id,
                     'observaciones' => $this->observaciones,
@@ -255,7 +261,8 @@ class Justificaciones extends Component
 
         $personas = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('status', 'activo')->orderBy('nombre')->get();
 
-        $justificaciones = Justificacion::with('falta', 'retardo', 'persona', 'creadoPor', 'actualizadoPor')->where('folio', 'LIKE', '%' . $this->search . '%')
+        $justificaciones = Justificacion::with('falta', 'retardo', 'persona', 'creadoPor', 'actualizadoPor')
+                                ->where('folio', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('persona_id', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('creado_por', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('actualizado_por', 'LIKE', '%' . $this->search . '%')

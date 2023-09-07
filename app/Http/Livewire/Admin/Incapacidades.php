@@ -95,8 +95,10 @@ class Incapacidades extends Component
 
             DB::transaction(function () {
 
+                $inc = Incapacidad::latest();
+
                 $incapacidad = Incapacidad::create([
-                    'folio' =>  intval(Incapacidad::latest()->folio) + 1,
+                    'folio' =>  $inc->folio ? $inc->folio + 1 : 0,
                     'tipo' => $this->tipo,
                     'fecha_inicial' => $this->fecha_inicial,
                     'fecha_final' => $this->fecha_final,
