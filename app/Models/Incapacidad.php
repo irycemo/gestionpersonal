@@ -25,7 +25,7 @@ class Incapacidad extends Model implements Auditable
 
         return $this->documento
                     ? Storage::disk('incapacidades')->url($this->documento)
-                    : Storage::disk('public')->url('img/logo2.png');
+                    : Storage::disk('public')->url('img/ico.png');
 
     }
 

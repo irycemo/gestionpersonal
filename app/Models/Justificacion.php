@@ -35,7 +35,7 @@ class Justificacion extends Model implements Auditable
 
         return $this->documento
                     ? Storage::disk('justificacion')->url($this->documento)
-                    : Storage::disk('public')->url('img/logo2.png');
+                    : Storage::disk('public')->url('img/ico.png');
 
     }
 }
