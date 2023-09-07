@@ -99,10 +99,6 @@ class Justificaciones extends Component
 
     public function crear(){
 
-        $h = Justificacion::latest();
-
-        dd($j);
-
         $this->validate();
 
         try {
