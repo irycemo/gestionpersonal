@@ -109,7 +109,7 @@ class Justificaciones extends Component
 
             DB::transaction(function () {
 
-                $jus = Justificacion::latest();
+                $jus = Justificacion::latest()->first();
 
                 $justificacion = Justificacion::create([
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
@@ -263,10 +263,11 @@ class Justificaciones extends Component
 
         $justificaciones = Justificacion::with('falta', 'retardo', 'persona', 'creadoPor', 'actualizadoPor')
                                 ->where('folio', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('persona_id', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('creado_por', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('actualizado_por', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('created_at','like', '%'.$this->search.'%')
+                                ->orWhereHas('persona', function($q){
+                                    $q->where('nombre', 'LIKE', '%' . $this->search . '%')
+                                        ->orWhere('ap_paterno', 'LIKE', '%' . $this->search . '%')
+                                        ->orWhere('ap_materno', 'LIKE', '%' . $this->search . '%');
+                                })
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);
 
