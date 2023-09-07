@@ -190,7 +190,8 @@ class Incapacidades extends Component
 
             $incapacidad = Incapacidad::find($this->selected_id);
 
-            Storage::disk('incapacidades')->delete($incapacidad->documento);
+            if($incapacidad->documento)
+                Storage::disk('incapacidades')->delete($incapacidad->documento);
 
             $incapacidad->delete();
 

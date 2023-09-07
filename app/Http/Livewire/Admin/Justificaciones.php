@@ -238,7 +238,8 @@ class Justificaciones extends Component
 
             $justificacion = Justificacion::find($this->selected_id);
 
-            Storage::disk('justificacion')->delete($justificacion->documento);
+            if($justificacion->documento)
+                Storage::disk('justificacion')->delete($justificacion->documento);
 
             $justificacion->delete();
 
