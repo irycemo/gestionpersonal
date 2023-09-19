@@ -23,14 +23,16 @@ class IncapacidadesExport implements FromCollection,  WithProperties, WithDrawin
     public $incapacidades_empleado;
     public $fecha1;
     public $fecha2;
+    public $area;
 
-    public function __construct($incapacidades_folio, $incapacidades_tipo, $incapacidades_empleado, $fecha1, $fecha2)
+    public function __construct($area, $incapacidades_folio, $incapacidades_tipo, $incapacidades_empleado, $fecha1, $fecha2)
     {
         $this->incapacidades_folio = $incapacidades_folio;
         $this->incapacidades_tipo = $incapacidades_tipo;
         $this->incapacidades_empleado = $incapacidades_empleado;
         $this->fecha1 = $fecha1;
         $this->fecha2 = $fecha2;
+        $this->area = $area;
     }
 
     /**
@@ -39,6 +41,11 @@ class IncapacidadesExport implements FromCollection,  WithProperties, WithDrawin
     public function collection()
     {
         return Incapacidad::with('creadoPor', 'actualizadoPor','persona')
+                                ->when (isset($this->area) && $this->area != "", function($q){
+                                    return $q->whereHas('persona', function($q){
+                                        $q->where('area', $this->area);
+                                    });
+                                })
                                 ->when(isset($this->incapacidades_folio) && $this->incapacidades_folio != "", function($q){
                                     return $q->where('folio', $this->incapacidades_folio);
 

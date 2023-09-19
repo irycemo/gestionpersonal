@@ -55,6 +55,17 @@ class Persona extends Model implements Auditable
         return $this->hasMany(PermisoPersona::class);
     }
 
+    public function tiempoConsumidoPermisos(){
+
+        return $this->permisos()->whereMonth('permisos_persona.created_at', Carbon::now()->month)->sum('tiempo_consumido');
+
+    }
+
+    public function permisosEconomicos(){
+
+        return $this->permisos()->whereYear('permisos_persona.created_at', Carbon::now()->year)->where('descripcion','PERMISO ECONÓMICO')->count();
+    }
+
     public function imagenUrl(){
 
         return $this->foto

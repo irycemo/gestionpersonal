@@ -244,7 +244,6 @@
                                      {{ $permiso->tiempo / 24 }} Días
                                 @endif
 
-
                             </td>
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static capitalize">
@@ -370,7 +369,7 @@
 
             </table>
 
-            <div class="h-full w-full rounded-lg bg-gray-200 bg-opacity-75 absolute top-0 left-0" wire:loading wire:target="search">
+            <div class="h-full w-full rounded-lg bg-gray-200 bg-opacity-75 absolute top-0 left-0" wire:loading.delay.longer>
 
                 <img class="mx-auto h-16" src="{{ asset('storage/img/loading.svg') }}" alt="">
 
@@ -567,7 +566,7 @@
 
     </x-jet-dialog-modal>
 
-    <x-jet-dialog-modal wire:model="modalAsignar">
+    <x-jet-dialog-modal wire:model="modalAsignar" maxWidth="lg">
 
         <x-slot name="title">
 
@@ -575,25 +574,25 @@
 
         </x-slot>
 
-        <x-slot name="content">
+        <x-slot name="content" >
 
             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
                 <div class="flex-auto">
 
                     <div>
-                        <label>Empleado</label>
+                        <label>Áreas de adscripción</label>
                     </div>
 
                     <div>
 
-                        <select class="bg-white rounded text-sm w-full" wire:model="empleado_id">
+                        <select class="bg-white rounded text-sm w-full" wire:model="area">
 
-                            <option value="" selected>Selecciona un empleado</option>
+                            <option value="" selected>Selecciona una opción</option>
 
-                            @foreach ($empleados as $empleado)
+                            @foreach ($areas as $item)
 
-                                <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->ap_paterno }} {{ $empleado->ap_materno }}</option>
+                                <option value="{{ $item }}">{{ $item }}</option>
 
                             @endforeach
 
@@ -603,27 +602,7 @@
 
                     <div>
 
-                        @error('empleado_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
-                    </div>
-
-                </div>
-
-                <div class="flex-auto">
-
-                    <div>
-                        <label>Fecha</label>
-                    </div>
-
-                    <div>
-
-                        <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada">
-
-                    </div>
-
-                    <div>
-
-                        @error('fecha_asignada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                        @error('area') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
@@ -631,22 +610,160 @@
 
             </div>
 
+            @if($area)
+
+                <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                    <div class="flex-auto">
+
+                        <div>
+                            <label>Empelado</label>
+                        </div>
+
+                        <div>
+
+                            <select class="bg-white rounded text-sm w-full" wire:model="empleado_id">
+
+                                <option value="" selected>Selecciona una opción</option>
+
+                                @foreach ($empleados as $item)
+
+                                    <option value="{{ $item->id }}">{{ $item->ap_paterno }} {{ $item->ap_materno }} {{ $item->nombre }}</option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            @error('empleado_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+            @if($empleado)
+
+                <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                    @if ($tipo == 'oficial')
+
+                        <div class="flex-auto">
+
+                            <div>
+                                <label>Fecha</label>
+                            </div>
+
+                            <div>
+
+                                <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada">
+
+                            </div>
+
+                            <div>
+
+                                @error('fecha_asignada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                            </div>
+
+                        </div>
+
+                    @elseif($tipo == 'personal' && $empleado->localidad != 'Catastro')
+
+                        <div class="flex-auto">
+
+                            <div>
+                                <label>Fecha inicial</label>
+                            </div>
+
+                            <div>
+
+                                <input type="date" class="bg-white rounded text-sm w-full" wire:model="fecha_asignada">
+
+                            </div>
+
+                            <div>
+
+                                @error('fecha_asignada') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                            </div>
+
+                        </div>
+
+                    @else
+
+                        <div class="flex-auto">
+
+                            <div>
+                                <label>Fecha inicial</label>
+                            </div>
+
+                            <div>
+
+                                <input type="datetime-local" class="bg-white rounded text-sm w-full" wire:model="fecha_inicial">
+
+                            </div>
+
+                            <div>
+
+                                @error('fecha_inicial') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                            </div>
+
+                        </div>
+
+                        <div class="flex-auto">
+
+                            <div>
+                                <label>Fecha final</label>
+                            </div>
+
+                            <div>
+
+                                <input type="datetime-local" class="bg-white rounded text-sm w-full" wire:model="fecha_final">
+
+                            </div>
+
+                            <div>
+
+                                @error('fecha_final') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                            </div>
+
+                        </div>
+
+                    @endif
+
+                </div>
+
+            @endif
+
         </x-slot>
 
         <x-slot name="footer">
 
             <div class="float-righ">
 
-                <button
-                    wire:click="asignarPermiso"
-                    wire:loading.attr="disabled"
-                    wire:target="asignarPermiso"
-                    class="bg-blue-400 text-white hover:shadow-lg font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+                @if($empleado)
 
-                    <img wire:loading wire:target="asignarPermiso" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+                    <button
+                        wire:click="asignarPermiso"
+                        wire:loading.attr="disabled"
+                        wire:target="asignarPermiso"
+                        class="bg-blue-400 text-white hover:shadow-lg font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
 
-                    Asignar
-                </button>
+                        <img wire:loading wire:target="asignarPermiso" class="mx-auto h-4 mr-1" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+
+                        Asignar
+                    </button>
+
+                @endif
 
                 <button
                     wire:click="resetearTodo"

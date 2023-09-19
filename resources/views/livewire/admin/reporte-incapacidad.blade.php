@@ -12,7 +12,7 @@
 
             <div>
 
-                <input type="datetime-local" class="bg-white rounded text-sm " wire:model="fecha1">
+                <input type="date" class="bg-white rounded text-sm " wire:model="fecha1">
 
             </div>
 
@@ -34,7 +34,7 @@
 
             <div>
 
-                <input type="datetime-local" class="bg-white rounded text-sm " wire:model="fecha2">
+                <input type="date" class="bg-white rounded text-sm " wire:model="fecha2">
 
             </div>
 
@@ -54,12 +54,43 @@
 
             <div>
 
+                <Label>Areas</Label>
+            </div>
+
+            <div>
+
+                <select class="rounded text-sm w-full" wire:model="area">
+
+                    <option value="" selected>Seleccione una opción</option>
+
+                    @foreach ($areas as $area)
+
+                        <option value="{{ $area }}">{{ $area }}</option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div>
+
+                @error('area') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+            </div>
+
+        </div>
+
+        <div class="flex-auto ">
+
+            <div>
+
                 <Label>Empleado</Label>
             </div>
 
             <div>
 
-                <select class="rounded text-sm w-full" wire:model="justificaciones_empleado">
+                <select class="rounded text-sm w-full" wire:model="incapacidades_empleado">
 
                     <option value="" selected>Seleccione un empleado</option>
 
@@ -75,7 +106,7 @@
 
             <div>
 
-                @error('justificaciones_empleado') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                @error('incapacidades_empleado') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
             </div>
 
@@ -256,7 +287,7 @@
 
             </table>
 
-            <div class="h-full w-full rounded-lg bg-gray-200 bg-opacity-75 absolute top-0 left-0" wire:loading>
+            <div class="h-full w-full rounded-lg bg-gray-200 bg-opacity-75 absolute top-0 left-0" wire:loading.delay.longer>
 
                 <img class="mx-auto h-16" src="{{ asset('storage/img/loading.svg') }}" alt="">
 

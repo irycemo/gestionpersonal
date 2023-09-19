@@ -144,6 +144,22 @@
 
                 @endif
 
+                <div class="mb-4">
+
+                    <p class="tracking-widest font-semibold text-lg">Tiempo consumido por permisos</p>
+
+                    {{ $persona->tiempoConsumidoPermisos() }} min.
+
+                </div>
+
+                <div class="mb-4">
+
+                    <p class="tracking-widest font-semibold text-lg">Permisos económicos</p>
+
+                    {{ $persona->permisosEconomicos() }}
+
+                </div>
+
             </div>
 
 

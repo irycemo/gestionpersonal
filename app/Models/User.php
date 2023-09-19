@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Http\Traits\ModelosTrait;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,5 +71,24 @@ class User extends Authenticatable implements Auditable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function tiempoConsumidoPermisos(){
+
+        $permisos = $this->permisos()->where('tipo', 'personal')
+                                                ->where('tiempo_consumido','!=', null)
+                                                ->where('status', '!=', null)
+                                                ->whereMonth('permisos_persona.created_at', Carbon::now()->month)
+                                                ->get();
+
+        $min = 0;
+
+        foreach ($permisos as $permiso) {
+
+            $min = $min + $permiso->pivot->tiempo_consumido;
+
+        }
+
+        return $min;
+    }
 
 }

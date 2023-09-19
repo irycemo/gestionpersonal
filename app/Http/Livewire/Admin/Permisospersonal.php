@@ -3,12 +3,16 @@
 namespace App\Http\Livewire\Admin;
 
 use Carbon\Carbon;
+use App\Models\Falta;
 use App\Models\Inhabil;
 use App\Models\Persona;
 use Livewire\Component;
+use App\Http\Constantes;
 use App\Models\Permisos;
 use Livewire\WithPagination;
+use App\Models\Justificacion;
 use App\Models\PermisoPersona;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use App\Http\Traits\ComponentesTrait;
 
@@ -25,12 +29,18 @@ class Permisospersonal extends Component
     public $unidad;
 
     public $modalAsignar = false;
+    public $areas;
+    public $area;
+    public $empleados;
     public $empleado_id;
     public $empleado;
     public $permiso_id;
     public $permiso_limite;
     public $permiso_tiempo;
+    public $permiso_descripcion;
     public $fecha_asignada;
+    public $fecha_inicial;
+    public $fecha_final;
 
     protected $queryString = ['search'];
 
@@ -54,9 +64,11 @@ class Permisospersonal extends Component
 
     public function updatedEmpleadoId(){
 
+        $this->reset('fecha_inicial', 'fecha_final');
+
         if($this->empleado_id != null){
 
-            $this->empleado = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->with('permisos')->find($this->empleado_id);
+            $this->empleado = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id', 'localidad')->with('permisos')->find($this->empleado_id);
 
             $permisosSolicitados = $this->empleado->permisos()->where('permisos_id', $this->permiso_id)
                                                                 ->whereMonth('permisos.created_at', Carbon::now()->month)
@@ -87,6 +99,17 @@ class Permisospersonal extends Component
 
     }
 
+    public function updatedArea(){
+
+        $this->reset('empleado', 'fecha_inicial', 'fecha_final');
+
+        $this->empleados = Persona::where('status', 'activo')
+                                        ->where('area', $this->area)
+                                        ->orderBy('ap_paterno')
+                                        ->get();
+
+    }
+
     public function convertirTiempo(){
 
         if($this->unidad == 'dias'){
@@ -97,7 +120,7 @@ class Permisospersonal extends Component
 
     public function resetearTodo(){
 
-        $this->reset(['fecha_asignada', 'tiempo', 'tipo', 'permiso_id', 'modalAsignar', 'empleado_id', 'modalBorrar', 'crear', 'editar', 'modal', 'descripcion', 'limite']);
+        $this->reset(['fecha_asignada','fecha_inicial', 'fecha_final', 'empleado', 'area', 'tiempo', 'tipo', 'permiso_id', 'modalAsignar', 'empleado_id', 'modalBorrar', 'crear', 'editar', 'modal', 'descripcion', 'limite']);
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -124,12 +147,13 @@ class Permisospersonal extends Component
 
     public function abiriModalAsignar($permiso){
 
+        $this->resetearTodo();
+
         $this->permiso_id = $permiso['id'];
+        $this->tipo = $permiso['tipo'];
         $this->permiso_limite = $permiso['limite'];
         $this->permiso_tiempo = $permiso['tiempo'];
-
-        if($this->permiso_tiempo == 0)
-            $this->fecha_asignada = now()->format('Y-m-d');
+        $this->permiso_descripcion = $permiso['descripcion'];
 
         $this->modalAsignar = true;
 
@@ -138,6 +162,14 @@ class Permisospersonal extends Component
     public function crear(){
 
         $this->validate();
+
+        if($this->tipo == 'personal' && $this->tiempo >= 24){
+
+            $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Los permisos personales no pueden ser mayores a 24 hrs."]);
+
+            return;
+
+        }
 
         $this->convertirTiempo();
 
@@ -218,27 +250,37 @@ class Permisospersonal extends Component
 
     public function asignarPermiso(){
 
-        /* Si el permiso es de salida ($this->permiso_tiempo == 0) la fecha asignada no puede ser mayor a el día actual */
-        if($this->permiso_tiempo == 0){
+        $this->validate([
+            'empleado' => 'required',
+            'area' => 'required',
+            'fecha_asignada' => [Rule::requiredIf($this->tipo == 'oficial' || $this->tipo == 'personal' && $this->empleado->localidad != 'Catastro')],
+            'fecha_inicial' => [Rule::requiredIf($this->tipo == 'personal' && $this->empleado->localidad == 'Catastro')],
+            'fecha_final' => [Rule::requiredIf($this->tipo == 'personal' && $this->empleado->localidad == 'Catastro')],
+        ]);
 
-            $this->validate([
-                'fecha_asignada' => 'sometimes|date|before:tomorrow',
-                'empleado_id' => 'required',
-            ]);
+        if($this->fecha_asignada){
 
-        }else{
-
-            $this->validate([
-                'fecha_asignada' => 'sometimes|date',
-                'empleado_id' => 'required',
-            ]);
-
-        }
-
-        $permiso = PermisoPersona::where('persona_id', $this->empleado_id)
+            $permiso = PermisoPersona::where('persona_id', $this->empleado_id)
                                         ->where('fecha_inicio', '<=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada)->toDateString())
                                         ->where('fecha_final', '>=', Carbon::createFromFormat('Y-m-d', $this->fecha_asignada)->toDateString())
                                         ->first();
+
+        }else{
+
+            if($this->fecha_inicial > $this->fecha_final){
+
+                $this->dispatchBrowserEvent('mostrarMensaje', ['error', "La fecha inicial no puede ser mayor a la fecha final."]);
+
+                return;
+
+            }
+
+            $permiso = PermisoPersona::where('persona_id', $this->empleado_id)
+                                        ->where('fecha_inicio', '<=', $this->fecha_inicial)
+                                        ->where('fecha_final', '>=', $this->fecha_final)
+                                        ->first();
+
+        }
 
         if($permiso){
 
@@ -280,6 +322,8 @@ class Permisospersonal extends Component
 
             try {
 
+                $this->justificarFalta($this->fecha_asignada, $final);
+
                 PermisoPersona::create([
                     'creado_por' => auth()->user()->id,
                     'fecha_inicio' => $this->fecha_asignada,
@@ -302,27 +346,46 @@ class Permisospersonal extends Component
 
             try {
 
-                if(now()->isSameDay($this->fecha_asignada)){
+                if($this->tipo == 'personal' && $this->empleado->localidad == 'Catastro'){
+
+                    $ff = Carbon::parse($this->fecha_final);
+                    $fi = Carbon::parse($this->fecha_inicial);
 
                     PermisoPersona::create([
                         'creado_por' => auth()->user()->id,
-                        'fecha_inicio' => $this->fecha_asignada,
-                        'fecha_final' => $this->fecha_asignada,
+                        'fecha_inicio' => $this->fecha_inicial,
+                        'fecha_final' => $this->fecha_final,
                         'permisos_id' => $this->permiso_id,
-                        'persona_id' => $this->empleado->id
+                        'persona_id' => $this->empleado->id,
+                        'status' => 1,
+                        'tiempo_consumido' => $ff->diffInMinutes($fi)
                     ]);
 
                 }else{
 
-                    PermisoPersona::create([
-                        'creado_por' => auth()->user()->id,
-                        'fecha_inicio' => $this->fecha_asignada,
-                        'fecha_final' => $this->fecha_asignada,
-                        'permisos_id' => $this->permiso_id,
-                        'persona_id' => $this->empleado->id,
-                        'status' => 1,
-                        'tiempo_consumido' => $this->tiempoConsumido()
-                    ]);
+                    if(now()->isSameDay($this->fecha_asignada)){
+
+                        PermisoPersona::create([
+                            'creado_por' => auth()->user()->id,
+                            'fecha_inicio' => $this->fecha_asignada,
+                            'fecha_final' => $this->fecha_asignada,
+                            'permisos_id' => $this->permiso_id,
+                            'persona_id' => $this->empleado->id
+                        ]);
+
+                    }else{
+
+                        PermisoPersona::create([
+                            'creado_por' => auth()->user()->id,
+                            'fecha_inicio' => $this->fecha_asignada,
+                            'fecha_final' => $this->fecha_asignada,
+                            'permisos_id' => $this->permiso_id,
+                            'persona_id' => $this->empleado->id,
+                            'status' => 1,
+                            'tiempo_consumido' => $this->tiempoConsumido()
+                        ]);
+                    }
+
                 }
 
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "Se asigno el permiso correctamente."]);
@@ -383,10 +446,42 @@ class Permisospersonal extends Component
 
     }
 
+    public function justificarFalta($fi, $ff){
+
+        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+
+        if($faltas->count() > 0){
+
+            foreach ($faltas as $falta) {
+
+                $jus = Justificacion::orderBy('folio', 'desc')->first();
+
+                $jsutificacion = Justificacion::create([
+                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                    'documento' => '',
+                    'persona_id' => $this->empleado->id,
+                    'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'creado_por' => auth()->user()->id
+                ]);
+
+                $falta->update([
+                    'justificacion_id' => $jsutificacion->id
+                ]);
+
+            }
+
+        }
+
+    }
+
+    public function mount(){
+
+        $this->areas = Constantes::AREAS_ADSCRIPCION;
+
+    }
+
     public function render()
     {
-
-        $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
         $permisos = Permisos::with('creadoPor', 'actualizadoPor')
                             ->where('descripcion','like', '%'.$this->search.'%')
@@ -396,6 +491,7 @@ class Permisospersonal extends Component
                             ->paginate($this->pagination);
 
 
-        return view('livewire.admin.permisospersonal', compact('permisos', 'empleados'))->extends('layouts.admin');
+        return view('livewire.admin.permisospersonal', compact('permisos'))->extends('layouts.admin');
+
     }
 }

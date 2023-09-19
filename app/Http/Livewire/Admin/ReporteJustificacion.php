@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Persona;
 use Livewire\Component;
+use App\Http\Constantes;
 use Livewire\WithPagination;
 use App\Models\Justificacion;
 use Illuminate\Support\Facades\Log;
@@ -15,12 +16,29 @@ class ReporteJustificacion extends Component
 
     use WithPagination;
 
+    public $area;
+    public $areas;
+    public $empleados;
     public $justificaciones_folio;
     public $justificaciones_empleado;
     public $fecha1;
     public $fecha2;
 
     public $pagination = 10;
+
+    public function updatedArea(){
+
+        if($this->area === ""){
+
+            $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
+
+        }else{
+
+            $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('area', $this->area)->orderBy('nombre')->get();
+
+        }
+
+    }
 
     public function descargarExcel(){
 
@@ -29,7 +47,7 @@ class ReporteJustificacion extends Component
 
         try {
 
-            return Excel::download(new JustificacionesExport($this->justificaciones_folio, $this->justificaciones_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_justificaciones_' . now()->format('d-m-Y') . '.xlsx');
+            return Excel::download(new JustificacionesExport($this->area, $this->justificaciones_folio, $this->justificaciones_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_justificaciones_' . now()->format('d-m-Y') . '.xlsx');
 
         } catch (\Throwable $th) {
 
@@ -40,12 +58,23 @@ class ReporteJustificacion extends Component
 
     }
 
+    public function mount(){
+
+        $this->areas = Constantes::AREAS_ADSCRIPCION;
+
+        $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
+
+    }
+
     public function render()
     {
 
-        $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
-
         $justificaciones = Justificacion::with('creadoPor', 'actualizadoPor','persona', 'falta', 'retardo')
+                                            ->when (isset($this->area) && $this->area != "", function($q){
+                                                return $q->whereHas('persona', function($q){
+                                                    $q->where('area', $this->area);
+                                                });
+                                            })
                                             ->when(isset($this->justificaciones_folio) && $this->justificaciones_folio != "", function($q){
                                                 return $q->where('folio', $this->justificaciones_folio);
 
@@ -56,6 +85,6 @@ class ReporteJustificacion extends Component
                                             ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
                                             ->paginate($this->pagination);
 
-        return view('livewire.admin.reporte-justificacion', compact('justificaciones', 'empleados'));
+        return view('livewire.admin.reporte-justificacion', compact('justificaciones'));
     }
 }

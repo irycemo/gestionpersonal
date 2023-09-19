@@ -15,11 +15,28 @@ class ReporteRetardo extends Component
 
     use WithPagination;
 
+    public $area;
+    public $areas;
+    public $empleados;
     public $retardo_empleado;
     public $fecha1;
     public $fecha2;
 
     public $pagination = 10;
+
+    public function updatedArea(){
+
+        if($this->area === ""){
+
+            $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
+
+        }else{
+
+            $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->where('area', $this->area)->orderBy('nombre')->get();
+
+        }
+
+    }
 
     public function descargarExcel(){
 
@@ -29,7 +46,7 @@ class ReporteRetardo extends Component
 
         try {
 
-            return Excel::download(new RetardosExport($this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
+            return Excel::download(new RetardosExport($this->area, $this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
 
         } catch (\Throwable $th) {
 
@@ -44,15 +61,18 @@ class ReporteRetardo extends Component
     public function render()
     {
 
-        $empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
-
         $retardos = Retardo::with('persona', 'justificacion')
+                                ->when (isset($this->area) && $this->area != "", function($q){
+                                    return $q->whereHas('persona', function($q){
+                                        $q->where('area', $this->area);
+                                    });
+                                })
                                 ->when(isset($this->retardo_empleado) && $this->retardo_empleado != "", function($q){
                                     return $q->where('persona_id', $this->retardo_empleado);
                                 })
                                 ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
                                 ->paginate($this->pagination);
 
-        return view('livewire.admin.reporte-retardo', compact('retardos', 'empleados'));
+        return view('livewire.admin.reporte-retardo', compact('retardos'));
     }
 }

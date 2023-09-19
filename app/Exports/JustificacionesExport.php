@@ -22,13 +22,15 @@ class JustificacionesExport implements FromCollection,  WithProperties, WithDraw
     public $justificaciones_empleado;
     public $fecha1;
     public $fecha2;
+    public $area;
 
-    public function __construct($justificaciones_folio, $justificaciones_empleado, $fecha1, $fecha2)
+    public function __construct($area, $justificaciones_folio, $justificaciones_empleado, $fecha1, $fecha2)
     {
         $this->justificaciones_folio = $justificaciones_folio;
         $this->justificaciones_empleado = $justificaciones_empleado;
         $this->fecha1 = $fecha1;
         $this->fecha2 = $fecha2;
+        $this->area = $area;
     }
 
     /**
@@ -37,6 +39,11 @@ class JustificacionesExport implements FromCollection,  WithProperties, WithDraw
     public function collection()
     {
         return Justificacion::with('creadoPor', 'actualizadoPor','persona', 'falta', 'retardo')
+                                ->when (isset($this->area) && $this->area != "", function($q){
+                                    return $q->whereHas('persona', function($q){
+                                        $q->where('area', $this->area);
+                                    });
+                                })
                                 ->when(isset($this->justificaciones_folio) && $this->justificaciones_folio != "", function($q){
                                     return $q->where('folio', $this->justificaciones_folio);
 

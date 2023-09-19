@@ -25,8 +25,9 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
         public $fecha_finalPermiso;
         public $fecha1;
         public $fecha2;
+        public $area;
 
-    public function __construct($personaPermiso,$permisoPermiso, $fecha_inicioPermiso, $fecha_finalPermiso, $fecha1, $fecha2)
+    public function __construct($area, $personaPermiso,$permisoPermiso, $fecha_inicioPermiso, $fecha_finalPermiso, $fecha1, $fecha2)
     {
         $this->personaPermiso = $personaPermiso;
         $this->permisoPermiso = $permisoPermiso;
@@ -34,6 +35,7 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
         $this->fecha_finalPermiso = $fecha_finalPermiso;
         $this->fecha1 = $fecha1;
         $this->fecha2 = $fecha2;
+        $this->area = $area;
     }
 
     /**
@@ -42,6 +44,11 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
     public function collection()
     {
         return PermisoPersona::with('persona', 'permiso', 'creadoPor')
+                                ->when (isset($this->area) && $this->area != "", function($q){
+                                    return $q->whereHas('persona', function($q){
+                                        $q->where('area', $this->area);
+                                    });
+                                })
                                 ->when (isset($this->personaPermiso) && $this->personaPermiso != "", function($q){
                                     return $q->where('persona_id', $this->personaPermiso);
                                 })

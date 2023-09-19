@@ -21,14 +21,16 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     public $falta_tipo;
     public $fecha1;
     public $fecha2;
+    public $area;
 
 
-    public function __construct($falta_empleado, $falta_tipo, $fecha1, $fecha2)
+    public function __construct($area, $falta_empleado, $falta_tipo, $fecha1, $fecha2)
     {
         $this->falta_empleado = $falta_empleado;
         $this->falta_tipo = $falta_tipo;
         $this->fecha1 = $fecha1;
         $this->fecha2 = $fecha2;
+        $this->area = $area;
 
     }
 
@@ -38,6 +40,11 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     public function collection()
     {
         return Falta::with('persona', 'justificacion')
+                        ->when (isset($this->area) && $this->area != "", function($q){
+                            return $q->whereHas('persona', function($q){
+                                $q->where('area', $this->area);
+                            });
+                        })
                         ->when(isset($this->falta_empleado) && $this->falta_empleado != "", function($q){
                             return $q->where('persona_id', $this->falta_empleado);
                         })
