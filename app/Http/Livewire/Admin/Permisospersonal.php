@@ -454,7 +454,7 @@ class Permisospersonal extends Component
 
             foreach ($faltas as $falta) {
 
-                $jus = Justificacion::orderBy('folio', 'desc')->first();
+                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
 
                 $jsutificacion = Justificacion::create([
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
