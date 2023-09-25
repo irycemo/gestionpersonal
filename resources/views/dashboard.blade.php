@@ -4,7 +4,7 @@
 
     <div class=" mb-10">
 
-        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Estadisticas del mes actual</h2>
+        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500  mb-6  bg-white">Estadisticas del mes actual</h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
 
@@ -12,13 +12,13 @@
 
                 <div class="  mb-2 items-center">
 
-                    <span class="font-bold text-2xl text-blueGray-600 mb-2">
+                    <span class="font-semibold text-2xl text-blueGray-600 mb-2">
 
                         <p>{{ $faltas }}</p>
 
                     </span>
 
-                    <h5 class="text-blueGray-400 uppercase font-semibold text-center  tracking-widest md:tracking-normal">Faltas</h5>
+                    <h5 class="text-blueGray-400 uppercase  text-center  tracking-widest md:tracking-normal">Faltas</h5>
 
                 </div>
 
@@ -30,13 +30,13 @@
 
                 <div class="  mb-2 items-center">
 
-                    <span class="font-bold text-2xl text-blueGray-600 mb-2">
+                    <span class="font-semibold text-2xl text-blueGray-600 mb-2">
 
                         <p>{{ $retardos }}</p>
 
                     </span>
 
-                    <h5 class="text-blueGray-400 uppercase font-semibold text-center  tracking-widest md:tracking-normal">Retardos</h5>
+                    <h5 class="text-blueGray-400 uppercase  text-center  tracking-widest md:tracking-normal">Retardos</h5>
 
                 </div>
 
@@ -48,13 +48,13 @@
 
                 <div class="  mb-2 items-center">
 
-                    <span class="font-bold text-2xl text-blueGray-600 mb-2">
+                    <span class="font-semibold text-2xl text-blueGray-600 mb-2">
 
                         <p>{{ $permisos }}</p>
 
                     </span>
 
-                    <h5 class="text-blueGray-400 uppercase font-semibold text-center  tracking-widest md:tracking-normal">Permisos</h5>
+                    <h5 class="text-blueGray-400 uppercase  text-center  tracking-widest md:tracking-normal">Permisos</h5>
 
                 </div>
 
@@ -66,13 +66,13 @@
 
                 <div class="  mb-2 items-center">
 
-                    <span class="font-bold text-2xl text-blueGray-600 mb-2">
+                    <span class="font-semibold text-2xl text-blueGray-600 mb-2">
 
                         <p>{{ $justificaciones }}</p>
 
                     </span>
 
-                    <h5 class="text-blueGray-400 uppercase font-semibold text-center  tracking-widest md:tracking-normal">Justificaciones</h5>
+                    <h5 class="text-blueGray-400 uppercase  text-center  tracking-widest md:tracking-normal">Justificaciones</h5>
 
                 </div>
 
@@ -84,13 +84,13 @@
 
                 <div class="  mb-2 items-center">
 
-                    <span class="font-bold text-2xl text-blueGray-600 mb-2">
+                    <span class="font-semibold text-2xl text-blueGray-600 mb-2">
 
                         <p>{{ $incapacidades }}</p>
 
                     </span>
 
-                    <h5 class="text-blueGray-400 uppercase font-semibold text-center  tracking-widest md:tracking-normal">Incapacidades</h5>
+                    <h5 class="text-blueGray-400 uppercase  text-center  tracking-widest md:tracking-normal">Incapacidades</h5>
 
                 </div>
 
@@ -104,7 +104,7 @@
 
     <div>
 
-        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6  bg-white">Estadisticas de Asistencias</h2>
+        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500  mb-6  bg-white">Estadisticas de Asistencias</h2>
 
     </div>
 
@@ -118,9 +118,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalCatastroTotal }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalCatastroTotal }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalCatastroPresente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalCatastroPresente }}</p>
 
                 </div>
 
@@ -138,9 +138,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRPPTotal }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRPPTotal }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRppPresente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRppPresente }}</p>
 
                 </div>
 
@@ -158,9 +158,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional1Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional1Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional1Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional1Presente }}</p>
 
                 </div>
 
@@ -178,9 +178,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional2Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional2Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional2Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional2Presente }}</p>
 
                 </div>
 
@@ -198,9 +198,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional3Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional3Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional3Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional3Presente }}</p>
 
                 </div>
 
@@ -218,9 +218,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional4Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional4Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional4Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional4Presente }}</p>
 
                 </div>
 
@@ -238,9 +238,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional5Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional5Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional5Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional5Presente }}</p>
 
                 </div>
 
@@ -258,9 +258,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional6Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional6Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional6Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional6Presente }}</p>
 
                 </div>
 
@@ -278,9 +278,9 @@
 
                 <div>
 
-                    <p class="font-bold">Total de empleados activos: {{ $personalRegional7Total }}</p>
+                    <p class="font-semibold">Total de empleados activos: {{ $personalRegional7Total }}</p>
 
-                    <p class="font-bold">Total de empleados presentes: {{ $personalRegional7Presente }}</p>
+                    <p class="font-semibold">Total de empleados presentes: {{ $personalRegional7Presente }}</p>
 
                 </div>
 
