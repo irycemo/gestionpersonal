@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Persona;
 use App\Models\Retardo;
 use Livewire\Component;
+use App\Http\Constantes;
 use Livewire\WithPagination;
 use App\Exports\RetardosExport;
 use Illuminate\Support\Facades\Log;
@@ -55,6 +56,14 @@ class ReporteRetardo extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
 
         }
+
+    }
+
+    public function mount(){
+
+        $this->areas = collect(Constantes::AREAS_ADSCRIPCION)->sort();
+
+        $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
     }
 
