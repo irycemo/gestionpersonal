@@ -8,11 +8,12 @@ use App\Models\Horario;
 use App\Models\Retardo;
 use App\Models\Checador;
 use App\Models\Permisos;
+use App\Models\Incidencia;
 use App\Models\PermisoPersona;
 use App\Http\Traits\ModelosTrait;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Persona extends Model implements Auditable
@@ -47,6 +48,14 @@ class Persona extends Model implements Auditable
         return $this->hasMany(Checador::class);
     }
 
+    public function ultimoChecado(){
+        return $this->hasOne(Checador::class)->latest();
+    }
+
+    public function incidencias(){
+        return $this->hasMany(Incidencia::class);
+    }
+
     public function permisos(){
         return $this->belongsToMany(Permisos::class)->withPivot(['fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
     }
@@ -57,7 +66,13 @@ class Persona extends Model implements Auditable
 
     public function tiempoConsumidoPermisos(){
 
-        return $this->permisos()->whereMonth('permisos_persona.created_at', Carbon::now()->month)->sum('tiempo_consumido');
+        return $this->permisos()->whereYear('permisos_persona.created_at', Carbon::now()->year)->sum('tiempo_consumido');
+
+    }
+
+    public function tiempoConsumidoIncidencias(){
+
+        return $this->incidencias()->whereYear('created_at', Carbon::now()->year)->sum('tiempo_consumido');
 
     }
 

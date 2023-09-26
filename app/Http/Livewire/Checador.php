@@ -156,7 +156,6 @@ class Checador extends Component
         $permiso = $this->persona->permisos()
                                     ->where('tipo', 'personal')
                                     ->where('tiempo_consumido', null)
-                                    ->where('status', null)
                                     ->whereDate('fecha_inicio', now()->format('Y-m-d'))
                                     ->first();
 
@@ -165,8 +164,6 @@ class Checador extends Component
             if(count($this->persona->checados) > 0){
 
                 if($this->persona->checados->last()->created_at->isSameDay(now()) && $this->persona->checados->last()->tipo == 'salida'){
-
-                    $permiso->pivot->status = 1;
                     $permiso->pivot->tiempo_consumido = now()->diffInMinutes($this->persona->checados->last()->created_at);
                     $permiso->pivot->save();
                 }

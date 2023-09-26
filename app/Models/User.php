@@ -72,23 +72,4 @@ class User extends Authenticatable implements Auditable
         'profile_photo_url',
     ];
 
-    public function tiempoConsumidoPermisos(){
-
-        $permisos = $this->permisos()->where('tipo', 'personal')
-                                                ->where('tiempo_consumido','!=', null)
-                                                ->where('status', '!=', null)
-                                                ->whereMonth('permisos_persona.created_at', Carbon::now()->month)
-                                                ->get();
-
-        $min = 0;
-
-        foreach ($permisos as $permiso) {
-
-            $min = $min + $permiso->pivot->tiempo_consumido;
-
-        }
-
-        return $min;
-    }
-
 }

@@ -87,7 +87,7 @@ class RevisarAsistencias extends Command
 
         } catch (\Throwable $th) {
 
-            Log::error('Error en proceso para checar faltas. ' . $th->getMessage());
+            Log::error('Error en proceso para checar faltas. ' . $th);
 
         }
 

@@ -16,6 +16,8 @@ class PermisoPersona extends Model implements Auditable
     use ModelosTrait;
     use \OwenIt\Auditing\Auditable;
 
+    /* Status ? 1 contabilizado : no contabilizado */
+
     protected $fillable = ['persona_id', 'permisos_id', 'creado_por', 'fecha_inicio', 'fecha_final', 'tiempo_consumido', 'status'];
 
     protected $table = 'permisos_persona';

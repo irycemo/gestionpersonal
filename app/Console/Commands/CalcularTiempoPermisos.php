@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Persona;
-use App\Models\Permisos;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +21,7 @@ class CalcularTiempoPermisos extends Command
      *
      * @var string
      */
-    protected $description = 'Calcula el tiempo consumido por los permisos personales pedidos en el mes actual';
+    protected $description = 'Calcula el tiempo consumido por los permisos personales pedidos e incidencias en el año actual';
 
     /**
      * Execute the console command.
@@ -34,14 +33,19 @@ class CalcularTiempoPermisos extends Command
 
         try {
 
-            $empleados = Persona::with('checados', 'permisos')->where('status', 'activo')->get();
+            $empleados = Persona::with('checados', 'permisos', 'incidencias')->where('status', 'activo')->get();
 
             foreach($empleados as $empleado){
 
                 $permisos = $empleado->permisos()->where('tipo', 'personal')
                                                 ->where('tiempo_consumido','!=', null)
-                                                ->where('status', '!=', null)
-                                                ->whereMonth('permisos_persona.created_at', Carbon::now()->month)
+                                                ->whereNull('status')
+                                                ->whereYear('permisos_persona.created_at', Carbon::now()->year)
+                                                ->get();
+
+                $incidencias = $empleado->incidencias()->where('tiempo_consumido','!=', null)
+                                                ->whereYear('created_at', Carbon::now()->year)
+                                                ->where('status', '!=', 1)
                                                 ->get();
 
                 $min = 0;
@@ -52,23 +56,43 @@ class CalcularTiempoPermisos extends Command
 
                 }
 
+                foreach ($incidencias as $incidencia) {
+
+                    $min = $min + $incidencia->tiempo_consumido;
+
+                }
+
                 //Horas laborales 8
                 $dias = ($min / 60) / 8;
 
                 if($dias >= 1){
 
-                    /* Se asigna día económico al trabajador id: 1 */
+                    /* Se asigna día económico (id: 1), al trabajador */
                     $empleado->permisos()->attach(1, ['fecha_inicio' => now()->format('Y-m-d')]);
+
+                    foreach($permisos as $permiso){
+
+                        $permiso->status = 1;
+                        $permiso->save();
+
+                    }
+
+                    foreach($incidencias as $incidencia){
+
+                        $incidencia->status = 1;
+                        $incidencia->save();
+
+                    }
 
                 }
 
             }
 
-            Log::info('Proceso completado para calcular el tiempo consumido por los permisos en el mes actual.');
+            Log::info('Proceso completado para calcular el tiempo consumido por los permisos e incidencias en el año actual.');
 
         } catch (\Throwable $th) {
 
-            Log::error('Error en proceso para calcular tiempo consumido por los permisos. ' . $th->getMessage());
+            Log::error('Error en proceso para calcular tiempo consumido por los permisos. ' . $th);
 
         }
 

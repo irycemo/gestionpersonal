@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use Carbon\Carbon;
 use App\Models\Falta;
 use App\Models\Persona;
 use App\Models\Retardo;
@@ -128,13 +129,19 @@ class Justificaciones extends Component
                 }
 
                 if($this->falta_id){
+
                     $falta = Falta::find($this->falta_id);
                     $falta->update(['justificacion_id' => $justificacion->id]);
+
+                    $this->justificacionTresRetardos($falta);
+
                 }
 
                 if($this->retardo_id){
+
                     $retardo = Retardo::find($this->retardo_id);
                     $retardo->update(['justificacion_id' => $justificacion->id]);
+
                 }
 
                 $this->resetearTodo();
@@ -148,6 +155,29 @@ class Justificaciones extends Component
             Log::error("Error al crear justificación por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
+
+        }
+
+    }
+
+    public function justificacionTresRetardos($falta){
+
+        if($falta->tipo === 'Falta por acomulación de 3 retardos en el mes actual.'){
+
+            $retardos = Retardo::where('status',  0)
+                            ->where('persona_id', $this->persona_id)
+                            ->whereNull('justificacion_id')
+                            ->whereMonth('created_at', Carbon::now()->month)
+                            ->latest()
+                            ->take(2)
+                            ->get();
+
+            foreach ($retardos as $retardo) {
+
+                $retardo->status = 1;
+                $retardo->save();
+
+            }
 
         }
 
