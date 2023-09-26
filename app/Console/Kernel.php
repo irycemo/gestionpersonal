@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('revisar:permisos_activos')->dailyAt('1:00')->days([Schedule::TUESDAY, Schedule::WEDNESDAY, Schedule::THURSDAY, Schedule::FRIDAY, Schedule::SATURDAY]);
         $schedule->command('calcular:tiempo_permisos')->lastDayOfMonth('23:00');
         $schedule->command('revisar:incidencias')->dailyAt('23:00');
+        $schedule->command('revisar:salida')->dailyAt('23:10');
     }
 
     /**
