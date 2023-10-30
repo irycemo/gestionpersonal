@@ -36,7 +36,7 @@ class Incapacidades extends Component
             'persona' => 'required',
             /* 'fecha_inicial' => 'required|date|after:yesterday', */
             'fecha_inicial' => 'required|date',
-            'fecha_final' => 'required|date|after:fecha_inicial|after:fecha_inicial'
+            'fecha_final' => 'required|date|after_or_equal:fecha_inicial'
          ];
     }
 
