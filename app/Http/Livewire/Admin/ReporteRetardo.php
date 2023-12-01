@@ -18,6 +18,8 @@ class ReporteRetardo extends Component
 
     public $area;
     public $areas;
+    public $localidades;
+    public $localidad;
     public $empleados;
     public $retardo_empleado;
     public $fecha1;
@@ -47,7 +49,7 @@ class ReporteRetardo extends Component
 
         try {
 
-            return Excel::download(new RetardosExport($this->area, $this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
+            return Excel::download(new RetardosExport($this->localidad, $this->area, $this->retardo_empleado, $this->fecha1, $this->fecha2), 'Reporte_de_retardos_' . now()->format('d-m-Y') . '.xlsx');
 
         } catch (\Throwable $th) {
 
@@ -63,6 +65,8 @@ class ReporteRetardo extends Component
 
         $this->areas = collect(Constantes::AREAS_ADSCRIPCION)->sort();
 
+        $this->localidades = Constantes::LOCALIDADES;
+
         $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
     }
@@ -71,6 +75,11 @@ class ReporteRetardo extends Component
     {
 
         $retardos = Retardo::with('persona', 'justificacion')
+                                ->when (isset($this->localidad) && $this->localidad != "", function($q){
+                                    return $q->whereHas('persona', function($q){
+                                        $q->where('localidad', $this->localidad);
+                                    });
+                                })
                                 ->when (isset($this->area) && $this->area != "", function($q){
                                     return $q->whereHas('persona', function($q){
                                         $q->where('area', $this->area);

@@ -22,14 +22,16 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     public $fecha1;
     public $fecha2;
     public $area;
+    public $localidad;
 
-    public function __construct($area, $retardo_empleado, $fecha1, $fecha2)
+    public function __construct($localidad, $area, $retardo_empleado, $fecha1, $fecha2)
     {
 
         $this->retardo_empleado = $retardo_empleado;
         $this->fecha1 = $fecha1;
         $this->fecha2 = $fecha2;
         $this->area = $area;
+        $this->localidad = $localidad;
 
     }
 
@@ -39,6 +41,11 @@ class RetardosExport implements FromCollection,  WithProperties, WithDrawings, S
     public function collection()
     {
         return Retardo::with('persona', 'justificacion')
+                            ->when (isset($this->localidad) && $this->localidad != "", function($q){
+                                return $q->whereHas('persona', function($q){
+                                    $q->where('localidad', $this->localidad);
+                                });
+                            })
                             ->when (isset($this->area) && $this->area != "", function($q){
                                 return $q->whereHas('persona', function($q){
                                     $q->where('area', $this->area);

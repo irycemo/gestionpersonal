@@ -19,6 +19,7 @@ class ReporteFalta extends Component
     public $area;
     public $areas;
     public $localidades;
+    public $localidad;
     public $empleados;
     public $falta_empleado;
     public $falta_tipo;

@@ -59,7 +59,7 @@
 
             <div>
 
-                <select class="rounded text-sm w-full" wire:model="area">
+                <select class="rounded text-sm w-full" wire:model="localidad">
 
                     <option value="" selected>Seleccione una opción</option>
 
@@ -75,7 +75,7 @@
 
             <div>
 
-                @error('area') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                @error('localidad') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
             </div>
 
