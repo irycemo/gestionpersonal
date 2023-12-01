@@ -18,6 +18,7 @@ class ReporteFalta extends Component
 
     public $area;
     public $areas;
+    public $localidades;
     public $empleados;
     public $falta_empleado;
     public $falta_tipo;
@@ -47,7 +48,7 @@ class ReporteFalta extends Component
 
         try {
 
-            return Excel::download(new FaltasExport($this->area, $this->falta_empleado, $this->falta_tipo, $this->fecha1, $this->fecha2), 'Reporte_de_faltas_' . now()->format('d-m-Y') . '.xlsx');
+            return Excel::download(new FaltasExport($this->localidad, $this->area, $this->falta_empleado, $this->falta_tipo, $this->fecha1, $this->fecha2), 'Reporte_de_faltas_' . now()->format('d-m-Y') . '.xlsx');
 
         } catch (\Throwable $th) {
 
@@ -63,6 +64,8 @@ class ReporteFalta extends Component
 
         $this->areas = Constantes::AREAS_ADSCRIPCION;
 
+        $this->localidades = Constantes::LOCALIDADES;
+
         $this->empleados = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')->orderBy('nombre')->get();
 
     }
@@ -71,6 +74,11 @@ class ReporteFalta extends Component
     {
 
         $faltas = Falta::with('persona', 'justificacion')
+                            ->when (isset($this->localidad) && $this->localidad != "", function($q){
+                                return $q->whereHas('persona', function($q){
+                                    $q->where('localidad', $this->localidad);
+                                });
+                            })
                             ->when (isset($this->area) && $this->area != "", function($q){
                                 return $q->whereHas('persona', function($q){
                                     $q->where('area', $this->area);

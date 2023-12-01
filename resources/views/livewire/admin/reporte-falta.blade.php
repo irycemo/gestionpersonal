@@ -54,6 +54,37 @@
 
             <div>
 
+                <Label>Localidades</Label>
+            </div>
+
+            <div>
+
+                <select class="rounded text-sm w-full" wire:model="area">
+
+                    <option value="" selected>Seleccione una opción</option>
+
+                    @foreach ($localidades as $localidad)
+
+                        <option value="{{ $localidad }}">{{ $localidad }}</option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div>
+
+                @error('area') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+            </div>
+
+        </div>
+
+        <div class="flex-auto ">
+
+            <div>
+
                 <Label>Areas</Label>
             </div>
 
