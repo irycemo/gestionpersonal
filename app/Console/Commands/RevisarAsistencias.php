@@ -8,8 +8,6 @@ use App\Models\Inhabil;
 use App\Models\Persona;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class RevisarAsistencias extends Command
 {

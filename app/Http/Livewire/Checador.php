@@ -7,7 +7,6 @@ use App\Models\Falta;
 use App\Models\Persona;
 use App\Models\Retardo;
 use Livewire\Component;
-use App\Models\Incapacidad;
 use App\Models\Checador as CH;
 
 class Checador extends Component

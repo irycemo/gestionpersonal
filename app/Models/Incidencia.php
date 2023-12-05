@@ -10,6 +10,6 @@ class Incidencia extends Model
 
     use HasFactory;
 
-    protected $fillable = ['persona_id', 'tiempo', 'tipo', 'status'];
+    protected $fillable = ['persona_id', 'tiempo_consumido', 'tipo', 'status'];
 
 }
