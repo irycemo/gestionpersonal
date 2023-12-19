@@ -37,7 +37,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
             foreach($empleados as $empleado){
 
-                if($empleado->ultimoChecado && $empleado->ultimoChecado->tipo == 'salida'){
+                if($empleado->ultimoChecado && $empleado->ultimoChecado->created_at->isToday() && $empleado->ultimoChecado->tipo == 'salida'){
 
                     $horaSalida = strtotime($this->obtenerDia($empleado->horario));
 
