@@ -37,7 +37,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
             foreach($empleados as $empleado){
 
-                if($empleado->ultimoChecado->tipo == 'salida'){
+                if($empleado->ultimoChecado && $empleado->ultimoChecado->tipo == 'salida'){
 
                     $horaSalida = strtotime($this->obtenerDia($empleado->horario));
 
@@ -64,7 +64,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
         } catch (\Throwable $th) {
 
-            Log::error('Error en proceso para reviar horas de salida. ' . $th);
+            Log::error('Error en proceso para revisar horas de salida. ' . $th);
 
         }
 
