@@ -45,13 +45,13 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                     if($horaChecada < $horaSalida){
 
-                        $min = $horaChecada - $horaSalida;
+                        $min = $horaChecada - $horaSalida / 60;
 
                         Incidencia::create([
                             'tipo' => 'Incidencia por checar salida antes de la hora de salida.',
                             'persona_id' => $empleado->id,
                             'status' => 1,
-                            'tiempo_consumido' => $min
+                            'tiempo_consumido' => abs($min)
                         ]);
 
                     }
