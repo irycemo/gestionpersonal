@@ -43,6 +43,13 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                     $horaChecada = strtotime($empleado->ultimoChecado->created_at->format('H:i:s'));
 
+                    info([
+                        'horaSalida' => $horaSalida,
+                        'horaChecada' => $horaChecada,
+                        'tiempo_consumido' => $horaChecada - $horaSalida,
+                        'min' => $horaSalida / 60
+                    ]);
+
                     if($horaChecada < $horaSalida){
 
                         $min = $horaChecada - $horaSalida / 60;
