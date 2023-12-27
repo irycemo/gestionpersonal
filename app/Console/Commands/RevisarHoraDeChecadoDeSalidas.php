@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use App\Models\Persona;
 use App\Models\Incidencia;
 use Illuminate\Console\Command;
@@ -39,26 +40,24 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                 if($empleado->ultimoChecado && $empleado->ultimoChecado->created_at->isToday() && $empleado->ultimoChecado->tipo == 'salida'){
 
-                    $horaSalida = strtotime($this->obtenerDia($empleado->horario));
+                    $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
 
-                    $horaChecada = strtotime($empleado->ultimoChecado->created_at->format('H:i:s'));
+                    $horaChecada = $empleado->ultimoChecado->created_at->format('H:i:s');
 
                     info([
                         'horaSalida' => $horaSalida,
                         'horaChecada' => $horaChecada,
                         'tiempo_consumido' => $horaChecada - $horaSalida,
-                        'min' => date('i', $horaSalida)
+                        'min' => $horaSalida->diffInMinutes($horaChecada)
                     ]);
 
-                    if($horaChecada < $horaSalida){
-
-                        $min = $horaChecada - $horaSalida / 60;
+                    if($horaSalida < $horaChecada){
 
                         Incidencia::create([
                             'tipo' => 'Incidencia por checar salida antes de la hora de salida.',
                             'persona_id' => $empleado->id,
                             'status' => 1,
-                            'tiempo_consumido' => date('i', $horaSalida)
+                            'tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)
                         ]);
 
                     }
