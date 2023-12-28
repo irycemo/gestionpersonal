@@ -47,7 +47,6 @@ class RevisarHoraDeChecadoDeSalidas extends Command
                     info([
                         'horaSalida' => $horaSalida,
                         'horaChecada' => $horaChecada,
-                        'tiempo_consumido' => $horaChecada - $horaSalida,
                         'min' => $horaSalida->diffInMinutes($horaChecada)
                     ]);
 
