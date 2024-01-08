@@ -42,7 +42,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                     $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
 
-                    $horaChecada = $empleado->ultimoChecado->created_at->format('H:i:s');
+                    $horaChecada = $empleado->ultimoChecado->created_at;
 
                     info([
                         'horaSalida' => $horaSalida,
