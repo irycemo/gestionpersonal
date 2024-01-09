@@ -62,25 +62,31 @@ class CalcularTiempoPermisos extends Command
 
                 }
 
-                //Horas laborales 8
-                $dias = ($min / 60) / 8;
+                if($min > 0){
 
-                if($dias >= 1){
+                    //Horas laborales 8
+                    $dias = ($min / 60) / 8;
 
-                    /* Se asigna día económico (id: 1), al trabajador */
-                    $empleado->permisos()->attach(1, ['fecha_inicio' => now()->format('Y-m-d')]);
+                    if($dias >= 1){
 
-                    foreach($permisos as $permiso){
+                        /* Se asigna día económico (id: 1), al trabajador */
+                        $empleado->permisos()->attach(1, ['fecha_inicio' => now()->format('Y-m-d')]);
 
-                        $permiso->status = 1;
-                        $permiso->save();
+                        $empleado->incidencias->create(['tipo' => 'Se descuenta un permiso de día económico debido al tiempo consumido por permisos personales e incidencias.', 'status' => 1]);
 
-                    }
+                        foreach($permisos as $permiso){
 
-                    foreach($incidencias as $incidencia){
+                            $permiso->status = 1;
+                            $permiso->save();
 
-                        $incidencia->status = 1;
-                        $incidencia->save();
+                        }
+
+                        foreach($incidencias as $incidencia){
+
+                            $incidencia->status = 1;
+                            $incidencia->save();
+
+                        }
 
                     }
 

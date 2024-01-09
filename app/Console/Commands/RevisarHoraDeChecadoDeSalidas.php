@@ -44,13 +44,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                     $horaChecada = $empleado->ultimoChecado->created_at;
 
-                    info([
-                        'horaSalida' => $horaSalida,
-                        'horaChecada' => $horaChecada,
-                        'min' => $horaSalida->diffInMinutes($horaChecada)
-                    ]);
-
-                    if($horaSalida < $horaChecada){
+                    if($horaSalida > $horaChecada){
 
                         Incidencia::create([
                             'tipo' => 'Incidencia por checar salida antes de la hora de salida.',
