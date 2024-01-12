@@ -415,9 +415,9 @@ class Permisospersonal extends Component
 
             $dia = $ultimaChecada->created_at->format('l');
 
-            $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario, $dia)));
-
             $horaChecada = $ultimaChecada->created_at;
+
+            $horaSalida = Carbon::createFromFormat('Y-m-d H:i:s', $ultimaChecada->created_at->format('Y-m-d') . ' ' . $this->obtenerDia($empleado->horario, $dia));
 
             if($horaSalida > $horaChecada){
 
