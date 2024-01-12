@@ -34,15 +34,13 @@ class RevisarChecadaSalida extends Command
 
         try {
 
-            $empleados = Persona::with('checados')->where('status', 'activo')->get();
+            $empleados = Persona::with('ultimoChecado')->where('status', 'activo')->get();
 
             foreach($empleados as $empleado){
 
-                $checados = $empleado->checados()
-                                        ->whereDate('created_at', Carbon::now()->today())
-                                        ->get();
+                $permiso = $empleado->permisos2()->whereDate('created_at', now()->toDay())->first();
 
-                if($checados->count() == 1 && $checados->first()->tipo == 'entrada'){
+                if($empleado->ultimoChecado->created_at->isToday() && $empleado->ultimoChecado->tipo == 'entrada' && !$permiso){
 
                     Falta::create([
                         'tipo' => 'Registro entrada y no registro salida',

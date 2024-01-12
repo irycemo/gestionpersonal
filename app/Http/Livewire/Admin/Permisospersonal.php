@@ -409,20 +409,21 @@ class Permisospersonal extends Component
 
         $empleado = Persona::with('checados', 'horario')->where('id', $this->empleado->id)->first();
 
-        $ultimaChecada = $empleado->checados()->whereDate('created_at', '=', $this->fecha_asignada)->get()->last();
+        $ultimaChecada = $empleado->checados()->whereDate('created_at', $this->fecha_asignada)->first();
 
-        if($ultimaChecada && $ultimaChecada->tipo == 'salida'){
-
-            $ultimaChecadaFormateada = $ultimaChecada->created_at->format('H:i:s');
+        if($ultimaChecada){
 
             $dia = $ultimaChecada->created_at->format('l');
 
-            $tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario, $dia)) - strtotime($ultimaChecadaFormateada)) / 60);
+            $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario, $dia)));
 
-            if($tiempo_consumido < 0)
-                return null;
-            else
-                return $tiempo_consumido;
+            $horaChecada = $ultimaChecada->created_at;
+
+            if($horaSalida > $horaChecada){
+
+                return $horaSalida->diffInMinutes($horaChecada);
+
+            }
 
         }else{
 

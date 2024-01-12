@@ -43,18 +43,23 @@ class RevisarPermisosPersonalesActivos extends Command
                                                 ->whereDate('fecha_inicio', Carbon::yesterday()->toDateString())
                                                 ->get();
 
-                $ultimaChecada = $empleado->checados->where('created_at', Carbon::yesterday()->toDateString())->where('tipo', 'salida')->first();
+                $ultimaChecada = $empleado->checados()->whereDate('created_at', Carbon::yesterday())->where('tipo', 'salida')->first();
 
                 if($ultimaChecada){
 
-                    $ultimaChecada = $ultimaChecada->created_at->format('H:i:s');
+                    $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
 
-                    foreach ($permisos as $permiso) {
+                    $ultimaChecada = $ultimaChecada->created_at;
 
-                        $permiso->pivot->tiempo_consumido = floor((strtotime($this->obtenerDia($empleado->horario)) - strtotime($ultimaChecada)) / 60);
-                        $permiso->pivot->tiempo_consumido = $permiso->pivot->tiempo_consumido < 0 ? null : $permiso->pivot->tiempo_consumido;
-                        $permiso->pivot->status = 1;
-                        $permiso->pivot->save();
+                    if($horaSalida > $ultimaChecada){
+
+                        foreach ($permisos as $permiso) {
+
+                            $permiso->pivot->tiempo_consumido = $horaSalida->diffInMinutes($ultimaChecada);
+                            $permiso->pivot->status = 1;
+                            $permiso->pivot->save();
+
+                        }
 
                     }
 

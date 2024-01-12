@@ -21,7 +21,7 @@ class CalcularTiempoPermisos extends Command
      *
      * @var string
      */
-    protected $description = 'Calcula el tiempo consumido por los permisos personales pedidos e incidencias en el año actual';
+    protected $description = 'Calcula el tiempo consumido por los permisos personales pedidos e incidencias en el mes actual';
 
     /**
      * Execute the console command.
@@ -76,7 +76,7 @@ class CalcularTiempoPermisos extends Command
 
                         foreach($permisos as $permiso){
 
-                            $permiso->status = 1;
+                            $permiso->pivot->status = 1;
                             $permiso->save();
 
                         }
