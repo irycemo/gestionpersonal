@@ -40,7 +40,7 @@ class RevisarChecadaSalida extends Command
 
                 $permiso = $empleado->permisos2()->whereDate('created_at', now()->toDay())->first();
 
-                if($empleado->ultimoChecado->created_at->isToday() && $empleado->ultimoChecado->tipo == 'entrada' && !$permiso){
+                if($empleado->ultimoChecado && $empleado->ultimoChecado->created_at->isToday() && $empleado->ultimoChecado->tipo == 'entrada' && !$permiso){
 
                     Falta::create([
                         'tipo' => 'Registro entrada y no registro salida',
