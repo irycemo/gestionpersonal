@@ -146,9 +146,10 @@
 
                 <div class="mb-4">
 
-                    <p class="tracking-widest font-semibold text-lg">Tiempo consumido por permisos</p>
+                    <p class="tracking-widest font-semibold text-lg">Tiempo consumido</p>
 
-                    {{ $persona->tiempoConsumidoPermisos() }} min.
+                    <p>Permisos: {{ $persona->tiempoConsumidoPermisos() }} min.</p>
+                    <p>Incidencias: {{ $persona->tiempoConsumidoIncidencias() }} min.</p>
 
                 </div>
 
