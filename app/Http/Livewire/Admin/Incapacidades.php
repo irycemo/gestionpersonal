@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Admin;
 
 use Carbon\Carbon;
+use App\Models\Falta;
 use App\Models\Persona;
+use App\Models\Retardo;
 use Livewire\Component;
 use App\Models\Incapacidad;
 use Livewire\WithPagination;
+use App\Models\Justificacion;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -119,6 +122,8 @@ class Incapacidades extends Component
 
                 }
 
+                $this->justificar($this->fecha_inicial, $this->fecha_final);
+
                 $this->resetearTodo();
 
                 $this->dispatchBrowserEvent('mostrarMensaje', ['success', "La incapacidad se creó con éxito."]);
@@ -204,6 +209,58 @@ class Incapacidades extends Component
             Log::error("Error al borrar incapacidad por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
             $this->resetearTodo();
+
+        }
+
+    }
+
+    public function justificar($fi, $ff){
+
+        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+
+        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+
+        if($retardos->count() > 0){
+
+            foreach ($faltas as $falta) {
+
+                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
+
+                $jsutificacion = Justificacion::create([
+                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                    'documento' => '',
+                    'persona_id' => $this->empleado->id,
+                    'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'creado_por' => auth()->user()->id
+                ]);
+
+                $falta->update([
+                    'justificacion_id' => $jsutificacion->id
+                ]);
+
+            }
+
+        }
+
+        if($retardos->count() > 0){
+
+            foreach ($retardos as $retardo) {
+
+                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
+
+                $jsutificacion = Justificacion::create([
+                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                    'documento' => '',
+                    'persona_id' => $this->empleado->id,
+                    'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'creado_por' => auth()->user()->id
+                ]);
+
+                $retardo->update([
+                    'justificacion_id' => $jsutificacion->id
+                ]);
+
+            }
 
         }
 

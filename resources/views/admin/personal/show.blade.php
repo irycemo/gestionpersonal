@@ -283,6 +283,40 @@
 
             <div
                 class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                x-ref="tab6"
+                :style="selected == 6 ? 'max-height: ' + $refs.tab6.scrollHeight + 'px;' :  ''"
+            >
+
+                @livewire('admin.personal.full-callendar', ['persona_id' => $persona->id])
+
+            </div>
+
+            <div @click="selected != 7 ? selected = 7 : selected = null" class="">
+
+                <h2 class="text-2xl tracking-widest px-6 py-3 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-3 cursor-pointer  bg-white">
+
+                    Incidencias ({{ $persona->incidencias->count() }})
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-right" :class="selected == 6 ? 'transform rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="gray">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 9l-7 7-7-7" />
+                    </svg>
+
+                </h2>
+
+            </div>
+
+            <div
+                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                x-ref="tab7"
+                :style="selected == 7 ? 'max-height: ' + $refs.tab7.scrollHeight + 'px;' :  ''"
+            >
+
+                @livewire('admin.personal.incidencias', ['persona' => $persona])
+
+            </div>
+
+            <div
+                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
                 x-ref="tab2"
                 :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
             >
@@ -302,16 +336,6 @@
                     </svg>
 
                 </h2>
-
-            </div>
-
-            <div
-                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
-                x-ref="tab6"
-                :style="selected == 6 ? 'max-height: ' + $refs.tab6.scrollHeight + 'px;' :  ''"
-            >
-
-                @livewire('admin.personal.full-callendar', ['persona_id' => $persona->id])
 
             </div>
 

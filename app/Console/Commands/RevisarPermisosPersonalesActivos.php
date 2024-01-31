@@ -56,7 +56,6 @@ class RevisarPermisosPersonalesActivos extends Command
                         foreach ($permisos as $permiso) {
 
                             $permiso->pivot->tiempo_consumido = $horaSalida->diffInMinutes($ultimaChecada);
-                            $permiso->pivot->status = 1;
                             $permiso->pivot->save();
 
                         }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Falta;
 use App\Models\Inhabil;
 use App\Models\Persona;
+use App\Models\Retardo;
 use Livewire\Component;
 use App\Http\Constantes;
 use App\Models\Permisos;
@@ -322,7 +323,7 @@ class Permisospersonal extends Component
 
             try {
 
-                $this->justificarFalta($this->fecha_asignada, $final);
+                $this->justificar($this->fecha_asignada, $final);
 
                 PermisoPersona::create([
                     'creado_por' => auth()->user()->id,
@@ -447,11 +448,13 @@ class Permisospersonal extends Component
 
     }
 
-    public function justificarFalta($fi, $ff){
+    public function justificar($fi, $ff){
 
         $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
 
-        if($faltas->count() > 0){
+        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+
+        if($retardos->count() > 0){
 
             foreach ($faltas as $falta) {
 
@@ -466,6 +469,28 @@ class Permisospersonal extends Component
                 ]);
 
                 $falta->update([
+                    'justificacion_id' => $jsutificacion->id
+                ]);
+
+            }
+
+        }
+
+        if($retardos->count() > 0){
+
+            foreach ($retardos as $retardo) {
+
+                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
+
+                $jsutificacion = Justificacion::create([
+                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                    'documento' => '',
+                    'persona_id' => $this->empleado->id,
+                    'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'creado_por' => auth()->user()->id
+                ]);
+
+                $retardo->update([
                     'justificacion_id' => $jsutificacion->id
                 ]);
 
