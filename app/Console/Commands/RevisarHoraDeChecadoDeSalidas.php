@@ -22,7 +22,7 @@ class RevisarHoraDeChecadoDeSalidas extends Command
      *
      * @var string
      */
-    protected $description = 'Proceso para calcular los minutos de diferencia entre la hora de checada de salida cuando es menos a la hora de salida establecida';
+    protected $description = 'Proceso para calcular los minutos de diferencia entre la hora de checada de salida cuando es menor a la hora de salida establecida';
 
     /**
      * Execute the console command.
@@ -49,7 +49,6 @@ class RevisarHoraDeChecadoDeSalidas extends Command
                         Incidencia::create([
                             'tipo' => 'Incidencia por checar salida antes de la hora de salida.',
                             'persona_id' => $empleado->id,
-                            'status' => 1,
                             'tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)
                         ]);
 
