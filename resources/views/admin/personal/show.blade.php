@@ -283,11 +283,11 @@
 
             <div
                 class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
-                x-ref="tab6"
-                :style="selected == 6 ? 'max-height: ' + $refs.tab6.scrollHeight + 'px;' :  ''"
+                x-ref="tab2"
+                :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
             >
 
-                @livewire('admin.personal.full-callendar', ['persona_id' => $persona->id])
+                @livewire('admin.personal.permisos', ['persona' => $persona])
 
             </div>
 
@@ -315,16 +315,6 @@
 
             </div>
 
-            <div
-                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
-                x-ref="tab2"
-                :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
-            >
-
-                @livewire('admin.personal.permisos', ['persona' => $persona])
-
-            </div>
-
             <div @click="selected != 6 ? selected = 6 : selected = null" class="">
 
                 <h2 class="text-2xl tracking-widest px-6 py-3 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-3 cursor-pointer  bg-white">
@@ -336,6 +326,16 @@
                     </svg>
 
                 </h2>
+
+            </div>
+
+            <div
+                class="text-center mb-2 overflow-hidden max-h-0 transition-all duration-500"
+                x-ref="tab6"
+                :style="selected == 6 ? 'max-height: ' + $refs.tab6.scrollHeight + 'px;' :  ''"
+            >
+
+                @livewire('admin.personal.full-callendar', ['persona_id' => $persona->id])
 
             </div>
 
