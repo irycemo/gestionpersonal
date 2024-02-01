@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Persona;
+use App\Models\PermisoPersona;
 use Illuminate\Console\Command;
 
 class FixDb extends Command
@@ -42,15 +43,13 @@ class FixDb extends Command
 
             foreach($permisos as $permiso){
 
-                info($permiso);
-
                 $checadaSalida = $empleado->checados()
-                                            ->whereDate('created_at', $permiso->created_at)
+                                            ->whereDate('created_at', $permiso->pivot->created_at)
                                             ->where('tipo', 'salida')
                                             ->latest()
                                             ->get();
 
-                                            info($checadaSalida);
+                info($checadaSalida);
 
                 if($checadaSalida->count()){
 
@@ -58,14 +57,19 @@ class FixDb extends Command
 
                     $horaSalida = Carbon::parse($horaChecada->format('Y-m-d') . $this->obtenerDia($empleado->horario));
 
-                    info($horaSalida->diffInMinutes($horaChecada));
+                    info($horaChecada);
+
+                    info($horaSalida);
 
                     if($horaSalida > $horaChecada){
 
-                        $permiso->update([
-                            'tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)
-                        ]);
-
+                        $permiso->pivot->update(['tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)]);
+/*
+                        PermisoPersona::where('persona_id', $empleado->id)
+                            ->where('permisos_id', $permiso->id)
+                            ->whereDate('created_at', $permiso->pivot->created_at)
+                            ->update(['tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)]);
+ */
                     }
 
                 }

@@ -57,7 +57,7 @@ class Persona extends Model implements Auditable
     }
 
     public function permisos(){
-        return $this->belongsToMany(Permisos::class)->withPivot(['fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
+        return $this->belongsToMany(Permisos::class)->withPivot(['id', 'fecha_inicio', 'fecha_final', 'tiempo_consumido'])->withTimestamps();
     }
 
     public function permisos2(){
