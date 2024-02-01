@@ -66,13 +66,13 @@ class Persona extends Model implements Auditable
 
     public function tiempoConsumidoPermisos(){
 
-        return $this->permisos()->whereYear('permisos_persona.created_at', Carbon::now()->year)->sum('tiempo_consumido');
+        return $this->permisos()->whereNull('status')->whereYear('permisos_persona.created_at', Carbon::now()->year)->sum('tiempo_consumido');
 
     }
 
     public function tiempoConsumidoIncidencias(){
 
-        return $this->incidencias()->whereYear('created_at', Carbon::now()->year)->sum('tiempo_consumido');
+        return $this->incidencias()->whereNull('status')->whereYear('created_at', Carbon::now()->year)->sum('tiempo_consumido');
 
     }
 

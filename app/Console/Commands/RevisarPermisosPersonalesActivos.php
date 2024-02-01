@@ -33,32 +33,26 @@ class RevisarPermisosPersonalesActivos extends Command
 
         try {
 
-            $empleados = Persona::with('permisos', 'checados', 'horario')->where('status', 'activo')->get();
+            $empleados = Persona::with('permisos', 'checados','ultimoChecado')->where('status', 'activo')->get();
 
             foreach($empleados as $empleado){
 
-                $permisos = $empleado->permisos()->where('tipo', 'personal')
+                $permiso = $empleado->permisos()->where('tipo', 'personal')
                                                 ->where('tiempo_consumido', null)
                                                 ->where('status', null)
                                                 ->whereDate('fecha_inicio', Carbon::yesterday()->toDateString())
-                                                ->get();
+                                                ->first();
 
-                $ultimaChecada = $empleado->checados()->whereDate('created_at', Carbon::yesterday())->where('tipo', 'salida')->first();
-
-                if($ultimaChecada){
+                if($empleado->ultimoChecado && $empleado->ultimoChecado->tipo == 'salida'){
 
                     $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
 
-                    $ultimaChecada = $ultimaChecada->created_at;
+                    $horaChecada = $empleado->ultimoChecado->created_at;
 
-                    if($horaSalida > $ultimaChecada){
+                    if($horaSalida > $horaChecada){
 
-                        foreach ($permisos as $permiso) {
-
-                            $permiso->pivot->tiempo_consumido = $horaSalida->diffInMinutes($ultimaChecada);
-                            $permiso->pivot->save();
-
-                        }
+                        $permiso->pivot->tiempo_consumido = $horaSalida->diffInMinutes($horaChecada);
+                        $permiso->pivot->save();
 
                     }
 

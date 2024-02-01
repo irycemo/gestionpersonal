@@ -45,7 +45,7 @@ class CalcularTiempoPermisos extends Command
 
                 $incidencias = $empleado->incidencias()->where('tiempo_consumido','!=', null)
                                                 ->whereYear('created_at', Carbon::now()->year)
-                                                ->where('status', '!=', 1)
+                                                ->where('status', false)
                                                 ->get();
 
                 $min = 0;
@@ -87,7 +87,7 @@ class CalcularTiempoPermisos extends Command
 
                         foreach($incidencias as $incidencia){
 
-                            $incidencia->status = 1;
+                            $incidencia->status = true;
                             $incidencia->save();
 
                         }
