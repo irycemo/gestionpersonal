@@ -275,6 +275,11 @@ class Incapacidades extends Component
                                         ->orWhere('documento', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
                                         ->orWhere('created_at','like', '%'.$this->search.'%')
+                                        ->orWhereHas('persona', function($q){
+                                            $q->where('nombre', 'like', '%'.$this->search.'%')
+                                                ->orWhere('ap_paterno', 'like', '%'.$this->search.'%')
+                                                ->orWhere('ap_materno', 'like', '%'.$this->search.'%');
+                                        })
                                         ->orderBy($this->sort, $this->direction)
                                         ->paginate($this->pagination);
 
