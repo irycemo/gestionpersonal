@@ -42,17 +42,23 @@ class FixDb extends Command
 
             foreach($permisos as $permiso){
 
+                info($permiso);
+
                 $checadaSalida = $empleado->checados()
-                                            ->whereDate('created_at', $permiso->created_at->toDateString())
+                                            ->whereDate('created_at', $permiso->created_at)
                                             ->where('tipo', 'salida')
                                             ->latest()
                                             ->get();
+
+                                            info($checadaSalida);
 
                 if($checadaSalida->count()){
 
                     $horaChecada = $checadaSalida->first()->created_at;
 
                     $horaSalida = Carbon::parse($horaChecada->format('Y-m-d') . $this->obtenerDia($empleado->horario));
+
+                    info($horaSalida->diffInMinutes($horaChecada));
 
                     if($horaSalida > $horaChecada){
 
