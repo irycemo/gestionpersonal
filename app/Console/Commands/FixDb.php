@@ -43,7 +43,7 @@ class FixDb extends Command
             foreach($permisos as $permiso){
 
                 $checadaSalida = $empleado->checados()
-                                            ->whereDate('created_at', $permiso->created_at)
+                                            ->whereDate('created_at', $permiso->created_at->toDateString())
                                             ->where('tipo', 'salida')
                                             ->latest()
                                             ->get();
