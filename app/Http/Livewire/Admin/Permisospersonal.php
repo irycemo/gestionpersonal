@@ -359,7 +359,6 @@ class Permisospersonal extends Component
                         'fecha_final' => $this->fecha_final,
                         'permisos_id' => $this->permiso_id,
                         'persona_id' => $this->empleado->id,
-                        'status' => 1,
                         'tiempo_consumido' => $ff->diffInMinutes($fi)
                     ]);
 
@@ -383,7 +382,6 @@ class Permisospersonal extends Component
                             'fecha_final' => $this->fecha_asignada,
                             'permisos_id' => $this->permiso_id,
                             'persona_id' => $this->empleado->id,
-                            'status' => 1,
                             'tiempo_consumido' => $this->tiempoConsumido()
                         ]);
                     }
