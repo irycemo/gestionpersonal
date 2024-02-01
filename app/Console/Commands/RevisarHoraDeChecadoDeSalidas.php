@@ -44,6 +44,10 @@ class RevisarHoraDeChecadoDeSalidas extends Command
 
                     $horaChecada = $empleado->ultimoChecado->created_at;
 
+                    $permiso = $empleado->permisos()->whereDate('permisos_persona.created_at', $horaChecada)->first();
+
+                    if($permiso) continue;
+
                     if($horaSalida > $horaChecada){
 
                         Incidencia::create([
