@@ -37,7 +37,7 @@ class FixDb extends Command
             $permisos = $empleado->permisos()->where('tipo', 'personal')
                                             ->where('tiempo_consumido', null)
                                             ->where('status', null)
-                                            ->whereYear('created_at', now()->year)
+                                            ->whereYear('permisos_persona.created_at', now()->year)
                                             ->get();
 
             foreach($permisos as $permiso){
