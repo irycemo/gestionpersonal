@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('calcular:tiempo_permisos')->lastDayOfMonth('23:00');
         $schedule->command('revisar:incidencias')->dailyAt('23:00');
         $schedule->command('revisar:salida')->dailyAt('23:10');
-        $schedule->command('fix:bd')->everyMinute();
+        $schedule->command('fix:db')->everyMinute();
     }
 
     /**
