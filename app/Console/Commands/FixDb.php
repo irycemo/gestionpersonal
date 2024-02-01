@@ -48,9 +48,9 @@ class FixDb extends Command
                                             ->latest()
                                             ->get();
 
-                $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
-
                 $horaChecada = $checadaSalida->first()->created_at;
+
+                $horaSalida = Carbon::parse($horaChecada->format('Y-m-d') . $this->obtenerDia($empleado->horario));
 
                 if($horaSalida > $horaChecada){
 
