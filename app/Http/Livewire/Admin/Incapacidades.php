@@ -216,9 +216,9 @@ class Incapacidades extends Component
 
     public function justificar($fi, $ff){
 
-        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi, $ff])->get();
 
-        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi, $ff])->get();
 
         if($retardos->count() > 0){
 
@@ -229,7 +229,7 @@ class Incapacidades extends Component
                 $jsutificacion = Justificacion::create([
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
                     'documento' => '',
-                    'persona_id' => $this->empleado->id,
+                    'persona_id' => $this->persona,
                     'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
                     'creado_por' => auth()->user()->id
                 ]);
@@ -251,7 +251,7 @@ class Incapacidades extends Component
                 $jsutificacion = Justificacion::create([
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
                     'documento' => '',
-                    'persona_id' => $this->empleado->id,
+                    'persona_id' => $this->persona,
                     'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
                     'creado_por' => auth()->user()->id
                 ]);
