@@ -116,7 +116,7 @@
 
                                 @if ($permiso->tiempo_consumido)
 
-                                    {{ $permiso->tiempo_consumido }} min. @if($permiso->status)<span class="bg-slate-400 text-white rounded-full px-2 py-1 text-xs">Contabilizado</span>@endif
+                                    {{ $permiso->tiempo_consumido }} min. @if($permiso->status)<span class="bg-gray-400 text-white rounded-full px-2 py-1 text-xs">Contabilizado</span>@endif
 
                                 @else
 
