@@ -48,15 +48,19 @@ class FixDb extends Command
                                             ->latest()
                                             ->get();
 
-                $horaChecada = $checadaSalida->first()->created_at;
+                if($checadaSalida->count()){
 
-                $horaSalida = Carbon::parse($horaChecada->format('Y-m-d') . $this->obtenerDia($empleado->horario));
+                    $horaChecada = $checadaSalida->first()->created_at;
 
-                if($horaSalida > $horaChecada){
+                    $horaSalida = Carbon::parse($horaChecada->format('Y-m-d') . $this->obtenerDia($empleado->horario));
 
-                    $permiso->update([
-                        'tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)
-                    ]);
+                    if($horaSalida > $horaChecada){
+
+                        $permiso->update([
+                            'tiempo_consumido' => $horaSalida->diffInMinutes($horaChecada)
+                        ]);
+
+                    }
 
                 }
 
