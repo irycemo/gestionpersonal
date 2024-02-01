@@ -29,6 +29,7 @@ class Incapacidades extends Component
     public $fecha_inicial;
     public $fecha_final;
     public $observaciones;
+    public $incapacidad;
 
     protected $queryString = ['search'];
 
@@ -39,7 +40,8 @@ class Incapacidades extends Component
             'persona' => 'required',
             /* 'fecha_inicial' => 'required|date|after:yesterday', */
             'fecha_inicial' => 'required|date',
-            'fecha_final' => 'required|date|after_or_equal:fecha_inicial'
+            'fecha_final' => 'required|date|after_or_equal:fecha_inicial',
+            'observaciones' => 'required'
          ];
     }
 
@@ -100,7 +102,7 @@ class Incapacidades extends Component
 
                 $inc = Incapacidad::latest()->first();
 
-                $incapacidad = Incapacidad::create([
+                $this->incapacidad = Incapacidad::create([
                     'folio' =>  $inc->folio ? $inc->folio + 1 : 0,
                     'tipo' => $this->tipo,
                     'fecha_inicial' => $this->fecha_inicial,
@@ -116,7 +118,7 @@ class Incapacidades extends Component
 
                     $this->dispatchBrowserEvent('removeFiles');
 
-                    $incapacidad->update([
+                    $this->incapacidad->update([
                         'documento' => $nombreArchivo
                     ]);
 
@@ -216,11 +218,11 @@ class Incapacidades extends Component
 
     public function justificar($fi, $ff){
 
-        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi, $ff])->get();
+        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi, $ff])->get();
+        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        if($retardos->count() > 0){
+        if($faltas->count() > 0){
 
             foreach ($faltas as $falta) {
 
@@ -230,7 +232,7 @@ class Incapacidades extends Component
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
                     'documento' => '',
                     'persona_id' => $this->persona,
-                    'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'observaciones' => "Se justifica falta mediante incapacidad con folio: " . $this->incapacidad->folio . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
                     'creado_por' => auth()->user()->id
                 ]);
 
@@ -252,7 +254,7 @@ class Incapacidades extends Component
                     'folio' => $jus->folio ? $jus->folio + 1 : 0,
                     'documento' => '',
                     'persona_id' => $this->persona,
-                    'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                    'observaciones' => "Se justifica retardo mediante incapacidad con folio: " . $this->incapacidad->folio . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
                     'creado_por' => auth()->user()->id
                 ]);
 

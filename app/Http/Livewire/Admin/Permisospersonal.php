@@ -450,11 +450,11 @@ class Permisospersonal extends Component
 
     public function justificar($fi, $ff){
 
-        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi, $ff])->get();
+        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        if($retardos->count() > 0){
+        if($faltas->count() > 0){
 
             foreach ($faltas as $falta) {
 
