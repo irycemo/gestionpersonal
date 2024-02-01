@@ -7,6 +7,7 @@ use App\Models\Falta;
 use App\Models\Persona;
 use App\Models\Retardo;
 use Livewire\Component;
+use App\Models\Incidencia;
 use App\Models\Incapacidad;
 use Livewire\WithPagination;
 use App\Models\Justificacion;
@@ -222,6 +223,8 @@ class Incapacidades extends Component
 
         $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->persona)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
+        $incidencias = Incidencia::where('persona_id', $this->persona)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
+
         if($faltas->count() > 0){
 
             foreach ($faltas as $falta) {
@@ -261,6 +264,17 @@ class Incapacidades extends Component
                 $retardo->update([
                     'justificacion_id' => $jsutificacion->id
                 ]);
+
+            }
+
+        }
+
+        if($incidencias->count() > 0){
+
+            foreach ($incidencias as $incidencia) {
+
+                if($incidencia->tipo == 'Incidencia por checar salida antes de la hora de salida.')
+                    $incidencia->delete();
 
             }
 
