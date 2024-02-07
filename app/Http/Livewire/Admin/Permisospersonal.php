@@ -362,6 +362,8 @@ class Permisospersonal extends Component
                         'tiempo_consumido' => $ff->diffInMinutes($fi)
                     ]);
 
+                    $this->justificar($fi, $ff);
+
                 }else{
 
                     if(now()->isSameDay($this->fecha_asignada)){
@@ -385,6 +387,8 @@ class Permisospersonal extends Component
                             'tiempo_consumido' => $this->tiempoConsumido()
                         ]);
                     }
+
+                    $this->justificar($this->fecha_asignada, $this->fecha_asignada);
 
                 }
 
