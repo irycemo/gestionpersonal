@@ -43,7 +43,7 @@ class RevisarPermisosPersonalesActivos extends Command
                                                 ->whereDate('fecha_inicio', Carbon::yesterday()->toDateString())
                                                 ->first();
 
-                if($empleado->ultimoChecado && $empleado->ultimoChecado->tipo == 'salida'){
+                if($permiso && $empleado->ultimoChecado && $empleado->ultimoChecado->tipo == 'salida'){
 
                     $horaSalida = Carbon::createFromTimeStamp(strtotime($this->obtenerDia($empleado->horario)));
 
