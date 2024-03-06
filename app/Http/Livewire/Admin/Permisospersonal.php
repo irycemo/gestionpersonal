@@ -453,64 +453,72 @@ class Permisospersonal extends Component
 
     public function justificar($fi, $ff){
 
-        $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
+        try {
 
-        $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
+            $faltas = Falta::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        $incidencias = Incidencia::where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
+            $retardos = Retardo::whereNull('justificacion_id')->where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-        if($faltas->count() > 0){
+            $incidencias = Incidencia::where('persona_id', $this->empleado->id)->whereBetween('created_at', [$fi . ' 00:00:00', $ff . ' 23:59:59'])->get();
 
-            foreach ($faltas as $falta) {
+            if($faltas->count() > 0){
 
-                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
+                foreach ($faltas as $falta) {
 
-                $jsutificacion = Justificacion::create([
-                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
-                    'documento' => '',
-                    'persona_id' => $this->empleado->id,
-                    'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
-                    'creado_por' => auth()->user()->id
-                ]);
+                    $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
 
-                $falta->update([
-                    'justificacion_id' => $jsutificacion->id
-                ]);
+                    $jsutificacion = Justificacion::create([
+                        'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                        'documento' => '',
+                        'persona_id' => $this->empleado->id,
+                        'observaciones' => "Se justifica falta mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                        'creado_por' => auth()->user()->id
+                    ]);
 
-            }
+                    $falta->update([
+                        'justificacion_id' => $jsutificacion->id
+                    ]);
 
-        }
-
-        if($retardos->count() > 0){
-
-            foreach ($retardos as $retardo) {
-
-                $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
-
-                $jsutificacion = Justificacion::create([
-                    'folio' => $jus->folio ? $jus->folio + 1 : 0,
-                    'documento' => '',
-                    'persona_id' => $this->empleado->id,
-                    'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
-                    'creado_por' => auth()->user()->id
-                ]);
-
-                $retardo->update([
-                    'justificacion_id' => $jsutificacion->id
-                ]);
+                }
 
             }
 
-        }
+            if($retardos->count() > 0){
 
-        if($incidencias->count() > 0){
+                foreach ($retardos as $retardo) {
 
-            foreach ($incidencias as $incidencia) {
+                    $jus = Justificacion::latest()->orderBy('folio', 'desc')->first();
 
-                if($incidencia->tipo == 'Incidencia por checar salida antes de la hora de salida.')
-                    $incidencia->delete();
+                    $jsutificacion = Justificacion::create([
+                        'folio' => $jus->folio ? $jus->folio + 1 : 0,
+                        'documento' => '',
+                        'persona_id' => $this->empleado->id,
+                        'observaciones' => "Se justifica retardo mediante permiso " . $this->tipo . " " . $this->permiso_descripcion . " registrado por: " . auth()->user()->name . " con fecha de " . now()->format('d-m-Y H:i:s'),
+                        'creado_por' => auth()->user()->id
+                    ]);
+
+                    $retardo->update([
+                        'justificacion_id' => $jsutificacion->id
+                    ]);
+
+                }
 
             }
+
+            if($incidencias->count() > 0){
+
+                foreach ($incidencias as $incidencia) {
+
+                    if($incidencia->tipo == 'Incidencia por checar salida antes de la hora de salida.')
+                        $incidencia->delete();
+
+                }
+
+            }
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error al justificar mediante permiso: " . "id: " . $this->permiso_id . " al usuario: " . $this->empleado->id . " por: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
 
         }
 
