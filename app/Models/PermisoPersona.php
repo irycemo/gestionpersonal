@@ -35,8 +35,8 @@ class PermisoPersona extends Model implements Auditable
     }
 
     public function getFechaFinalAttribute(){
-        if($this->fecha_final)
-            return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['fecha_final'])->format('d-m-Y');
-        else return null;
+
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['fecha_final'])->format('d-m-Y');
+
     }
 }
