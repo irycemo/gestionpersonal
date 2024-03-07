@@ -324,7 +324,7 @@ class Permisospersonal extends Component
 
             try {
 
-                $this->justificar($this->fecha_asignada, $final->toDateString());
+                $this->justificar($this->fecha_asignada, $final->format('Y-m-d'));
 
                 PermisoPersona::create([
                     'creado_por' => auth()->user()->id,
