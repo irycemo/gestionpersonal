@@ -324,7 +324,7 @@ class Permisospersonal extends Component
 
             try {
 
-                $this->justificar($this->fecha_asignada, $final);
+                $this->justificar($this->fecha_asignada, $final->toDateString());
 
                 PermisoPersona::create([
                     'creado_por' => auth()->user()->id,
@@ -348,7 +348,7 @@ class Permisospersonal extends Component
 
             try {
 
-                if($this->tipo == 'personal' && $this->empleado->localidad == 'Catastro'){
+                if($this->tipo === 'personal' && $this->empleado->localidad === 'Catastro'){
 
                     $ff = Carbon::parse($this->fecha_final);
                     $fi = Carbon::parse($this->fecha_inicial);
@@ -362,7 +362,7 @@ class Permisospersonal extends Component
                         'tiempo_consumido' => $ff->diffInMinutes($fi)
                     ]);
 
-                    $this->justificar($fi, $ff);
+                    $this->justificar($fi->format('Y-m-d'), $ff->format('Y-m-d'));
 
                 }else{
 
