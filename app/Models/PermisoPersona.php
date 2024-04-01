@@ -30,13 +30,4 @@ class PermisoPersona extends Model implements Auditable
         return $this->belongsTo(Permisos::class, 'permisos_id');
     }
 
-    public function getFechaInicioAttribute(){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['fecha_inicio'])->format('d-m-Y');
-    }
-
-    public function getFechaFinalAttribute(){
-
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['fecha_final'])->format('d-m-Y');
-
-    }
 }
