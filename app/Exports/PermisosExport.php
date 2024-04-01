@@ -55,12 +55,6 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
                                 ->when (isset($this->permisoPermiso) && $this->permisoPermiso != "", function($q){
                                     return $q->where('permisos_id', $this->permisoPermiso);
                                 })
-                                ->when (isset($this->fecha_inicioPermiso) && $this->fecha_inicioPermiso != "", function($q){
-                                    return $q->whereDate('fecha_inicio','<=', Carbon::createFromFormat('Y-m-d', $this->fecha_inicioPermiso));
-                                })
-                                ->when (isset($this->fecha_finalPermiso) && $this->fecha_finalPermiso != "", function($q){
-                                    return $q->whereDate('fecha_final','>=', Carbon::createFromFormat('Y-m-d', $this->fecha_finalPermiso));
-                                })
                                 ->whereBetween('created_at', [$this->fecha1, $this->fecha2])
                                 ->get();
     }
